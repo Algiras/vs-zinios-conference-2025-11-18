@@ -1,0 +1,26 @@
+# Marp CLI Configuration
+# https://github.com/marp-team/marp-cli#configuration-file
+
+# Allow local files
+allowLocalFiles: true
+
+# HTML output
+html: true
+
+# Enable Mermaid diagrams
+markdown:
+  mermaid: true
+
+# Theme
+theme: default
+
+# PDF/PPTX options
+pdfOutlines:
+  pages: false
+  headings: true
+
+# Server options (for dev mode)
+server:
+  open: true
+  port: 8080
+
