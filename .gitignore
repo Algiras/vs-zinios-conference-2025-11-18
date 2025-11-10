@@ -5,6 +5,18 @@ repos/
 node_modules/
 package-lock.json
 yarn.lock
+pnpm-lock.yaml
+
+# Generated presentation files (commit source only)
+slides/*.html
+slides/*.pptx
+slides/*.pdf
+slides/*.processed.md
+
+# Generated images (intermediate build artifacts)
+slides/images/mermaid/
+slides/images/qr/
+slides/images/
 
 # macOS
 .DS_Store
@@ -54,6 +66,7 @@ yarn-error.log*
 tmp/
 temp/
 *.tmp
+.tmp/
 
 # Build outputs (if any)
 dist/

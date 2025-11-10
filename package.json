@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "Presentation on Autonomous Development Workflows",
   "scripts": {
-    "dev": "marp --watch --server slides/presentation.md",
-    "build": "marp slides/presentation.md --output slides/presentation.html",
-    "export": "marp slides/presentation.md --pptx --output slides/presentation.pptx",
-    "export:pdf": "marp slides/presentation.md --pdf --output slides/presentation.pdf",
-    "preview": "marp --server slides/presentation.md"
+    "preprocess": "node preprocess-markdown.js",
+    "dev": "npx @marp-team/marp-cli -w -s --html --engine ./engine.js slides/",
+    "build": "npm run preprocess && npx @marp-team/marp-cli --html --engine ./engine.js -o slides/presentation.html slides/presentation.processed.md",
+    "build:original": "npx @marp-team/marp-cli --html --engine ./engine.js -o slides/presentation.original.html slides/presentation.md",
+    "export": "npm run preprocess && npx @marp-team/marp-cli --html --engine ./engine.js --pptx --allow-local-files -o slides/presentation.pptx slides/presentation.processed.md",
+    "export:pdf": "npm run preprocess && npx @marp-team/marp-cli --html --engine ./engine.js --pdf --allow-local-files -o slides/presentation.pdf slides/presentation.processed.md",
+    "preview": "npx @marp-team/marp-cli -s --html --engine ./engine.js slides/",
+    "lint:mermaid": "md-mermaid-lint slides/presentation.md",
+    "lint:mermaid:all": "md-mermaid-lint slides/**/*.md docs/**/*.md"
   },
   "keywords": [
     "marp",
@@ -18,7 +22,11 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@marp-team/marp-cli": "^3.4.0"
+    "@marp-team/marp-cli": "^3.4.0",
+    "@marp-team/marp-core": "^3.9.0",
+    "@mermaid-js/mermaid-cli": "^11.12.0",
+    "md-mermaid-lint": "^1.0.1",
+    "qrcode": "^1.5.4"
   },
   "packageManager": "yarn@3.6.4+sha512.e70835d4d6d62c07be76b3c1529cb640c7443f0fe434ef4b6478a5a399218cbaf1511b396b3c56eb03bc86424cff2320f6167ad2fde273aa0df6e60b7754029f"
 }

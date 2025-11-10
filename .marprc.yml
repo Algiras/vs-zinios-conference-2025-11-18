@@ -7,10 +7,6 @@ allowLocalFiles: true
 # HTML output
 html: true
 
-# Enable Mermaid diagrams
-markdown:
-  mermaid: true
-
 # Theme
 theme: default
 

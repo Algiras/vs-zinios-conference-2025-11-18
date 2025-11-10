@@ -1,0 +1,524 @@
+# Cursor Rules for Autonomous Development Workflows Project
+
+## Project Overview
+
+This is a Marp-based presentation project with comprehensive documentation on autonomous development workflows, AI agents, and frameworks. The project structure:
+- `/slides/` - Marp presentation (main deliverable)
+- `/docs/` - Research documentation (MCP, agents, frameworks)
+- `/repos/` - Reference code repositories (gitignored)
+
+## Marp Slide Guidelines
+
+### General Principles
+
+1. **Content Density**: Keep slides focused and readable
+   - Max 5-7 bullet points per slide
+   - Split dense content across multiple slides
+   - Use two-column layouts for comparisons
+
+2. **No Code Examples**: Show principles, not implementation
+   - Reference documentation files instead of showing code
+   - Use pseudocode or structure descriptions
+   - Format: "**Reference**: `/docs/path/to/file.md`"
+
+3. **Visual Hierarchy**:
+   - Use consistent heading levels (H2 for titles, H3 for sections)
+   - Employ bullet points and numbered lists
+   - Use **bold** for emphasis, not excessive formatting
+
+### Marp-Specific Syntax
+
+#### Front Matter (Required)
+```markdown
+---
+marp: true
+size: 16:9
+theme: default
+paginate: true
+footer: 'Title | Date'
+style: |
+  footer { font-size: 0.8em; color: #666; }
+  section::after { content: attr(data-marpit-pagination) ' / ' attr(data-marpit-pagination-total); }
+---
+```
+
+#### Special Slides
+
+**Title Slide** (no pagination/footer):
+```markdown
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Title
+**Subtitle**
+```
+
+**Section Intro** (centered):
+```markdown
+<!-- _class: lead -->
+
+## Section Title
+```
+
+**Final Slides**:
+```markdown
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Questions?
+
+---
+
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Thank You!
+
+**Resources**: `/docs` directory
+```
+
+#### Two-Column Layout
+
+```markdown
+<div class="columns">
+<div>
+
+## Left Column
+- Point 1
+- Point 2
+
+</div>
+<div>
+
+## Right Column
+- Point 3
+- Point 4
+
+</div>
+</div>
+
+<style scoped>
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+}
+</style>
+```
+
+#### Content That Doesn't Fit
+
+```markdown
+<style scoped>
+section {
+  font-size: 24px;  /* Reduce from default 28px */
+}
+h2 {
+  font-size: 1.5em; /* Reduce from 1.8em */
+}
+</style>
+
+## Dense Content Slide
+...content...
+```
+
+### Diagrams
+
+#### Mermaid (Limited Support)
+- Marp has limited Mermaid support
+- Keep diagrams simple
+- Use ASCII art as fallback
+- Test rendering with `npm run dev`
+
+#### ASCII Diagrams
+```markdown
+```
+┌─────────┐
+│  Start  │
+└────┬────┘
+     │
+     v
+┌─────────┐
+│  Process│
+└─────────┘
+\```
+```
+
+### Content Organization
+
+#### Comparison Tables
+```markdown
+| Feature | Option A | Option B |
+|---------|----------|----------|
+| Speed   | Fast     | Slow     |
+| Cost    | High     | Low      |
+```
+
+#### Code Principles (Not Full Code)
+```markdown
+### Pattern Structure
+- **Component 1**: Purpose
+- **Component 2**: Purpose
+- **Integration**: How they work together
+
+**Reference**: `/docs/path/to/implementation.md`
+```
+
+## Documentation Guidelines
+
+### File Organization
+
+```
+/docs/
+  README.md              # Index with cross-references
+  /mcp/                  # Model Context Protocol
+    README.md
+    architecture.md
+    tools.md
+    resources.md
+  /agents/               # Agent architectures
+    reflex-agents.md
+    learning-agents.md
+    finite-state-machines.md
+    behavior-trees.md
+    goap.md
+    scratchpad-pattern.md
+  /frameworks/           # Framework comparisons
+    python-frameworks.md
+    typescript-frameworks.md
+    workflow-orchestration.md
+```
+
+### Documentation Standards
+
+1. **Structure**:
+   - Start with `# Title` and `## Overview`
+   - Include both ASCII and Mermaid diagrams
+   - Provide code examples for implementation
+   - End with `## Use Cases` and `## Best Practices`
+
+2. **Diagrams**:
+   - Include BOTH ASCII (for all contexts) AND Mermaid (for rich rendering)
+   - ASCII diagrams use box-drawing characters: `┌ ─ ┐ │ └ ┘ ├ ┤ ┬ ┴ ┼`
+   - Mermaid for complex flows, state machines, sequence diagrams
+
+3. **Code Examples**:
+   - Full working examples with context
+   - Language-specific syntax highlighting
+   - Include comments explaining key parts
+   - Show complete imports and setup
+
+4. **Cross-References**:
+   - Link to related documentation: `See [Related Topic](../path/to/file.md)`
+   - Reference presentation slides: "Used in slide: [Topic]"
+   - Point to code examples: `See /repos/framework-name/`
+
+5. **Comparison Tables**:
+   - Use for framework/tool comparisons
+   - Include: Features, Pros/Cons, Use Cases, Performance
+   - Keep cells concise
+
+### Creating New Documentation
+
+When adding new documentation:
+
+1. **Check Existing Structure**: Review `/docs/README.md` for organization
+2. **Follow Naming**: Use kebab-case: `my-topic-name.md`
+3. **Update Index**: Add entry to `/docs/README.md` with cross-references
+4. **Include Both Diagrams**: ASCII for compatibility, Mermaid for detail
+5. **Add References**: Link to external sources and internal docs
+
+### Documentation Templates
+
+#### Agent Architecture Doc
+```markdown
+# [Agent Type]
+
+## Overview
+Brief description of the agent type.
+
+## Characteristics
+- Key trait 1
+- Key trait 2
+
+## Architecture Diagram
+
+### ASCII
+\```
+[Diagram here]
+\```
+
+### Mermaid
+\```mermaid
+graph TD
+    A --> B
+\```
+
+## Implementation
+[Code example or pattern]
+
+## Advantages
+✅ Pro 1
+✅ Pro 2
+
+## Limitations
+❌ Con 1
+❌ Con 2
+
+## Use Cases
+- Scenario 1
+- Scenario 2
+
+## Best Practices
+1. Practice 1
+2. Practice 2
+```
+
+#### Framework Doc
+```markdown
+# [Framework Name]
+
+**Repository**: URL
+**Stars**: Count
+**Status**: Active/Maintenance
+
+## Description
+What it does.
+
+## Key Features
+- Feature 1
+- Feature 2
+
+## Installation
+\```bash
+pip install framework
+\```
+
+## Basic Usage
+\```python
+# Example
+\```
+
+## Use Cases
+- Case 1
+- Case 2
+
+## Comparison
+| Feature | This | Competitor |
+|---------|------|------------|
+```
+
+## Development Workflow
+
+### Working on Slides
+
+```bash
+# Start dev server (hot reload)
+npm run dev
+
+# Preview without watching
+npm run preview
+
+# Export to PowerPoint
+npm run export
+
+# Export to PDF
+npm run export:pdf
+
+# Build HTML
+npm run build
+```
+
+### Best Practices
+
+1. **Iterative Development**:
+   - Run `npm run dev` while editing
+   - Check content fits on each slide
+   - Test all diagrams render correctly
+   - Verify two-column layouts work
+
+2. **Content Guidelines**:
+   - One main idea per slide
+   - Use visual hierarchy (headings, bullets)
+   - Reference docs instead of showing code
+   - Keep backup slides minimal
+
+3. **Before Export**:
+   - Review all slides for overflow
+   - Check footer/pagination display
+   - Verify diagrams render
+   - Test in presentation mode
+
+## Common Patterns
+
+### Slide: Introducing a Concept
+
+```markdown
+---
+
+## [Concept Name]
+
+**Definition**: Brief explanation
+
+### Key Characteristics
+- Trait 1
+- Trait 2
+- Trait 3
+
+### Why It Matters
+- Reason 1
+- Reason 2
+
+**Learn More**: `/docs/path/to/details.md`
+```
+
+### Slide: Comparison
+
+```markdown
+---
+
+## [Topic] Comparison
+
+<div class="columns">
+<div>
+
+### Option A
+- Pro 1
+- Pro 2
+- Use when: X
+
+</div>
+<div>
+
+### Option B
+- Pro 1
+- Pro 2
+- Use when: Y
+
+</div>
+</div>
+
+<style scoped>
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
+</style>
+```
+
+### Slide: Architecture/Process
+
+```markdown
+---
+
+## [Process Name]
+
+### Flow
+\```
+Step 1 → Step 2 → Step 3 → Result
+\```
+
+### Components
+1. **Component 1**: Description
+2. **Component 2**: Description
+3. **Component 3**: Description
+
+**Details**: `/docs/path/to/file.md`
+```
+
+## Project-Specific Context
+
+### Key Topics
+
+1. **MCP (Model Context Protocol)**:
+   - Standardized tool/resource definitions
+   - Client-host-server architecture
+   - Annotation-based descriptions
+   - Docs: `/docs/mcp/`
+
+2. **Agent Architectures**:
+   - Reflex agents (simple, no learning)
+   - Learning agents (improve over time)
+   - FSM, Behavior Trees, GOAP
+   - Docs: `/docs/agents/`
+
+3. **Frameworks**:
+   - Python: LangChain, AG2, CrewAI
+   - TypeScript: VoltAgent, LangChain.js
+   - Docs: `/docs/frameworks/`
+
+4. **Production Patterns**:
+   - Scratchpad pattern
+   - Workflow orchestration
+   - AI Gateway (model switching)
+   - Control flows (queue, stack, async)
+
+### Terminology
+
+- **Autonomous Workflow**: Self-directed system that makes decisions without human intervention
+- **Agentic Workflow**: Another term for autonomous workflow
+- **Reflex Agent**: Reacts to current input only (no memory)
+- **Learning Agent**: Improves from experience
+- **MCP**: Model Context Protocol - standardized tool/resource interface
+- **GOAP**: Goal-Oriented Action Planning
+- **FSM**: Finite State Machine
+- **BT**: Behavior Tree
+
+## File Naming Conventions
+
+- Slides: `presentation.md` (singular, in `/slides/`)
+- Docs: `kebab-case-names.md` (e.g., `behavior-trees.md`)
+- Configs: `.marprc.yml`, `package.json`, `.cursorrules`
+- Code: Standard language conventions
+
+## Git Guidelines
+
+- **Include**: All markdown files, configs, package.json
+- **Exclude** (`.gitignore`): `/repos/`, `node_modules/`, slides output files
+- Commit presentation source, not generated PPTX (unless needed for delivery)
+
+## Quality Checklist
+
+### Before Committing Slides
+
+- [ ] All slides have proper pagination/footer
+- [ ] Title slide has no pagination/footer
+- [ ] Content fits without overflow
+- [ ] Two-column layouts render correctly
+- [ ] Diagrams display properly
+- [ ] Code references instead of full code
+- [ ] Final slides (Questions/Thank You) are clean
+- [ ] Backup slides are marked clearly
+
+### Before Committing Documentation
+
+- [ ] Proper markdown formatting
+- [ ] Both ASCII and Mermaid diagrams where applicable
+- [ ] Code examples are complete and working
+- [ ] Cross-references are accurate
+- [ ] Added to `/docs/README.md` index
+- [ ] Use cases and best practices included
+- [ ] External sources cited
+
+## Troubleshooting
+
+### Slides
+
+**Content overflow**: Add scoped style to reduce font size
+**Diagrams don't render**: Check `npm run dev` output for errors
+**Footer missing**: Check `<!-- _footer: "" -->` not hiding it
+**Two columns broken**: Verify scoped style is present
+
+### Development
+
+**Marp not found**: Run `npm install`
+**Port in use**: Change port in `.marprc.yml`
+**Hot reload not working**: Restart `npm run dev`
+
+## References
+
+- **Marp Documentation**: https://marpit.marp.app/
+- **Project README**: `/README.md`
+- **Documentation Index**: `/docs/README.md`
+- **Marp Guide**: `/MARP_GUIDE.md`
+- **Project Summary**: `/PROJECT_SUMMARY.md`
+
