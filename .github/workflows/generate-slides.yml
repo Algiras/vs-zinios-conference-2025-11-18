@@ -27,14 +27,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Setup Node.js
+      - name: Setup Node.js with Yarn
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'yarn'
       
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
       
       - name: Install ImageMagick (for image generation)
         run: |
@@ -42,10 +42,13 @@ jobs:
           sudo apt-get install -y imagemagick
       
       - name: Generate slides and export PPTX
-        run: npm run export:pptx
+        run: yarn export:pptx
       
       - name: Generate theme-specific slide images
-        run: npm run export:themes
+        run: yarn export:themes
+      
+      - name: Generate PDF
+        run: yarn export:pdf
       
       - name: Upload PPTX artifact
         uses: actions/upload-artifact@v4
@@ -53,6 +56,15 @@ jobs:
           name: presentation-pptx
           path: slides/presentation.pptx
           retention-days: 30
+          if-no-files-found: warn
+      
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: presentation-pdf
+          path: slides/presentation.pdf
+          retention-days: 30
+          if-no-files-found: warn
       
       - name: Upload combined slide images
         uses: actions/upload-artifact@v4
@@ -62,14 +74,15 @@ jobs:
             slides/slide-images-light/slides-combined-light.png
             slides/slide-images-dark/slides-combined-dark.png
           retention-days: 30
+          if-no-files-found: warn
       
       - name: Commit and push generated files (optional)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add slides/presentation.pptx || true
-          git commit -m "chore: auto-generate slides and PPTX [skip ci]" || exit 0
+          git add slides/presentation.pptx slides/presentation.pdf || true
+          git commit -m "chore: auto-generate slides, PPTX, and PDF [skip ci]" || exit 0
           git push || exit 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
