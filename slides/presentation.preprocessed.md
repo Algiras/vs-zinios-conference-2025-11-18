@@ -400,10 +400,7 @@ Workflows & Autonomous Systems
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    Input --> Process --> Output
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-736111dd.png)
 
 </div>
 <div>
@@ -478,13 +475,7 @@ section { padding-bottom: 3em !important; }
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    SENSOR["Sensor"] --> RULE["Rules"] --> HEATER["Heater"]
-    style SENSOR fill:#e1f5ff
-    style RULE fill:#fff3e0
-    style HEATER fill:#ffebee
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-36876f59.png)
 
 </div>
 <div>
@@ -540,18 +531,7 @@ section { padding-bottom: 3.5em !important; }
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    PERF["Performance"] --> LEARN["Learning"]
-    CRITIC["Critic"] --> LEARN
-    LEARN --> PROB["Problem Gen"]
-    PROB --> PERF
-    
-    style PERF fill:#e3f2fd
-    style LEARN fill:#c8e6c9
-    style CRITIC fill:#fff3e0
-    style PROB fill:#f3e5f5
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-c3d9eb2e.png)
 
 </div>
 <div>
@@ -595,20 +575,7 @@ FSM, BT, GOAP & ReAct
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    Commit[Commit] --> Analyzing[Analyzing]
-    Analyzing --> Testing[Testing]
-    Testing -->|Pass| Approved[Approved]
-    Testing -->|Critical| Rejected[Rejected]
-    Rejected -->|Fix| Analyzing
-    
-    style Commit fill:#e1f5ff
-    style Analyzing fill:#fff3e0
-    style Testing fill:#f3e5f5
-    style Approved fill:#c8e6c9
-    style Rejected fill:#ffebee
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-4a941b02.png)
 
 </div>
 <div>
@@ -632,20 +599,7 @@ graph LR
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    ROOT["🎯 Root"] --> A["📊 Analyze"]
-    A --> L["Lint"]
-    L --> T["Type Check"]
-    ROOT --> B["🔨 Build"]
-    B --> C["Compile"]
-    C --> E["Test"]
-    ROOT --> S["⏭️ Skip"]
-    style ROOT fill:#FFD700
-    style A fill:#87CEEB
-    style B fill:#90EE90
-    style S fill:#FFB6C1
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-f329ec76.png)
 
 </div>
 <div>
@@ -674,14 +628,7 @@ graph LR
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    GOAL["🎯 Goal"] --> PLAN["📋 Plan<br/>(A* pathfinding)"]
-    PLAN --> EXEC["⚙️ Execute<br/>(cost-optimized)"]
-    style GOAL fill:#e1f5ff
-    style PLAN fill:#fff3e0
-    style EXEC fill:#c8e6c9
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-ea397b79.png)
 
 </div>
 <div>
@@ -712,18 +659,7 @@ section { padding-bottom: 3.5em !important; }
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    THOUGHT["💭 Think"] --> ACTION["⚙️ Act"]
-    ACTION --> OBS["👁️ Observe"]
-    OBS --> REFLECT["🔄 Reflect"]
-    REFLECT --> THOUGHT
-    
-    style THOUGHT fill:#e3f2fd
-    style ACTION fill:#fff3e0
-    style OBS fill:#f3e5f5
-    style REFLECT fill:#c8e6c9
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-1e34972c.png)
 
 </div>
 <div>
@@ -788,17 +724,7 @@ section { padding-bottom: 3em !important; }
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    ACTION[Action] --> OBS[Observe]
-    OBS --> FEEDBACK[Feedback]
-    FEEDBACK --> MEMORY[Memory]
-    MEMORY --> LEARN[Learn]
-    LEARN --> ACTION
-    
-    style MEMORY fill:#90EE90
-    style LEARN fill:#87CEEB
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-792fd3e2.png)
 
 </div>
 <div>
@@ -863,15 +789,7 @@ Standardized Tools & Resources
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    H[Host] --> C1[Client 1]
-    H --> C2[Client 2]
-    C1 --> S1[Services]
-    C2 --> S2[Services]
-    S1 -.->|Plugins| T[Tools]
-    S2 -.->|Plugins| R[Resources]
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-df73482c.png)
 
 </div>
 <div>
@@ -1015,18 +933,7 @@ resource: {
 
 **Solution**: Gateway layer for intelligent routing
 
-```mermaid
-graph TD
-    USER[User Request] --> GATEWAY[AI Gateway]
-    GATEWAY --> ROUTING[Routing Logic]
-    ROUTING -->|Cost-based| GPT4[GPT-4]
-    ROUTING -->|Latency-based| CLAUDE[Claude]
-    ROUTING -->|Quality-based| GEMINI[Gemini]
-    ROUTING -->|Load-balanced| LOCAL[Local Model]
-    
-    style GATEWAY fill:#90EE90
-    style ROUTING fill:#FFD700
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-8a6f06d0.png)
 
 </div>
 <div>
@@ -1090,23 +997,7 @@ section { padding-bottom: 2em; }
 <div class="columns">
 <div>
 
-```mermaid
-graph TB
-    subgraph SCRATCHPAD["Scratchpad Memory"]
-        TASK["<b>Current Task</b><br/>Build REST API"]
-        PLAN["<b>Plan</b><br/>1. Design ✓<br/>2. Implement ← NOW<br/>3. Test<br/>4. Deploy"]
-        OBS["<b>Observations</b><br/>• FastAPI framework<br/>• PostgreSQL database"]
-        RESULTS["<b>Results</b><br/>✅ Schema designed<br/>🔄 Implementing endpoints"]
-        
-        TASK --> PLAN
-        PLAN --> OBS
-        OBS --> RESULTS
-    end
-    
-    style SCRATCHPAD fill:#f0f0f0
-    style TASK fill:#e1f5ff
-    style RESULTS fill:#fff9c4
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-e5b0f995.png)
 
 </div>
 <div>
@@ -1202,24 +1093,7 @@ Real-World Implementations
 <div class="columns">
 <div>
 
-```mermaid
-graph LR
-    START[Commit] --> ANALYST[Analyst]
-    ANALYST --> ARCH[Architect]
-    ANALYST --> REVIEW[Reviewer]
-    ANALYST --> SEC[Security]
-    
-    ARCH --> REPORT[Report]
-    REVIEW --> REPORT
-    SEC --> REPORT
-    
-    REPORT --> DEC{Pass?}
-    DEC -->|Yes| OK[✓]
-    DEC -->|No| WARN[⚠]
-    
-    style ANALYST fill:#FFD700
-    style DEC fill:#FFA500
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-d0156407.png)
 
 </div>
 <div>
@@ -1269,19 +1143,7 @@ section { padding-bottom: 3.8em !important; }
 <div class="columns">
 <div>
 
-```mermaid
-graph TD
-    COORD[Coordinator] --> PLANNER[Planner]
-    COORD --> EXECUTOR[Executor]
-    COORD --> REVIEWER[Reviewer]
-    COORD --> REPORTER[Reporter]
-    
-    style COORD fill:#FFD700
-    style PLANNER fill:#87CEEB
-    style EXECUTOR fill:#90EE90
-    style REVIEWER fill:#FFB6C1
-    style REPORTER fill:#DDA0DD
-```
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-f7654fb5.png)
 
 </div>
 <div>
@@ -1585,7 +1447,7 @@ section { padding-bottom: 1.2em !important; }
 
 https://github.com/Algiras/vs-zinios-conference-2025-11-18
 
-![QR Code](qr:https://github.com/Algiras/vs-zinios-conference-2025-11-18)
+![QR Code](images/qr/qr-28584567.png)
 
 <style scoped>
 p {

@@ -1,0 +1,76 @@
+name: Generate Slides and Export PPTX
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'slides/presentation.md'
+      - 'themes/**'
+      - 'scripts/**'
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - 'slides/presentation.md'
+      - 'themes/**'
+      - 'scripts/**'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  generate-slides:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install ImageMagick (for image generation)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+      
+      - name: Generate slides and export PPTX
+        run: npm run export:pptx
+      
+      - name: Generate theme-specific slide images
+        run: npm run export:themes
+      
+      - name: Upload PPTX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: presentation-pptx
+          path: slides/presentation.pptx
+          retention-days: 30
+      
+      - name: Upload combined slide images
+        uses: actions/upload-artifact@v4
+        with:
+          name: slide-images
+          path: |
+            slides/slide-images-light/slides-combined-light.png
+            slides/slide-images-dark/slides-combined-dark.png
+          retention-days: 30
+      
+      - name: Commit and push generated files (optional)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add slides/presentation.pptx || true
+          git commit -m "chore: auto-generate slides and PPTX [skip ci]" || exit 0
+          git push || exit 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

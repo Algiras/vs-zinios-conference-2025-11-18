@@ -9,12 +9,14 @@
     "export": "node scripts/export-with-validation.js",
     "export:pptx": "node scripts/export-with-validation.js --skip-images",
     "export:images": "node scripts/export-with-validation.js --skip-pptx",
-    "export:pdf": "node scripts/preprocess-for-pdf.js slides/presentation.md slides/presentation.preprocessed.md && npx @marp-team/marp-cli --html --pdf --allow-local-files -o slides/presentation.pdf slides/presentation.preprocessed.md",
+    "export:pdf": "node scripts/export-pdf.js",
     "export:images:only": "node scripts/slides-to-image.js",
     "export:images:combined": "node scripts/slides-to-image.js --stitch",
+    "export:themes": "node scripts/export-both-themes.js",
     "preview": "npx @marp-team/marp-cli -s --html slides/",
     "lint:mermaid": "md-mermaid-lint slides/presentation.md",
-    "lint:mermaid:all": "md-mermaid-lint slides/**/*.md docs/**/*.md"
+    "lint:mermaid:all": "md-mermaid-lint slides/**/*.md docs/**/*.md",
+    "chart:generate": "node scripts/generate-charts.js"
   },
   "keywords": [
     "marp",

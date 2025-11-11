@@ -11,12 +11,57 @@ const { execSync } = require('child_process');
 const crypto = require('crypto');
 const QRCode = require('qrcode');
 
-const IMAGES_DIR = path.join(__dirname, '../slides/images/mermaid');
 const QR_DIR = path.join(__dirname, '../slides/images/qr');
 const TEMP_DIR = path.join(__dirname, '../.tmp/mermaid');
 
+// Theme color mappings
+const THEME_COLORS = {
+  'rose-pine-dawn': {
+    primary: '#d7827e',    // --rose
+    secondary: '#286983',   // --pine
+    accent: '#56949f',      // --foam
+    highlight: '#907aa9',   // --iris
+    success: '#56949f',      // --foam (green-like)
+    warning: '#ea9d34',      // --gold
+    info: '#286983',         // --pine (blue-like)
+    light: '#f2e9e1',        // --overlay
+    lighter: '#fffaf3',      // --surface
+    muted: '#dfdad9',        // --highlight-muted
+  },
+  'rose-pine-moon': {
+    primary: '#ea9a97',      // --rose
+    secondary: '#3e8fb0',    // --pine
+    accent: '#9ccfd8',       // --foam
+    highlight: '#c4a7e7',   // --iris
+    success: '#9ccfd8',      // --foam (green-like)
+    warning: '#f6c177',      // --gold
+    info: '#3e8fb0',         // --pine (blue-like)
+    light: '#393552',        // --overlay
+    lighter: '#2a273f',      // --surface
+    muted: '#44415a',        // --highlight-muted
+  }
+};
+
+// Color mapping from hardcoded colors to theme colors
+const COLOR_MAP = {
+  '#e1f5ff': 'info',      // Light blue -> theme info color
+  '#fff3e0': 'warning',   // Light orange -> theme warning color
+  '#ffebee': 'primary',   // Light red -> theme primary color
+  '#e3f2fd': 'info',      // Light blue -> theme info color
+  '#c8e6c9': 'success',   // Light green -> theme success color
+  '#f3e5f5': 'highlight', // Light purple -> theme highlight color
+  '#90EE90': 'success',   // Light green -> theme success color
+  '#87CEEB': 'info',      // Sky blue -> theme info color
+  '#FFB6C1': 'primary',   // Light pink -> theme primary color
+  '#FFD700': 'warning',   // Gold -> theme warning color
+  '#FFA500': 'warning',   // Orange -> theme warning color
+  '#DDA0DD': 'highlight', // Plum -> theme highlight color
+  '#f0f0f0': 'light',      // Light gray -> theme light color
+  '#fff9c4': 'warning',   // Light yellow -> theme warning color
+};
+
 // Ensure directories exist
-[IMAGES_DIR, QR_DIR, TEMP_DIR].forEach(dir => {
+[QR_DIR, TEMP_DIR].forEach(dir => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -47,7 +92,36 @@ async function generateQRCode(url) {
   return `images/qr/${filename}`;
 }
 
-function generateMermaid(code) {
+function generateMermaid(code, themeName = 'rose-pine-dawn') {
+  // Get theme colors
+  const themeColors = THEME_COLORS[themeName] || THEME_COLORS['rose-pine-dawn'];
+  
+  // Replace hardcoded colors with theme colors
+  let themedCode = code;
+  for (const [hardcodedColor, colorKey] of Object.entries(COLOR_MAP)) {
+    const themeColor = themeColors[colorKey];
+    if (themeColor) {
+      // Replace in style directives: style NODE fill:#COLOR
+      // Handle both uppercase and lowercase hex colors
+      const colorUpper = hardcodedColor.toUpperCase();
+      const colorLower = hardcodedColor.toLowerCase();
+      
+      // Replace uppercase version
+      const regexUpper = new RegExp(`fill:${colorUpper.replace('#', '\\#')}`, 'gi');
+      themedCode = themedCode.replace(regexUpper, `fill:${themeColor}`);
+      
+      // Replace lowercase version
+      const regexLower = new RegExp(`fill:${colorLower.replace('#', '\\#')}`, 'gi');
+      themedCode = themedCode.replace(regexLower, `fill:${themeColor}`);
+    }
+  }
+  
+  // Create theme-specific directory
+  const IMAGES_DIR = path.join(__dirname, '../slides/images/mermaid', themeName);
+  if (!fs.existsSync(IMAGES_DIR)) {
+    fs.mkdirSync(IMAGES_DIR, { recursive: true });
+  }
+  
   const hash = crypto.createHash('md5').update(code).digest('hex').substring(0, 8);
   const filename = `mermaid-${hash}`;
   const svgPath = path.join(IMAGES_DIR, `${filename}.svg`);
@@ -55,10 +129,10 @@ function generateMermaid(code) {
   
   if (!fs.existsSync(svgPath)) {
     try {
-      const mmdFile = path.join(TEMP_DIR, `${filename}.mmd`);
-      fs.writeFileSync(mmdFile, code);
+      const mmdFile = path.join(TEMP_DIR, `${filename}-${themeName}.mmd`);
+      fs.writeFileSync(mmdFile, themedCode);
       
-      console.log(`Generating Mermaid diagram: ${filename}...`);
+      console.log(`   Generating Mermaid diagram: ${filename} (${themeName})...`);
       
       execSync(`npx -y mmdc -i "${mmdFile}" -o "${svgPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q`, {
         stdio: 'pipe'
@@ -68,19 +142,19 @@ function generateMermaid(code) {
         stdio: 'pipe'
       });
       
-      console.log(`✅ Generated ${filename}`);
+      console.log(`   ✅ Generated ${filename} (${themeName})`);
     } catch (error) {
-      console.error(`❌ Failed to generate ${filename}:`, error.message);
+      console.error(`   ❌ Failed to generate ${filename} (${themeName}):`, error.message);
       return null;
     }
   }
   
   // Use relative path from markdown file location
-  // Marp CLI v4+ can resolve these correctly
-  return `images/mermaid/${filename}.png`;
+  // Note: The theme subdirectory is only for organization - the export script will flatten it
+  return `images/mermaid/${themeName}/${filename}.png`;
 }
 
-async function preprocessMarkdown(inputPath) {
+async function preprocessMarkdown(inputPath, themeName = 'rose-pine-dawn') {
   let content = fs.readFileSync(inputPath, 'utf8');
   
   // Replace Mermaid code blocks
@@ -89,7 +163,7 @@ async function preprocessMarkdown(inputPath) {
   
   for (const match of mermaidMatches) {
     const code = match[1].trim();
-    const imagePath = generateMermaid(code);
+    const imagePath = generateMermaid(code, themeName);
     if (imagePath) {
       // Use pure Markdown image syntax - Marp handles this best for exports
       // Marp will embed these correctly in PDF/PPTX

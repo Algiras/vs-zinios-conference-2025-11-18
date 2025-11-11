@@ -15,9 +15,13 @@ slides/*.processed.md
 
 # Generated images (intermediate build artifacts)
 slides/images/mermaid/
+slides/images/mermaid/rose-pine-dawn/
+slides/images/mermaid/rose-pine-moon/
 slides/images/qr/
 slides/images/
 slides/slide-images/
+slides/slide-images-light/
+slides/slide-images-dark/
 
 # macOS
 .DS_Store
