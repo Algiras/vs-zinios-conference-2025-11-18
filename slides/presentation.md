@@ -217,9 +217,9 @@ style: |
     gap: 2em !important;
   }
   section .resources-grid div {
-    background: #f7f7f7 !important;
-    padding: 1em 1.2em !important;
-    border-radius: 8px !important;
+    background: transparent !important;
+    padding: 0.5em 0 !important;
+    border-radius: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -298,36 +298,42 @@ AI Tool Developer at Wix
 
 ## Our Talk Today
 
-**Learn how to build work environments where LLMs autonomously complete programming tasks**
+**Building AI systems that autonomously complete programming tasks**
 
 **Topics**:
-- Autonomous workflow environments and architectures
-- Agent types and decision-making patterns
-- What works (and what doesn't) in production
-- Available frameworks and tools
-- Real-world implementation patterns
+- Autonomous workflow environments for LLMs
+- Agent architectures: Reflex → Learning → Production patterns
+- What works in production (and what doesn't)
+- Frameworks and tools for autonomous development
+- Real-world implementation examples
 
 ---
 
-## Three Deployment Environments
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
 
-<div class="columns">
-<div>
+## Overview
 
-### 1. Local (CLI-Based)
-Shell scripts, command-line tools | Direct developer interaction | Fast iteration
+1. **Foundations** - Workflows & Autonomous Systems
+2. **Agent Types** - Reflex & Learning Agents
+3. **Architecture Patterns** - FSM, BT, GOAP, ReAct
+4. **Model Context Protocol** - Standardized Tools & Resources
+5. **What Works** - Production Patterns & Best Practices
+6. **Frameworks** - Python, TypeScript & Orchestration
+7. **Examples** - Real-World Implementations
+8. **Best Practices** - Design, Security & Common Pitfalls
+9. **Conclusion** - Takeaways & Resources
 
-### 2. Remote (Single Agent)  
-Web UI with one running agent | Centralized execution | User-initiated workflows
+---
 
-</div>
-<div>
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
 
-### 3. Distributed Remote
-Multi-agent coordination | Scheduling and task distribution | Production-scale systems
+# Part 1: Foundations
 
-</div>
-</div>
+Workflows & Autonomous Systems
 
 ---
 
@@ -369,12 +375,22 @@ graph LR
 
 ---
 
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Part 2: Agent Types
+
+Reflex & Learning Agents
+
+---
+
 ## Agent Types: Overview
 
 <div class="columns">
 <div>
 
-### Reflex Agents
+**Reflex Agents**
 - React to current input only
 - No memory of past states
 - Fast, simple, predictable
@@ -382,7 +398,7 @@ graph LR
 </div>
 <div>
 
-### Learning Agents
+**Learning Agents**
 - Improve from experience
 - Maintain state and memory
 - Adapt behavior over time
@@ -506,6 +522,16 @@ section { padding-bottom: 3.8em !important; }
 
 ---
 
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Part 3: Architecture Patterns
+
+FSM, BT, GOAP & ReAct
+
+---
+
 ## Finite State Machines (FSM)
 
 **State-Based Decision Making**
@@ -534,6 +560,8 @@ graph LR
 **Use Case**: CI/CD pipelines, workflows, automation
 
 **Key**: Clear • Predictable • Debuggable • Workflow-friendly
+
+**In LLM Space**: LangGraph (Python) provides FSM/BT primitives for structured agent workflows
 
 </div>
 </div>
@@ -575,6 +603,8 @@ graph LR
 - Decision trees
 - Hierarchical workflows
 
+**In LLM Space**: LangGraph supports BT patterns for complex agent hierarchies
+
 </div>
 </div>
 
@@ -583,62 +613,38 @@ graph LR
 
 ## GOAP: Goal-Oriented Action Planning
 
-**🚀 Dynamic Planning**
+**Advanced ReAct Planning with Cost Optimization**
 
 <div class="columns">
 <div>
 
 ```mermaid
 graph LR
-    S["Write Tests<br/>(cost: 3)"] --> A["Implement<br/>(cost: 5)"]
-    A --> F["Fix Code<br/>(cost: 2)"]
-    style S fill:#ffcccc
-    style F fill:#ccffcc
+    GOAL["🎯 Goal"] --> PLAN["📋 Plan<br/>(A* pathfinding)"]
+    PLAN --> EXEC["⚙️ Execute<br/>(cost-optimized)"]
+    style GOAL fill:#e1f5ff
+    style PLAN fill:#fff3e0
+    style EXEC fill:#c8e6c9
 ```
 
 </div>
 <div>
 
-**Total Cost**: 10  
-**Method**: A* pathfinding
+**Concept**: ReAct planning with cost-based pathfinding
 
-**Key Features**:
-- Cost-based planning
-- Dynamic pathfinding
-- Goal-oriented actions
-- Optimal solutions
+**Use Case**: Complex multi-step workflows where cost matters
+
+**In LLM Space**: Advanced ReAct variant. Most frameworks use simpler ReAct; GOAP for specialized planning needs.
 
 </div>
 </div>
 
 <style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
-img[src*="mermaid"] { max-height: 42% !important; max-width: 82% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; }
-.columns div { font-size: 0.92em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
-.columns div p { margin: 0.6em 0; }
-.columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-</style>
-
----
-
-## Agent Architecture Patterns
-
-### Comprehensive Comparison
-
-| **Pattern** | **Mechanism** | **Strengths** | **Best For** |
-|:---|:---|:---|:---|
-| 🔄 **FSM** | State + Transitions | Simple, predictable | Workflow pipelines |
-| 🌳 **BT** | Tree of behaviors | Modular, scalable | Complex task hierarchies |
-| 🎯 **GOAP** | A* pathfinding | Dynamic, optimal paths | Goal-driven planning |
-| 💭 **ReAct** | Thought → Action → Observation | LLM reasoning | Modern LLM agents |
-| 🧠 **Learning Agents** | Memory + Feedback loops | Adaptive, self-improving | Long-term autonomous systems |
-
-**Recommendation**: For autonomous development, use **ReAct + Learning** with optional GOAP/BT for complex workflows
-
-<style scoped>
-section table { font-size: 0.75em; margin: 0.5em 0; line-height: 1.3; }
-section table td { padding: 0.3em 0.2em; }
+.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
+img[src*="mermaid"] { max-height: 40% !important; max-width: 85% !important; margin: 0.3em auto !important; }
+section { padding-bottom: 3.5em !important; }
+.columns div { font-size: 0.88em; line-height: 1.4; margin: 0; }
+.columns div p { margin: 0.4em 0; }
 </style>
 
 ---
@@ -670,6 +676,8 @@ graph LR
 
 **Cycle**: Think → Act → Observe → Reflect
 
+**In LLM Space**: Core pattern in LangChain, VoltAgent, AG2, CrewAI. Most modern LLM frameworks implement ReAct as their default agent paradigm.
+
 </div>
 </div>
 
@@ -680,6 +688,37 @@ section { padding-bottom: 3.5em !important; }
 .columns div { font-size: 0.85em; line-height: 1.3; margin: 0; }
 .columns div p { margin: 0.3em 0; }
 </style>
+
+---
+
+## Agent Architecture Patterns
+
+**Comprehensive Comparison**
+
+| **Pattern** | **Mechanism** | **Strengths** | **Best For** |
+|:---|:---|:---|:---|
+| 🔄 **FSM** | State + Transitions | Simple, predictable | Workflow pipelines |
+| 🌳 **BT** | Tree of behaviors | Modular, scalable | Complex task hierarchies |
+| 🎯 **GOAP** | A* pathfinding | Dynamic, optimal paths | Goal-driven planning |
+| 💭 **ReAct** | Thought → Action → Observation | LLM reasoning | Modern LLM agents |
+| 🧠 **Learning Agents** | Memory + Feedback loops | Adaptive, self-improving | Long-term autonomous systems |
+
+<style scoped>
+section table { font-size: 0.75em; margin: 0.5em 0; line-height: 1.3; }
+section table td { padding: 0.3em 0.2em; }
+section { padding-bottom: 3em !important; }
+</style>
+
+---
+
+## Agent Architecture Patterns: Recommendations
+
+**Recommendation**: For autonomous development, use **ReAct + Learning** with optional GOAP/BT/FSM for complex workflows
+
+**Framework Mapping**:
+- **ReAct**: LangChain, VoltAgent, AG2, CrewAI (default pattern)
+- **FSM/BT**: LangGraph provides primitives for structured workflows
+- **GOAP**: Specialized planning (advanced ReAct variant, less common)
 
 ---
 
@@ -709,6 +748,8 @@ graph LR
 
 **Process**: Act → Observe → Feedback → Memory → Learn → Action
 
+**In LLM Space**: LangChain, AG2, VoltAgent support memory systems. Essential for learning agents and long-running workflows.
+
 </div>
 </div>
 
@@ -722,9 +763,19 @@ section { padding-bottom: 3.5em !important; }
 
 ---
 
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Part 4: Model Context Protocol
+
+Standardized Tools & Resources
+
+---
+
 ## 🔌 Model Context Protocol (MCP)
 
-**Standardized Tool and Resource Definition**
+**Plugin Architecture for AI Pipelines**
 
 | Concept | Purpose |
 |---------|---------|
@@ -733,7 +784,18 @@ section { padding-bottom: 3.5em !important; }
 | **Prompts** 📋 | Templated workflows |
 | **Sampling** 🎯 | Extension strategies for tool selection |
 
-**Benefits**: Standardized interface • Easy integration • Clear capability negotiation • Secure access
+---
+
+## MCP: Key Benefits
+
+**Key Insight**: MCP is a **generic plugin system** - add tools, resources, and features to any pipeline without modifying core code
+
+**Benefits**:
+- Standardized interface
+- Easy integration
+- Clear capability negotiation
+- Secure access
+- Composable servers
 
 ---
 
@@ -744,35 +806,48 @@ section { padding-bottom: 3.5em !important; }
 
 ```mermaid
 graph LR
-    H[Host Manager] --> C1[Client 1]
+    H[Host] --> C1[Client 1]
     H --> C2[Client 2]
-    C1 --> S1[Local Services]
-    C2 --> S2[Remote Services]
-    H --> S3[Shared APIs]
+    C1 --> S1[Services]
+    C2 --> S2[Services]
+    S1 -.->|Plugins| T[Tools]
+    S2 -.->|Plugins| R[Resources]
 ```
 
 </div>
 <div>
 
-**Key Strength**
-- Host manages multiple clients
-- Each client connects to dedicated services
+**Plugin Architecture**
+- Host manages clients
+- Servers act as plugins
+- Add capabilities without code changes
 
-**Operational Impact**
-- Centralized governance and logging
-- Easy to extend with new clients or servers
+**Impact**
+- Compose multiple servers
+- Extend pipelines easily
+- Language-agnostic
 
 </div>
 </div>
 
 <style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
-img[src*="mermaid"] { max-height: 42% !important; max-width: 82% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; }
-.columns div { font-size: 0.92em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
-.columns div p { margin: 0.6em 0; }
-.columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
+.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
+img[src*="mermaid"] { max-height: 38% !important; max-width: 80% !important; margin: 0.3em auto !important; }
+section { padding-bottom: 3.5em !important; }
+.columns div { font-size: 0.85em; line-height: 1.3; margin: 0; }
+.columns div p { margin: 0.4em 0; }
+.columns div ul { margin: 0.4em 0; padding-left: 1.2em; }
 </style>
+
+---
+
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Part 5: What Works
+
+Production Patterns & Best Practices
 
 ---
 
@@ -781,7 +856,7 @@ section { padding-bottom: 3.8em !important; }
 <div class="columns">
 <div>
 
-### Separate Planning Agent
+**Separate Planning Agent**
 ✅ **Benefits**:
 - Dedicated agent for task decomposition
 - Clearer reasoning traces
@@ -790,7 +865,7 @@ section { padding-bottom: 3.8em !important; }
 </div>
 <div>
 
-### Separate Information Gathering
+**Separate Information Gathering**
 ✅ **Benefits**:
 - Focused research/search agents
 - Parallel information collection
@@ -806,7 +881,7 @@ section { padding-bottom: 3.8em !important; }
 <div class="columns">
 <div>
 
-### Continuous Workflows
+**Continuous Workflows**
 ✅ **Scheduling Patterns**:
 - **Queue**: Sequential task processing
 - **Stack**: Depth-first execution (interrupts)
@@ -815,7 +890,7 @@ section { padding-bottom: 3.8em !important; }
 </div>
 <div>
 
-### Adaptive Patterns
+**Adaptive Patterns**
 ✅ **Communication**:
 - JSON-RPC 2.0 for structured communication
 - STDIO for process communication
@@ -872,15 +947,80 @@ resource: {
 
 ---
 
-## What Works: Advanced Patterns
+## What Works: AI Gateway Pattern
 
-**Three key patterns enhance agent capabilities**:
+<div class="columns">
+<div>
 
-1. **Enriched Reasoning**: Chain-of-Thought, self-critique to improve decision-making
+**Problem**: Multiple LLM providers, costs, performance variability
 
-2. **Custom Control Flows**: Bespoke execution loops (state machines) vs. built-in tool calling
+**Solution**: Gateway layer for intelligent routing
 
-3. **Scratchpad Pattern**: External working memory to track progress and reasoning
+```mermaid
+graph TD
+    USER[User Request] --> GATEWAY[AI Gateway]
+    GATEWAY --> ROUTING[Routing Logic]
+    ROUTING -->|Cost-based| GPT4[GPT-4]
+    ROUTING -->|Latency-based| CLAUDE[Claude]
+    ROUTING -->|Quality-based| GEMINI[Gemini]
+    ROUTING -->|Load-balanced| LOCAL[Local Model]
+    
+    style GATEWAY fill:#90EE90
+    style ROUTING fill:#FFD700
+```
+
+</div>
+<div>
+
+**Benefits**:
+- Model abstraction
+- Cost optimization
+- Performance routing
+- A/B testing
+- Fallback handling
+
+</div>
+</div>
+
+<style scoped>
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
+img[src*="mermaid"] { max-height: 50% !important; max-width: 90% !important; margin-top: 0.5em !important; }
+section { padding-bottom: 3.5em !important; }
+.columns div { font-size: 0.9em; }
+</style>
+
+---
+
+## AI Gateway: Benefits
+
+✅ **Model Abstraction** - Switch models without code changes • A/B testing
+
+✅ **Cost Optimization** - Route cheap tasks to cheaper models • Budget enforcement
+
+✅ **Reliability** - Automatic failover • Load balancing across instances
+
+✅ **Observability** - Centralized logging • Cost tracking • Performance monitoring
+
+<div class="gateway-summary">
+<div>
+
+**When to use it**
+- Multiple model providers in production
+- Need routing by price, latency, or quality
+
+</div>
+<div>
+
+**Operational Tips**
+- Instrument routing decisions for audit trails
+- Tune thresholds regularly with telemetry
+
+</div>
+</div>
+
+<style scoped>
+section { padding-bottom: 2em; }
+</style>
 
 ---
 
@@ -937,26 +1077,39 @@ section { padding-bottom: 4.5em !important; }
 
 ---
 
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Part 6: Frameworks
+
+Python, TypeScript & Orchestration
+
+---
+
 ## Python Frameworks
 
 **LangChain** (119K+ stars)
-- Agents, memory, tools, chains | General-purpose LLM applications
+- ReAct agents, memory, tools, chains | General-purpose LLM applications
+
+**LangGraph** (LangChain extension)
+- FSM/BT patterns, stateful workflows | Structured agent control flows
 
 **AG2 (AutoGen)** (38K+ stars)
-- Agent conversations, code execution | Collaborative problem solving
+- ReAct-based conversations, code execution | Collaborative problem solving
 
 **CrewAI** (30K+ stars)
-- Role-playing agents, workflows | Content creation and research
+- Role-playing ReAct agents, workflows | Content creation and research
 
 ---
 
 ## TypeScript Frameworks
 
 **VoltAgent** - Production-Ready  
-Type safety, tool system, built-in observability | Enterprise deployments
+ReAct agents, type safety, tool system, built-in observability | Enterprise deployments
 
 **LangChain.js** - Feature Parity  
-Agents, memory, streaming | Node.js and edge computing
+ReAct agents, memory, streaming | Node.js and edge computing
 
 **Composio** - Integration Platform  
 100+ integrations, universal function calling | Integration-heavy applications
@@ -973,90 +1126,13 @@ Agents, memory, streaming | Node.js and edge computing
 
 ---
 
-## AI Gateway Pattern
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
 
-<div class="columns">
-<div>
+# Part 7: Examples
 
-**Problem**: Multiple LLM providers, costs, performance variability
-
-**Solution**: Gateway layer for intelligent routing
-
-```mermaid
-graph TD
-    USER[User Request] --> GATEWAY[AI Gateway]
-    GATEWAY --> ROUTING[Routing Logic]
-    ROUTING -->|Cost-based| GPT4[GPT-4]
-    ROUTING -->|Latency-based| CLAUDE[Claude]
-    ROUTING -->|Quality-based| GEMINI[Gemini]
-    ROUTING -->|Load-balanced| LOCAL[Local Model]
-    
-    style GATEWAY fill:#90EE90
-    style ROUTING fill:#FFD700
-```
-
-</div>
-<div>
-
-**Benefits**:
-- Model abstraction
-- Cost optimization
-- Performance routing
-- A/B testing
-- Fallback handling
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
-img[src*="mermaid"] { max-height: 50% !important; max-width: 90% !important; margin-top: 0.5em !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.9em; }
-</style>
-
----
-
-## AI Gateway: Benefits
-
-✅ **Model Abstraction** - Switch models without code changes • A/B testing
-
-✅ **Cost Optimization** - Route cheap tasks to cheaper models • Budget enforcement
-
-✅ **Reliability** - Automatic failover • Load balancing across instances
-
-✅ **Observability** - Centralized logging • Cost tracking • Performance monitoring
-
-<div class="gateway-summary">
-<div>
-### When to use it
-- Multiple model providers in production
-- Need routing by price, latency, or quality
-
-</div>
-<div>
-### Operational Tips
-- Instrument routing decisions for audit trails
-- Tune thresholds regularly with telemetry
-
-</div>
-</div>
-
-<style scoped>
-section { padding-bottom: 2em; }
-</style>
-
----
-
-## What We Use at Wix
-
-**Knowledge Base Pattern** - Infrastructure for semantic search | Build and test easily | RAG foundation
-
-**Workflow Orchestration** - Internal systems + n8n | Agent task scheduling | Multi-step automation
-
-**AI Gateway Adapter** - Model routing (performance, cost, availability) | Single interface, multiple providers
-
-**Internal LLM Tooling** - 80% of daily work automated | Focus on what LLMs can't do | Productivity multiplier
+Real-World Implementations
 
 ---
 
@@ -1117,36 +1193,56 @@ section { padding-bottom: 3.8em !important; }
 
 ---
 
+## Multi-Agent System: Patterns
+
+**Patterns Used**:
+- **ReAct**: Each agent uses Think → Act → Observe cycle
+- **FSM**: System states (Commit → Analyzing → Reviewing → Decision)
+- **MCP**: Agents communicate via standardized tools/resources
+- **Memory**: Agents learn from past reviews to improve
+
+---
+
 ## Practical Example: Agent Handoff
 
 **Language-Agnostic Pattern**
 
+<div class="columns">
+<div>
+
 ```mermaid
 graph TD
-    COORD[Coordinator Agent] --> PLANNER[Planner Agent]
-    COORD --> EXECUTOR[Executor Agent]
-    COORD --> REVIEWER[Reviewer Agent]
-    COORD --> REPORTER[Reporter Agent]
-    
-    PLANNER -.->|Plan Task| P_OUT[ ]
-    EXECUTOR -.->|Run Code & Tests| E_OUT[ ]
-    REVIEWER -.->|Check Quality| R_OUT[ ]
-    REPORTER -.->|Generate Report| REP_OUT[ ]
+    COORD[Coordinator] --> PLANNER[Planner]
+    COORD --> EXECUTOR[Executor]
+    COORD --> REVIEWER[Reviewer]
+    COORD --> REPORTER[Reporter]
     
     style COORD fill:#FFD700
     style PLANNER fill:#87CEEB
     style EXECUTOR fill:#90EE90
     style REVIEWER fill:#FFB6C1
     style REPORTER fill:#DDA0DD
-    style P_OUT fill:none,stroke:none
-    style E_OUT fill:none,stroke:none
-    style R_OUT fill:none,stroke:none
-    style REP_OUT fill:none,stroke:none
 ```
 
+</div>
+<div>
+
+**Patterns**:
+- **BT**: Task routing
+- **MCP**: Standardized interfaces
+- **ReAct**: Internal pattern
+- **Scratchpad**: Shared memory
+
+</div>
+</div>
+
 <style scoped>
-img[src*="mermaid"] { max-height: 50% !important; max-width: 90% !important; margin-top: 0.5em !important; }
+.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
+img[src*="mermaid"] { max-height: 38% !important; max-width: 80% !important; margin: 0.3em auto !important; }
 section { padding-bottom: 3.5em !important; }
+.columns div { font-size: 0.82em; line-height: 1.25; margin: 0; }
+.columns div p { margin: 0.3em 0; }
+.columns div ul { margin: 0.3em 0; padding-left: 1.2em; }
 </style>
 
 ---
@@ -1164,12 +1260,55 @@ section { padding-bottom: 3.5em !important; }
 
 ---
 
+## Agent Handoff: Patterns
+
+**Patterns Used**:
+- **MCP**: Core pattern - standardized tool/resource definitions
+- **Behavior Tree**: Coordinator uses BT for task routing
+- **ReAct**: Each agent implements ReAct internally
+- **AI Gateway**: Routes requests to appropriate agents/models
+
+---
+
+## What We Use at Wix
+
+**Knowledge Base Pattern** - Infrastructure for semantic search | Build and test easily | RAG foundation
+
+**Workflow Orchestration** - Internal systems + n8n | Agent task scheduling | Multi-step automation
+
+**AI Gateway Adapter** - Model routing (performance, cost, availability) | Single interface, multiple providers
+
+**Internal LLM Tooling** - 80% of daily work automated | Focus on what LLMs can't do | Productivity multiplier
+
+---
+
+## What We Use at Wix: Patterns
+
+**Patterns in Practice**:
+- **AI Gateway**: Routes tasks to optimal models (cost/performance)
+- **FSM**: Workflow orchestration uses state machines
+- **ReAct + Learning**: Agents improve from feedback
+- **MCP**: Standardized tool definitions across systems
+- **Scratchpad**: Complex tasks use working memory pattern
+
+---
+
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Part 8: Best Practices
+
+Design, Security & Common Pitfalls
+
+---
+
 ## Best Practices: Design & Operations
 
 <div class="columns best-practices">
 <div>
 
-### Design
+**Design**
 - ✅ Start single → multi-agent
 - ✅ Clear responsibilities
 - ✅ Use standard protocols (MCP)
@@ -1178,7 +1317,7 @@ section { padding-bottom: 3.5em !important; }
 </div>
 <div>
 
-### Operations
+**Operations**
 - ✅ Monitor costs & tokens
 - ✅ Implement rate limiting
 - ✅ Log all decisions
@@ -1198,7 +1337,7 @@ section { padding-bottom: 3em !important; }
 <div class="columns best-practices">
 <div>
 
-### Security
+**Security**
 - ✅ Validate tool inputs
 - ✅ Sandbox code (E2B)
 - ✅ Access controls
@@ -1207,7 +1346,7 @@ section { padding-bottom: 3em !important; }
 </div>
 <div>
 
-### Testing
+**Testing**
 - ✅ Diverse scenarios
 - ✅ Benchmark baselines
 - ✅ A/B test approaches
@@ -1253,78 +1392,22 @@ section { padding-bottom: 3em !important; }
 </div>
 
 <style scoped>
-section { padding-bottom: 1.2em !important; }
+section { padding-bottom: 3.5em !important; }
+.columns { gap: 2em !important; }
+.columns div { font-size: 0.9em !important; line-height: 1.5 !important; }
+.columns div p { margin: 0.5em 0 !important; }
+.columns div ul { margin: 0.3em 0 !important; padding-left: 1.2em !important; }
 </style>
 
 ---
 
-## The Future of Autonomous Development
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
 
-**Trends**:
-- 🚀 Better reasoning models (GPT-5, Claude 4, etc.)
-- 🚀 Longer context windows (1M+ tokens)
-- 🚀 Lower costs per token
-- 🚀 Specialized coding models
-- 🚀 Better tool use capabilities
+# Part 9: Conclusion
 
-**Impact**:
-- Agents handle more complex tasks end-to-end
-- Shift from "code generation" to "system generation"
-- Developers become orchestrators and architects
-
----
-
-## Getting Started: Environment & Framework
-
-<div class="columns">
-<div>
-
-### 1. Pick Your Environment
-- **Local**: For experimentation
-- **Remote**: For team use
-- **Distributed**: For production
-
-</div>
-<div>
-
-### 2. Choose a Framework
-- **Python**: LangChain, AG2, CrewAI
-- **TypeScript**: VoltAgent, LangChain.js
-
-</div>
-</div>
-
-<style scoped>
-.columns { font-size: 0.95em; gap: 2em; }
-section { padding-bottom: 3em !important; }
-</style>
-
----
-
-## Getting Started: Approach & Resources
-
-<div class="columns">
-<div>
-
-### 3. Start Simple
-- Single-agent workflows first
-- Add complexity gradually
-- Measure improvements
-
-</div>
-<div>
-
-### Resources
-- **MCP**: https://modelcontextprotocol.io
-- **Conference**: https://github.com/Algiras/vs-zinios-conference-2025-11-18
-
-</div>
-</div>
-
-<style scoped>
-.columns { font-size: 0.95em; gap: 2em; }
-section { padding-bottom: 3em !important; }
-</style>
+Takeaways & Resources
 
 ---
 
@@ -1333,11 +1416,11 @@ section { padding-bottom: 3em !important; }
 <div class="takeaways-grid">
 <div>
 
-### Choose the Right Architecture
+**Choose the Right Architecture**
 - Simple: Reflex agents
 - Complex: Learning agents + planning
 
-### Design Matters
+**Design Matters**
 - Separate planning/execution
 - Use scratchpad for reasoning
 - Maintain proper control flows
@@ -1345,7 +1428,7 @@ section { padding-bottom: 3em !important; }
 </div>
 <div>
 
-### Production Ready
+**Production Ready**
 - Observability is critical
 - Cost monitoring is essential
 - Security first, always
@@ -1354,7 +1437,9 @@ section { padding-bottom: 3em !important; }
 </div>
 
 <style scoped>
-section { padding-bottom: 3em !important; }
+section { padding-bottom: 3.5em !important; }
+.takeaways-grid { gap: 2em !important; }
+.takeaways-grid div { font-size: 0.9em !important; }
 </style>
 
 ---
@@ -1364,36 +1449,39 @@ section { padding-bottom: 3em !important; }
 <div class="takeaways-grid">
 <div>
 
-### Leverage Standards
+**Leverage Standards**
 - MCP for tools/resources
 - Standard protocols across teams
 - Language-agnostic patterns
 
-</div>
-<div>
-
-### Iterate & Improve
+**Iterate & Improve**
 - Start simple → expand to complex
 - Measure outcomes continually
 - Learn from failures quickly
 
-### Stay Current
-- Rapidly evolving field
-- Track new models & capabilities
-- Engage with community innovation
+</div>
+<div>
+
+**The Future**
+- Better reasoning models (GPT-5, Claude 4)
+- Longer context windows (1M+ tokens)
+- Lower costs, specialized models
+- Shift to "system generation"
 
 </div>
 </div>
 
 <style scoped>
-section { padding-bottom: 3em !important; }
+section { padding-bottom: 3.5em !important; }
+.takeaways-grid { gap: 2em !important; }
+.takeaways-grid div { font-size: 0.9em !important; }
 </style>
 
 ---
 
 ## Resources
 
-### Documentation & Links
+**Documentation & Links**
 
 <div class="resources-grid">
 <div>
@@ -1434,17 +1522,23 @@ section { padding-bottom: 1.2em !important; }
 
 # Thank You!
 
-**Conference Repository**: https://github.com/Algiras/vs-zinios-conference-2025-11-18
+**Conference Repository**
+
+https://github.com/Algiras/vs-zinios-conference-2025-11-18
 
 ![QR Code](qr:https://github.com/Algiras/vs-zinios-conference-2025-11-18)
 
 <style scoped>
+p {
+  margin: 0.8em 0;
+  font-size: 1.1em;
+}
 img { 
   max-width: 200px !important; 
   max-height: 200px !important;
   width: auto !important;
   height: auto !important;
-  margin-top: 1em !important;
+  margin-top: 1.5em !important;
   display: block !important;
   margin-left: auto !important;
   margin-right: auto !important;

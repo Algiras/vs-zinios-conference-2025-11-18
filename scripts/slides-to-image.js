@@ -119,7 +119,7 @@ try {
       fs.rmSync(tempImagesDir, { recursive: true, force: true });
     } catch (e) {
       // Ignore cleanup errors
-    }
+  }
 } catch (error) {
   console.error('❌ PDF export failed:');
   console.error(error.message);
@@ -135,7 +135,7 @@ try {
     execSync('which magick', { stdio: 'ignore' });
   } catch {
     try {
-      execSync('which convert', { stdio: 'ignore' });
+  execSync('which convert', { stdio: 'ignore' });
       magickCmd = 'convert';
     } catch {
       throw new Error('ImageMagick not found');
@@ -181,13 +181,13 @@ if (shouldStitch) {
     execSync('which magick', { stdio: 'ignore' });
   } catch {
     try {
-      execSync('which convert', { stdio: 'ignore' });
+    execSync('which convert', { stdio: 'ignore' });
       magickCmd = 'convert';
-    } catch {
-      console.error('❌ ImageMagick is required for stitching but not installed.');
-      console.error('   Install with: brew install imagemagick (macOS)');
-      console.error('   Or: sudo apt-get install imagemagick (Linux)');
-      process.exit(1);
+  } catch {
+    console.error('❌ ImageMagick is required for stitching but not installed.');
+    console.error('   Install with: brew install imagemagick (macOS)');
+    console.error('   Or: sudo apt-get install imagemagick (Linux)');
+    process.exit(1);
     }
   }
 
