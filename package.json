@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "Presentation on Autonomous Development Workflows",
   "scripts": {
-    "preprocess": "node preprocess-markdown.js",
-    "dev": "npx @marp-team/marp-cli -w -s --html --engine ./engine.js slides/",
-    "build": "npm run preprocess && npx @marp-team/marp-cli --html --engine ./engine.js -o slides/presentation.html slides/presentation.processed.md",
-    "build:original": "npx @marp-team/marp-cli --html --engine ./engine.js -o slides/presentation.original.html slides/presentation.md",
-    "export": "npm run preprocess && npx @marp-team/marp-cli --html --engine ./engine.js --pptx --allow-local-files -o slides/presentation.pptx slides/presentation.processed.md",
-    "export:pdf": "npm run preprocess && npx @marp-team/marp-cli --html --engine ./engine.js --pdf --allow-local-files -o slides/presentation.pdf slides/presentation.processed.md",
-    "preview": "npx @marp-team/marp-cli -s --html --engine ./engine.js slides/",
+    "dev": "npx @marp-team/marp-cli -w -s --html slides/",
+    "build": "node scripts/preprocess-for-pdf.js slides/presentation.md slides/presentation.preprocessed.md && npx @marp-team/marp-cli --html -o slides/presentation.html slides/presentation.preprocessed.md",
+    "build:original": "npx @marp-team/marp-cli --html -o slides/presentation.original.html slides/presentation.md",
+    "export": "node scripts/export-with-validation.js",
+    "export:pptx": "node scripts/export-with-validation.js --skip-images",
+    "export:images": "node scripts/export-with-validation.js --skip-pptx",
+    "export:pdf": "node scripts/preprocess-for-pdf.js slides/presentation.md slides/presentation.preprocessed.md && npx @marp-team/marp-cli --html --pdf --allow-local-files -o slides/presentation.pdf slides/presentation.preprocessed.md",
+    "export:images:only": "node scripts/slides-to-image.js",
+    "export:images:combined": "node scripts/slides-to-image.js --stitch",
+    "preview": "npx @marp-team/marp-cli -s --html slides/",
     "lint:mermaid": "md-mermaid-lint slides/presentation.md",
     "lint:mermaid:all": "md-mermaid-lint slides/**/*.md docs/**/*.md"
   },
@@ -22,11 +25,15 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@marp-team/marp-cli": "^3.4.0",
+    "@kazumatu981/markdown-it-kroki": "^1.3.6",
+    "@kazumatu981/markdown-it-nested-container": "^1.1.0",
+    "@marp-team/marp-cli": "^4.2.3",
     "@marp-team/marp-core": "^3.9.0",
     "@mermaid-js/mermaid-cli": "^11.12.0",
-    "md-mermaid-lint": "^1.0.1",
-    "qrcode": "^1.5.4"
+    "md-mermaid-lint": "^1.0.1"
   },
-  "packageManager": "yarn@3.6.4+sha512.e70835d4d6d62c07be76b3c1529cb640c7443f0fe434ef4b6478a5a399218cbaf1511b396b3c56eb03bc86424cff2320f6167ad2fde273aa0df6e60b7754029f"
+  "packageManager": "yarn@3.6.4+sha512.e70835d4d6d62c07be76b3c1529cb640c7443f0fe434ef4b6478a5a399218cbaf1511b396b3c56eb03bc86424cff2320f6167ad2fde273aa0df6e60b7754029f",
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
 }

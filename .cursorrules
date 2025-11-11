@@ -6,6 +6,9 @@ This is a Marp-based presentation project with comprehensive documentation on au
 - `/slides/` - Marp presentation (main deliverable)
 - `/docs/` - Research documentation (MCP, agents, frameworks)
 - `/repos/` - Reference code repositories (gitignored)
+- `/themes/` - Marp theme files (rose-pine-dawn, rose-pine-moon)
+- `/thoughts/` - LLM-generated analysis files (gitignored, except README.md)
+- `/scripts/` - Build and export automation scripts
 
 ## Marp Slide Guidelines
 
@@ -514,11 +517,19 @@ Step 1 → Step 2 → Step 3 → Result
 **Port in use**: Change port in `.marprc.yml`
 **Hot reload not working**: Restart `npm run dev`
 
+## Important Notes
+
+- **ONLY EDIT**: `slides/presentation.md` - all other files are generated or reference only
+- **LLM Thoughts**: Put all analysis/thoughts in `/thoughts/` folder (gitignored)
+- **Themes**: Use `rose-pine-dawn` (light) or `rose-pine-moon` (dark) from `/themes/`
+- **Documentation**: See `/thoughts/` for detailed guides (copied from root)
+
 ## References
 
 - **Marp Documentation**: https://marpit.marp.app/
 - **Project README**: `/README.md`
 - **Documentation Index**: `/docs/README.md`
-- **Marp Guide**: `/MARP_GUIDE.md`
-- **Project Summary**: `/PROJECT_SUMMARY.md`
+- **Agent Guide**: `/AGENTS.md` - Project structure for AI agents
+- **Thoughts Folder**: `/thoughts/` - LLM-generated analysis files
+
 

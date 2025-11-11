@@ -17,6 +17,7 @@ slides/*.processed.md
 slides/images/mermaid/
 slides/images/qr/
 slides/images/
+slides/slide-images/
 
 # macOS
 .DS_Store
@@ -67,6 +68,10 @@ tmp/
 temp/
 *.tmp
 .tmp/
+
+# LLM-generated thoughts and analysis
+thoughts/
+!thoughts/README.md
 
 # Build outputs (if any)
 dist/
