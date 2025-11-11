@@ -216,6 +216,220 @@ docs/
 - **Documentation Index**: `docs/README.md` - All documentation
 - **Thoughts Folder**: `thoughts/` - Detailed guides and analysis
 
+## 📐 Slide Layout Patterns
+
+This section documents all layout patterns used in `slides/presentation.md` for consistent slide design.
+
+### Column Layouts
+
+**Standard Two-Column Layout** (`.columns`)
+- **Usage**: Most slides with diagrams or side-by-side content
+- **Structure**: `1.1fr 0.9fr` (diagram left, text right typically)
+- **Gap**: `1em`
+- **Font size**: `0.88em`
+- **Line height**: `1.4`
+- **Example**:
+```markdown
+<div class="columns">
+<div>
+  <!-- Diagram or left content -->
+</div>
+<div>
+  <!-- Text or right content -->
+</div>
+</div>
+```
+
+**Reflex Columns** (`.reflex-columns`)
+- **Usage**: Reflex Agent characteristics slides
+- **Structure**: Same as `.columns` but with larger gap (`2.2em`)
+- **Font size**: `0.9em`
+- **Special**: Used for strengths/constraints comparisons
+
+**Takeaways Grid** (`.takeaways-grid`)
+- **Usage**: Key takeaways slides (2-column grid)
+- **Structure**: `repeat(2, minmax(0, 1fr))` (equal columns)
+- **Gap**: `2.4em`
+- **Font size**: `0.95em`
+- **Line height**: `1.45`
+
+**Resources Grid** (`.resources-grid`)
+- **Usage**: Resources slide with cards
+- **Structure**: `repeat(2, minmax(0, 1fr))` (equal columns)
+- **Gap**: `2em`
+- **Font size**: `0.9em`
+- **Special**: Cards have background (`#f7f7f7`), padding, border-radius
+
+**Flex Layouts** (`.mcp-highlights`, `.gateway-summary`)
+- **Usage**: MCP highlights and gateway summary slides
+- **Structure**: Flexbox with `gap: 1.5em`
+- **Behavior**: Equal-width columns that flex
+
+**Best Practices** (`.best-practices`)
+- **Usage**: Best practices slides
+- **Structure**: `1fr 1fr` (equal columns)
+- **Gap**: `2em`
+- **Font size**: `0.95em`
+- **Special**: Larger h3 headings (`1.2em`)
+
+### Diagram Patterns
+
+**Mermaid Diagrams in Columns**
+- **Max height**: `40%` (for vertical diagrams like FSM)
+- **Max width**: `90%` (for horizontal diagrams like BT)
+- **Margin**: `0.3em auto` (centered)
+- **Orientation**:
+  - `graph LR` - Left-to-right (preferred for most diagrams)
+  - `graph TB` - Top-to-bottom (for FSM state diagrams)
+  - `stateDiagram-v2` - State diagrams (vertical)
+
+**Diagram Sizing Guidelines**:
+- **Horizontal diagrams** (`graph LR`): Use `max-width: 90%`, `max-height: 40%`
+- **Vertical diagrams** (`graph TB`): Use `max-width: 80%`, `max-height: 35%` (more constrained)
+- **Complex diagrams** (subgraphs): Use `max-height: 45-47%`, `max-width: 85-87%`
+
+### Slide Types
+
+**Lead Slides** (`.lead`)
+- **Usage**: Title slide, section introductions, "Questions?", "Thank You!"
+- **Features**: 
+  - Centered content
+  - No pagination (`<!-- _paginate: false -->`)
+  - No footer (`<!-- _footer: "" -->`)
+- **Example**:
+```markdown
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
+
+# Title
+```
+
+**Regular Slides**
+- **Features**:
+  - Header: "Autonomous Development Workflows" (top)
+  - Footer: "Algimantas Krasauskas | Wix | November 2025" (bottom)
+  - Pagination: Bottom right
+  - Padding: `4em top`, `3.5em bottom`
+
+**Comparison Slides**
+- **Usage**: Agent types, frameworks, patterns
+- **Pattern**: Two-column layout with headings in each column
+- **Example**: "Agent Types: Overview" uses `.columns` with h3 headings
+
+### Content Patterns
+
+**Bullet Lists**
+- **Margin**: `0.4em 0`
+- **Padding left**: `1.2em`
+- **Line height**: `1.4-1.6` (varies by context)
+
+**Paragraphs in Columns**
+- **Margin**: `0.4em 0` (standard), `0.6em 0` (with diagrams)
+- **Font size**: Inherits from column (typically `0.88em`)
+
+**Headings**
+- **H2**: `margin-top: 0.2em`, `margin-bottom: 0.6em`
+- **H3 in columns**: `margin: 0 0 0.4-0.5em 0`, `font-size: 1.1-1.2em`
+
+**Code Blocks**
+- **Usage**: Tool examples, MCP structures
+- **Font size**: `0.85em` (reduced for fit)
+- **Margin**: `0.5em top` (to avoid header overlap)
+
+**Tables**
+- **Usage**: Framework comparisons, pattern comparisons
+- **Font size**: `0.75em` (reduced)
+- **Line height**: `1.3`
+- **Cell padding**: `0.3em 0.2em`
+
+### Special Patterns
+
+**QR Codes**
+- **Size**: `200px × 200px`
+- **Position**: Centered
+- **Usage**: Only on final "Thank You!" slide
+- **Syntax**: `![QR Code](qr:https://example.com)`
+
+**Mermaid Diagram Syntax**
+- **Standard**: ` ```mermaid ... ``` `
+- **Auto-generated**: Preprocessing converts to `![Mermaid diagram](images/mermaid/...)`
+- **Styling**: Handled globally, no scoped styles needed
+
+**Scoped Styles** (when needed)
+- **Usage**: Only for slide-specific overrides
+- **Pattern**: Most styling is global now
+- **Example**: Only used for special cases like `.best-practices` specific adjustments
+
+### Global Styling
+
+All slides use consistent global styles defined in the front matter `style:` block:
+
+- **Section padding**: `4em top`, `3.5em bottom`
+- **Column layouts**: `1.1fr 0.9fr`, `gap: 1em`
+- **Diagram sizing**: `40% max-height`, `90% max-width`
+- **Text sizing**: `0.88em` base, `1.4` line-height
+- **Headings**: Consistent margins across all slides
+
+**Key Principle**: Use global styles first, add scoped styles only when absolutely necessary for slide-specific needs.
+
+### Best Practices from Marp & Reveal.js
+
+**Consistent Heading Positioning:**
+- **H2 (slide titles)**: `margin-top: 0.2em`, `margin-bottom: 0.6em` (global)
+- **H3 (section headings)**: `margin: 0 0 0.4-0.5em 0`, `font-size: 1.1-1.2em` (in columns)
+- **Fitting headers**: Use `<!--fit-->` comment for auto-scaling when needed (not currently used)
+- **Heading hierarchy**: Maintain consistent spacing between heading levels
+
+**Content Positioning:**
+- **Section padding**: `4em top` (header clearance), `3.5em bottom` (footer clearance)
+- **Left/Right padding**: `1.5em` (prevents edge overflow)
+- **First element margin**: Ensure adequate top margin after headings
+- **Vertical centering**: Not used (content flows top-to-bottom for consistency)
+
+**Text Spacing:**
+- **Paragraphs**: `0.4em 0` (standard), `0.6em 0` (with diagrams)
+- **Bullet lists**: `0.4em 0` margin, `1.2em` padding-left
+- **Line height**: `1.4` (base), `1.6` (with diagrams), `1.45` (takeaways)
+- **Font size**: `0.88em` (base in columns), `0.9em` (reflex columns), `0.95em` (takeaways)
+
+**Diagram Positioning:**
+- **In columns**: `max-height: 40%`, `max-width: 90%`, `margin: 0.3em auto`
+- **Vertical diagrams**: More constrained (`max-height: 35%`, `max-width: 80%`)
+- **Margin after headings**: `0.8em` top margin to prevent overlap
+- **Clearance**: `clear: both` to prevent text wrapping
+
+**Layout Consistency:**
+- **Column ratio**: `1.1fr 0.9fr` (diagram/text split) for most slides
+- **Equal columns**: `1fr 1fr` for comparisons and grids
+- **Gap spacing**: `1em` (standard), `1.2em` (with diagrams), `2em+` (grids)
+- **Alignment**: `align-items: start` (top-aligned content in columns)
+
+**Header/Footer Positioning:**
+- **Header**: Fixed at top, hidden on lead slides
+- **Footer**: Fixed at bottom (`15px` from bottom), includes pagination
+- **Pagination**: Bottom right, hidden when `_paginate: false`
+- **Clearance**: Section padding ensures content doesn't overlap
+
+**Code Block Positioning:**
+- **Font size**: `0.85em` (reduced for fit)
+- **Top margin**: `0.5em` (to avoid header overlap)
+- **Line height**: `1.3` (compact)
+
+**Table Positioning:**
+- **Font size**: `0.75em` (reduced)
+- **Line height**: `1.3`
+- **Cell padding**: `0.3em 0.2em`
+
+**Patterns to Follow:**
+1. **Always use global styles** for common patterns (columns, diagrams, headings)
+2. **Consistent spacing** - Use the same margins/padding across similar slide types
+3. **Header clearance** - Always account for header height in top padding
+4. **Footer clearance** - Always account for footer height in bottom padding
+5. **Diagram containment** - Use columns to bound diagrams and prevent overflow
+6. **Text hierarchy** - Maintain consistent heading sizes and spacing
+7. **Scoped overrides** - Only use for slide-specific needs, not common patterns
+
 ---
 
 **Remember**: When in doubt, only edit `slides/presentation.md`. Everything else is either generated, reference-only, or should go in `thoughts/`.

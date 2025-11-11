@@ -58,17 +58,20 @@ style: |
     padding-top: 4em;
     padding-bottom: 3.5em;
   }
-  h1 {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+  /* Prevent vertical centering on regular slides, but allow lead slides to center */
+  section:not(.lead) {
+    display: block !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
   }
-  h2 {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+  h1 {
+    margin-top: 0.2em;
+    margin-bottom: 0.6em;
   }
   
   /* Ensure first element in section doesn't overlap header */
-  section > *:first-child {
+  /* Headings have their own consistent margins defined globally */
+  section > *:first-child:not(h1):not(h2) {
     margin-top: 0.3em;
   }
   
@@ -167,9 +170,12 @@ style: |
   }
   
   /* Headings - consistent across all slides */
-  section h2 {
-    margin-top: 0.2em !important;
+  /* Lead slides have their own h2 styling, so exclude them */
+  section:not(.lead) h2 {
+    margin-top: 0 !important;
     margin-bottom: 0.6em !important;
+    position: relative !important;
+    top: 0 !important;
   }
   section .reflex-columns { 
     font-size: 0.9em !important; 
@@ -222,15 +228,40 @@ style: |
   section .resources-grid p { margin: 0; }
   section .resources-grid a { color: #1565c0; text-decoration: none; }
   
+  /* Best practices layout - equal columns with larger headings */
+  section .columns.best-practices {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 2em !important;
+    font-size: 0.95em !important;
+  }
+  section .columns.best-practices h3 {
+    margin: 0 0 0.5em 0 !important;
+    font-size: 1.2em !important;
+  }
+  section .columns.best-practices ul {
+    margin: 0 !important;
+    padding-left: 1.2em !important;
+    line-height: 1.45 !important;
+  }
+  
   /* Lead slide - Marp's built-in lead class centers content */
-  /* Theme handles centering, we just ensure proper styling */
+  /* Allow centering for lead slides */
   section.lead {
     padding-top: 0;
     padding-bottom: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
   }
   section.lead h1 {
     font-size: 2.5em;
     margin-bottom: 0.5em;
+    margin-top: 0;
+  }
+  section.lead h2 {
+    margin-top: 0;
+    margin-bottom: 0.6em;
   }
   section.lead p {
     font-size: 1.2em;
@@ -398,10 +429,9 @@ graph LR
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
 img[src*="mermaid"] { max-height: 35% !important; max-width: 80% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; padding-top: 4em !important; }
+section { padding-bottom: 3.5em !important; }
 .columns div { font-size: 0.82em; line-height: 1.3; margin: 0; }
 .columns div p { margin: 0.3em 0; }
-h2 { margin-bottom: 0.5em !important; }
 </style>
 
 ---
@@ -468,11 +498,10 @@ graph LR
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
 img[src*="mermaid"] { max-height: 42% !important; max-width: 88% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; padding-top: 4.2em !important; }
+section { padding-bottom: 3.8em !important; }
 .columns div { font-size: 0.9em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
 .columns div p { margin: 0.6em 0; }
 .columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-h2 { margin-bottom: 0.6em !important; margin-top: 0.2em !important; }
 </style>
 
 ---
@@ -585,11 +614,10 @@ graph LR
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
 img[src*="mermaid"] { max-height: 42% !important; max-width: 82% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; padding-top: 4.2em !important; }
+section { padding-bottom: 3.8em !important; }
 .columns div { font-size: 0.92em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
 .columns div p { margin: 0.6em 0; }
 .columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-h2 { margin-bottom: 0.6em !important; margin-top: 0.2em !important; }
 </style>
 
 ---
@@ -648,10 +676,9 @@ graph LR
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
 img[src*="mermaid"] { max-height: 35% !important; max-width: 85% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; padding-top: 4em !important; }
+section { padding-bottom: 3.5em !important; }
 .columns div { font-size: 0.85em; line-height: 1.3; margin: 0; }
 .columns div p { margin: 0.3em 0; }
-h2 { margin-bottom: 0.5em !important; }
 </style>
 
 ---
@@ -688,10 +715,9 @@ graph LR
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
 img[src*="mermaid"] { max-height: 35% !important; max-width: 85% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; padding-top: 4em !important; }
+section { padding-bottom: 3.5em !important; }
 .columns div { font-size: 0.85em; line-height: 1.3; margin: 0; }
 .columns div p { margin: 0.3em 0; }
-h2 { margin-bottom: 0.5em !important; }
 </style>
 
 ---
@@ -742,11 +768,10 @@ graph LR
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
 img[src*="mermaid"] { max-height: 42% !important; max-width: 82% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; padding-top: 4.2em !important; }
+section { padding-bottom: 3.8em !important; }
 .columns div { font-size: 0.92em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
 .columns div p { margin: 0.6em 0; }
 .columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-h2 { margin-bottom: 0.6em !important; margin-top: 0.2em !important; }
 </style>
 
 ---
@@ -903,11 +928,10 @@ graph TB
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
 img[src*="mermaid"] { max-height: 47% !important; max-width: 87% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; padding-top: 4.2em !important; }
+section { padding-bottom: 4.5em !important; }
 .columns div { font-size: 0.92em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
 .columns div p { margin: 0.6em 0; }
 .columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-h2 { margin-bottom: 0.6em !important; margin-top: 0.2em !important; }
 </style>
 
 
@@ -1073,10 +1097,9 @@ graph LR
 <style scoped>
 .columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
 img[src*="mermaid"] { max-height: 42% !important; max-width: 88% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; padding-top: 4.2em !important; }
+section { padding-bottom: 3.8em !important; }
 .columns div { font-size: 0.9em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
 .columns div p { margin: 0.3em 0; }
-h2 { margin-bottom: 0.5em !important; }
 </style>
 
 ---
@@ -1165,9 +1188,6 @@ section { padding-bottom: 3.5em !important; }
 </div>
 
 <style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; font-size: 0.95em; }
-.columns h3 { margin: 0 0 0.5em 0; font-size: 1.2em; }
-.columns ul { margin: 0; padding-left: 1.2em; line-height: 1.45; }
 section { padding-bottom: 3em !important; }
 </style>
 
@@ -1233,8 +1253,6 @@ section { padding-bottom: 3em !important; }
 </div>
 
 <style scoped>
-.columns.best-practices h3 { margin: 0 0 0.5em 0; font-size: 1.2em; }
-.columns.best-practices ul { margin: 0; padding-left: 1.2em; line-height: 1.45; }
 section { padding-bottom: 1.2em !important; }
 </style>
 
@@ -1336,9 +1354,6 @@ section { padding-bottom: 3em !important; }
 </div>
 
 <style scoped>
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2em; font-size: 0.9em; line-height: 1.4; }
-.takeaways-grid h3 { margin: 0 0 0.4em 0; font-size: 1.1em; }
-.takeaways-grid ul { margin: 0 0 0.8em 0; padding-left: 1.2em; }
 section { padding-bottom: 3em !important; }
 </style>
 
@@ -1371,9 +1386,6 @@ section { padding-bottom: 3em !important; }
 </div>
 
 <style scoped>
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2em; font-size: 0.9em; line-height: 1.4; }
-.takeaways-grid h3 { margin: 0 0 0.4em 0; font-size: 1.1em; }
-.takeaways-grid ul { margin: 0 0 0.8em 0; padding-left: 1.2em; }
 section { padding-bottom: 3em !important; }
 </style>
 
@@ -1403,11 +1415,6 @@ section { padding-bottom: 3em !important; }
 </div>
 
 <style scoped>
-.resources-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2em; font-size: 0.9em; }
-.resources-grid div { background: #f7f7f7; padding: 1em 1.2em; border-radius: 8px; display: flex; flex-direction: column; align-items: flex-start; }
-.resources-grid h4 { margin: 0 0 0.25em 0; font-size: 1.05em; }
-.resources-grid p { margin: 0; }
-.resources-grid a { color: #1565c0; text-decoration: none; }
 section { padding-bottom: 1.2em !important; }
 </style>
 
@@ -1446,7 +1453,9 @@ img {
 
 ---
 
-<!-- _footer: "Backup Slides - For Reference" -->
+<!-- _class: lead -->
+<!-- _paginate: false -->
+<!-- _footer: "" -->
 
 ## Backup Slides
 
@@ -1486,7 +1495,7 @@ class FSM:
 
 <style scoped>
 code { font-size: 0.6em; line-height: 1.25; }
-section { padding-bottom: 3em !important; padding-top: 3.5em !important; }
+section { padding-bottom: 3em !important; }
 </style>
 
 ---
@@ -1610,6 +1619,6 @@ section { padding-bottom: 2.5em !important; }
 
 <style scoped>
 code { font-size: 0.6em; line-height: 1.25; }
-section { padding-bottom: 3em !important; padding-top: 3.5em !important; }
+section { padding-bottom: 3em !important; }
 .columns { font-size: 0.85em; }
 </style>
