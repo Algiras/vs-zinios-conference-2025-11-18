@@ -216,7 +216,7 @@ style: |
     color: var(--foam) !important;
     margin-bottom: 0.6em !important;
   }
-  .focus-layout .focus-areas img[src*="wix-logo"] {
+  .focus-layout .focus-areas img[src*="wix"] {
     max-width: 120px !important;
     height: auto !important;
     display: block !important;
@@ -326,6 +326,7 @@ style: |
   
   /* Wix logo */
   img[alt="Wix Logo"],
+  img[src*="wix_logo"],
   img[src*="wix-logo"] {
     max-width: 150px !important;
     height: auto !important;
@@ -794,7 +795,7 @@ Focused on autonomous development and LLM orchestration
 
 **My Work at Wix**
 
-![Wix Logo](images/wix-logo.png)
+![Wix Logo](images/wix_logo.svg)
 
 - 🤖 Autonomous AI systems
 - 🔗 LLM orchestration
