@@ -1805,23 +1805,17 @@ section { padding-bottom: 3.5em !important; }
 ## What We Use at Wix
 
 <div class="slide-container">
-<div class="wix-showcase">
-
-<!-- Add Wix logo here when available:
-<div class="wix-logo">
-
-![Wix Logo](images/wix-logo.png)
-
-</div>
--->
-
-<div class="wix-content">
+<div class="columns">
+<div>
 
 **Knowledge Base Pattern**  
 Infrastructure for semantic search · Build and test easily · RAG foundation
 
 **Workflow Orchestration**  
 Internal systems + n8n · Agent task scheduling · Multi-step automation
+
+</div>
+<div>
 
 **AI Gateway Adapter**  
 Model routing (performance, cost, availability) · Single interface, multiple providers
@@ -1830,39 +1824,51 @@ Model routing (performance, cost, availability) · Single interface, multiple pr
 80% of daily work automated · Focus on what LLMs can't do · Productivity multiplier
 
 </div>
+</div>
+</div>
 
-</div>
-</div>
+<style scoped>
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
+.columns div { font-size: 0.9em; line-height: 1.6; }
+.columns div p { margin: 0.8em 0; }
+.columns div strong { display: block; font-size: 1.08em; color: var(--rose); margin-bottom: 0.3em; }
+</style>
 
 ---
 
 ## What We Use at Wix: Patterns
 
 <div class="slide-container">
-<div class="wix-showcase">
+<div class="columns">
+<div>
 
-<!-- Add Wix logo here when available:
-<div class="wix-logo">
-
-![Wix Logo](images/wix-logo.png)
-
-</div>
--->
-
-<div class="wix-patterns">
-
-**Patterns in Practice**
+**Architecture Patterns**
 
 - **AI Gateway** — Routes tasks to optimal models (cost/performance)
 - **FSM** — Workflow orchestration uses state machines
 - **ReAct + Learning** — Agents improve from feedback
+
+</div>
+<div>
+
+**Integration Patterns**
+
 - **MCP** — Standardized tool definitions across systems
 - **Scratchpad** — Complex tasks use working memory pattern
 
 </div>
+</div>
+</div>
 
-</div>
-</div>
+<style scoped>
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
+.columns div { font-size: 0.92em; line-height: 1.6; }
+.columns div strong { display: block; font-size: 1.12em; color: var(--foam); margin-bottom: 0.8em; }
+.columns div ul { list-style: none; padding: 0; margin: 0; }
+.columns div li { margin: 0.7em 0; padding-left: 1.5em; position: relative; }
+.columns div li::before { content: "▸"; position: absolute; left: 0; color: var(--rose); font-weight: bold; }
+.columns div li strong { display: inline; color: var(--pine); font-size: 1em; margin: 0; }
+</style>
 
 ---
 
