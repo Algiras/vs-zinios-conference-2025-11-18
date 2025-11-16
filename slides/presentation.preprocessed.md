@@ -795,8 +795,6 @@ Focused on autonomous development and LLM orchestration
 
 **My Work at Wix**
 
-![Wix Logo](images/wix_logo.svg)
-
 - 🤖 Autonomous AI systems
 - 🔗 LLM orchestration
 - ⚡ Developer productivity
