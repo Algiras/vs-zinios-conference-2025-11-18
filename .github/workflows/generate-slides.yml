@@ -1,5 +1,10 @@
 name: Generate Slides and Export PPTX
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 on:
   push:
     branches:
@@ -36,6 +41,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       
+      - name: Lint Mermaid diagrams
+        run: yarn lint:mermaid
+      
+      - name: Build HTML presentation
+        run: yarn build
+      
       - name: Install ImageMagick (for image generation)
         run: |
           sudo apt-get update
@@ -49,6 +60,19 @@ jobs:
       
       - name: Generate PDF
         run: yarn export:pdf
+      
+      - name: Prepare site artifact
+        run: |
+          mkdir -p public/downloads
+          cp slides/presentation.html public/index.html
+          cp slides/presentation.pdf public/downloads/presentation.pdf
+          cp slides/presentation.pptx public/downloads/presentation.pptx
+          if [ -f slides/slide-images-light/slides-combined-light.png ]; then
+            cp slides/slide-images-light/slides-combined-light.png public/downloads/slides-combined-light.png
+          fi
+          if [ -f slides/slide-images-dark/slides-combined-dark.png ]; then
+            cp slides/slide-images-dark/slides-combined-dark.png public/downloads/slides-combined-dark.png
+          fi
       
       - name: Upload PPTX artifact
         uses: actions/upload-artifact@v4
@@ -66,6 +90,14 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
       
+      - name: Upload HTML artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: presentation-html
+          path: slides/presentation.html
+          retention-days: 30
+          if-no-files-found: warn
+      
       - name: Upload combined slide images
         uses: actions/upload-artifact@v4
         with:
@@ -75,6 +107,11 @@ jobs:
             slides/slide-images-dark/slides-combined-dark.png
           retention-days: 30
           if-no-files-found: warn
+      
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
       
       - name: Commit and push generated files (optional)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -86,4 +123,18 @@ jobs:
           git push || exit 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-pages:
+    needs: generate-slides
+    if: >
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+      && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
 
