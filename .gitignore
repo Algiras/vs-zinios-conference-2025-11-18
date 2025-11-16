@@ -3,16 +3,17 @@ repos/
 
 # Node modules
 node_modules/
-package-lock.json
 pnpm-lock.yaml
+.yarn/
 
-# Generated presentation files (commit source only)
+# Generated presentation files (dev only, use dist/ for final builds)
 slides/*.html
 slides/*.pptx
 slides/*.pdf
 slides/*.processed.md
+slides/presentation.preprocessed.md
 
-# Generated images (intermediate build artifacts)
+# Generated images (dev-mode build artifacts - use dist/ for final builds)
 slides/images/mermaid/
 slides/images/mermaid/rose-pine-dawn/
 slides/images/mermaid/rose-pine-moon/

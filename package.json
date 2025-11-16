@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Presentation on Autonomous Development Workflows",
   "scripts": {
-    "dev": "npx @marp-team/marp-cli -w -s --html slides/",
-    "build": "node scripts/preprocess-for-pdf.js slides/presentation.md slides/presentation.preprocessed.md && npx @marp-team/marp-cli --html -o slides/presentation.html slides/presentation.preprocessed.md",
-    "build:original": "npx @marp-team/marp-cli --html -o slides/presentation.original.html slides/presentation.md",
+    "dev": "npx @marp-team/marp-cli --no-stdin -w -s --html slides/",
+    "build": "node scripts/preprocess-for-pdf.js slides/presentation.md slides/presentation.preprocessed.md && npx @marp-team/marp-cli --no-stdin --html -o slides/presentation.html slides/presentation.preprocessed.md",
+    "build:original": "npx @marp-team/marp-cli --no-stdin --html -o slides/presentation.original.html slides/presentation.md",
+    "build:dist": "node scripts/build-dist.js",
     "export": "node scripts/export-with-validation.js",
     "export:pptx": "node scripts/export-with-validation.js --skip-images",
     "export:images": "node scripts/export-with-validation.js --skip-pptx",
@@ -13,7 +14,7 @@
     "export:images:only": "node scripts/slides-to-image.js",
     "export:images:combined": "node scripts/slides-to-image.js --stitch",
     "export:themes": "node scripts/export-both-themes.js",
-    "preview": "npx @marp-team/marp-cli -s --html slides/",
+    "preview": "npx @marp-team/marp-cli --no-stdin -s --html slides/",
     "lint:mermaid": "md-mermaid-lint slides/presentation.md",
     "lint:mermaid:all": "md-mermaid-lint slides/**/*.md docs/**/*.md",
     "chart:generate": "node scripts/generate-charts.js"
@@ -34,7 +35,7 @@
     "@mermaid-js/mermaid-cli": "^11.12.0",
     "md-mermaid-lint": "^1.0.1"
   },
-  "packageManager": "yarn@3.6.4+sha512.e70835d4d6d62c07be76b3c1529cb640c7443f0fe434ef4b6478a5a399218cbaf1511b396b3c56eb03bc86424cff2320f6167ad2fde273aa0df6e60b7754029f",
+  "packageManager": "npm@10.9.3",
   "dependencies": {
     "qrcode": "^1.5.4"
   }

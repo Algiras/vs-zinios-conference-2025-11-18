@@ -96,7 +96,7 @@ const pdfFile = path.join(slidesDir, 'presentation.pdf');
   console.log('📄 Exporting to PDF...');
   try {
     const themeFilePath = path.join(tempDir, 'rose-pine-dawn.css');
-    const command = `npx @marp-team/marp-cli --pdf --html --allow-local-files --theme ${themeFilePath} presentation.md -o "${pdfFile}"`;
+    const command = `npx @marp-team/marp-cli --no-stdin --pdf --html --allow-local-files --theme ${themeFilePath} presentation.md -o "${pdfFile}"`;
     execSync(command, { stdio: 'inherit', cwd: tempDir });
     console.log(`\n✅ PDF exported: ${pdfFile}`);
     

@@ -172,7 +172,7 @@ async function exportTheme(themeKey) {
     // Marp CLI looks for themes in: current dir, themes/ subdir, or via --theme-set
     // Using the theme file path directly is most reliable
     const themeFilePath = path.join(tempDir, `${theme.name}.css`);
-    const command = `npx @marp-team/marp-cli --pdf --html --allow-local-files --theme ${themeFilePath} presentation.md -o "${pdfFile}"`;
+    const command = `npx @marp-team/marp-cli --no-stdin --pdf --html --allow-local-files --theme ${themeFilePath} presentation.md -o "${pdfFile}"`;
     console.log(`   Using theme: ${theme.name} (from ${themeFilePath})`);
     execSync(command, { stdio: 'inherit', cwd: tempDir });
     console.log('✅ PDF exported\n');

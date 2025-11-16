@@ -157,7 +157,7 @@ if (!skipPptx) {
   try {
     console.log('📊 Exporting PPTX with preprocessed markdown...');
     // Explicitly enable HTML rendering for column layouts
-    const command = `npx @marp-team/marp-cli --pptx --html --allow-local-files presentation.md -o "${pptxFile}"`;
+    const command = `npx @marp-team/marp-cli --no-stdin --pptx --html --allow-local-files presentation.md -o "${pptxFile}"`;
     execSync(command, { stdio: 'inherit', cwd: tempDir });
     
     // Validate PPTX file

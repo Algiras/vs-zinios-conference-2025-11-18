@@ -315,6 +315,25 @@ pip install framework
 
 ## Development Workflow
 
+### Dev Mode Guidelines
+
+When working in dev mode, focus on these essential files:
+
+**📖 Documentation (Markdown only)**
+- `/thoughts/` - All LLM analysis and guides (*.md files only)
+- `/docs/` - Reference documentation
+
+**🖼️ Image References for LLMs**
+- `slides/slide-images/slides-combined.png` - All 60 slides (default theme)
+- `slides/slide-images-light/slides-combined-light.png` - All 60 slides (light theme)
+- `slides/slide-images-dark/slides-combined-dark.png` - All 60 slides (dark theme)
+
+**🚫 Ignore in Dev Mode**
+- `slides/presentation*.pptx` - Generated exports
+- `slides/slide-images*/slide-*.png` - Individual slide images
+- `.tmp/` - Temporary build files
+- `repos/` - Reference repositories
+
 ### Working on Slides
 
 ```bash

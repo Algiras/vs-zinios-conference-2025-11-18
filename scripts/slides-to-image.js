@@ -109,7 +109,7 @@ const tempThemesDir = tempDir;
 try {
   // Process from temp directory - Marp CLI seems to work better this way
   // Explicitly enable HTML rendering for column layouts
-  const command = `npx @marp-team/marp-cli --pdf --html --allow-local-files presentation.md -o "${pdfFile}"`;
+  const command = `npx @marp-team/marp-cli --no-stdin --pdf --html --allow-local-files presentation.md -o "${pdfFile}"`;
   execSync(command, { stdio: 'inherit', cwd: tempDir });
   console.log(`✅ PDF exported\n`);
   

@@ -32,23 +32,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Enable Corepack
-        run: corepack enable
-      
-      - name: Setup Node.js with Yarn
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
+          cache: 'npm'
       
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
       
       - name: Lint Mermaid diagrams
-        run: yarn lint:mermaid
+        run: npm run lint:mermaid
       
       - name: Build HTML presentation
-        run: yarn build
+        run: npm run build
       
       - name: Install ImageMagick (for image generation)
         run: |
@@ -56,13 +53,13 @@ jobs:
           sudo apt-get install -y imagemagick
       
       - name: Generate slides and export PPTX
-        run: yarn export:pptx
+        run: npm run export:pptx
       
       - name: Generate theme-specific slide images
-        run: yarn export:themes
+        run: npm run export:themes
       
       - name: Generate PDF
-        run: yarn export:pdf
+        run: npm run export:pdf
       
       - name: Prepare site artifact
         run: |
