@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Presentation on Autonomous Development Workflows",
   "scripts": {
-    "dev": "npx @marp-team/marp-cli --no-stdin -w -s --html slides/",
+    "dev": "npx @marp-team/marp-cli --no-stdin -w -s --html --theme themes/rose-pine-dawn.css slides/",
+    "dev:dark": "npx @marp-team/marp-cli --no-stdin -w -s --html --theme themes/rose-pine-moon.css slides/",
     "build": "node scripts/preprocess-for-pdf.js slides/presentation.md && node scripts/build-html.js",
     "build:original": "npx @marp-team/marp-cli --no-stdin --html -o slides/presentation.original.html slides/presentation.md",
     "build:dist": "node scripts/build-dist.js",
