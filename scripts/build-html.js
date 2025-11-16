@@ -2,6 +2,7 @@
 
 /**
  * Build HTML presentations from preprocessed markdown (light + dark themes)
+ * Uses single preprocessed file with different themes
  * Handles Marp CLI export with proper error handling
  */
 
@@ -11,16 +12,15 @@ const { execSync } = require('child_process');
 
 const slidesDir = path.join(__dirname, '../slides');
 const themesDir = path.join(__dirname, '../themes');
+const preprocessed = path.join(slidesDir, 'presentation.preprocessed.md');
 
 const builds = [
   {
-    preprocessed: path.join(slidesDir, 'presentation.preprocessed.light.md'),
     output: path.join(slidesDir, 'presentation.html'),
     theme: path.join(themesDir, 'rose-pine-dawn.css'),
     label: 'light (default)'
   },
   {
-    preprocessed: path.join(slidesDir, 'presentation.preprocessed.dark.md'),
     output: path.join(slidesDir, 'presentation-dark.html'),
     theme: path.join(themesDir, 'rose-pine-moon.css'),
     label: 'dark'
@@ -30,24 +30,24 @@ const builds = [
 try {
   console.log('📄 Building HTML presentations...\n');
   
-  for (const build of builds) {
-    console.log(`🎨 Building ${build.label} theme...`);
-  
   // Check if preprocessed file exists
-    if (!fs.existsSync(build.preprocessed)) {
-      console.error(`❌ Error: Preprocessed file not found: ${build.preprocessed}`);
-      console.error('Please run preprocessing first');
+  if (!fs.existsSync(preprocessed)) {
+    console.error(`❌ Error: Preprocessed file not found: ${preprocessed}`);
+    console.error('Please run preprocessing first');
     process.exit(1);
   }
   
-  // Use Marp CLI to convert markdown to HTML
+  for (const build of builds) {
+    console.log(`🎨 Building ${build.label} theme...`);
+  
+    // Use Marp CLI to convert markdown to HTML
     // Specify full output file path to avoid directory interpretation
     // Skip config file that forces directory input mode
-    const cmd = `npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files --theme "${build.theme}" "${build.preprocessed}" -o "${build.output}"`;
+    const cmd = `npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files --theme "${build.theme}" "${preprocessed}" -o "${build.output}"`;
   
-  execSync(cmd, {
-    stdio: 'inherit'
-  });
+    execSync(cmd, {
+      stdio: 'inherit'
+    });
   
     console.log(`✅ ${build.label} theme: ${build.output}\n`);
   }

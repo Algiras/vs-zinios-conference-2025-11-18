@@ -215,61 +215,15 @@ module.exports = { preprocessMarkdown, generateMermaid, generateQRCode };
 // Main execution (CLI mode - for backward compatibility)
 if (require.main === module) {
   const inputFile = process.argv[2] || path.join(__dirname, '../slides/presentation.md');
-  const themeArg = process.argv[3]; // Optional: 'light', 'dark', or empty for all
+  const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.md');
   
-  if (themeArg === 'light') {
-    // Generate light theme only
-    const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.light.md');
-    preprocessMarkdown(inputFile, 'rose-pine-dawn').then(content => {
-      fs.writeFileSync(outputFile, content, 'utf8');
-      console.log(`✅ Preprocessed markdown (light) saved to: ${outputFile}`);
-    }).catch(error => {
-      console.error(`❌ Preprocessing (light) failed:`, error.message);
-      process.exit(1);
-    });
-  } else if (themeArg === 'dark') {
-    // Generate dark theme only
-    const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.dark.md');
-    preprocessMarkdown(inputFile, 'rose-pine-moon').then(content => {
-      fs.writeFileSync(outputFile, content, 'utf8');
-      console.log(`✅ Preprocessed markdown (dark) saved to: ${outputFile}`);
-    }).catch(error => {
-      console.error(`❌ Preprocessing (dark) failed:`, error.message);
-      process.exit(1);
-    });
-  } else if (themeArg === 'default') {
-    // Generate default (no theme-specific Mermaid colors)
-    const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.md');
+  // Generate single preprocessed version (theme applied during HTML build)
   preprocessMarkdown(inputFile).then(content => {
     fs.writeFileSync(outputFile, content, 'utf8');
-      console.log(`✅ Preprocessed markdown (default) saved to: ${outputFile}`);
+    console.log(`✅ Preprocessed markdown saved to: ${outputFile}`);
   }).catch(error => {
-      console.error(`❌ Preprocessing (default) failed:`, error.message);
-      process.exit(1);
-    });
-  } else {
-    // No argument: generate all three versions (default, light, dark)
-    const outputFileDefault = path.join(__dirname, '../slides/presentation.preprocessed.md');
-    const outputFileLight = path.join(__dirname, '../slides/presentation.preprocessed.light.md');
-    const outputFileDark = path.join(__dirname, '../slides/presentation.preprocessed.dark.md');
-    
-    Promise.all([
-      preprocessMarkdown(inputFile).then(content => {
-        fs.writeFileSync(outputFileDefault, content, 'utf8');
-        console.log(`✅ Preprocessed markdown (default) saved to: ${outputFileDefault}`);
-      }),
-      preprocessMarkdown(inputFile, 'rose-pine-dawn').then(content => {
-        fs.writeFileSync(outputFileLight, content, 'utf8');
-        console.log(`✅ Preprocessed markdown (light) saved to: ${outputFileLight}`);
-      }),
-      preprocessMarkdown(inputFile, 'rose-pine-moon').then(content => {
-        fs.writeFileSync(outputFileDark, content, 'utf8');
-        console.log(`✅ Preprocessed markdown (dark) saved to: ${outputFileDark}`);
-      })
-    ]).catch(error => {
-    console.error('❌ Preprocessing failed:', error.message);
+    console.error(`❌ Preprocessing failed:`, error.message);
     process.exit(1);
   });
-  }
 }
 

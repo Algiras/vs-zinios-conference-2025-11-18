@@ -259,8 +259,8 @@ style: |
   /* Profile image - circular */
   img[alt="Profile"],
   img[src*="profile"] {
-    width: 180px !important;
-    height: 180px !important;
+    width: 240px !important;
+    height: 240px !important;
     border-radius: 50%;
     object-fit: cover;
     display: block;
