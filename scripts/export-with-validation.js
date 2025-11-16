@@ -115,19 +115,29 @@ if (!skipPptx) {
     fs.rmSync(tempImagesDir, { recursive: true, force: true });
   }
   
-  // Copy mermaid images
+  // Copy mermaid images (including theme subdirectories)
   const sourceMermaidDir = path.join(slidesDir, 'images/mermaid');
   const tempMermaidDir = path.join(tempImagesDir, 'mermaid');
   if (fs.existsSync(sourceMermaidDir)) {
     fs.mkdirSync(tempMermaidDir, { recursive: true });
-    fs.readdirSync(sourceMermaidDir).forEach(file => {
-      if (file.match(/\.(png|svg)$/)) {
-        fs.copyFileSync(
-          path.join(sourceMermaidDir, file),
-          path.join(tempMermaidDir, file)
-        );
+    
+    // Copy all files and subdirectories recursively
+    const copyRecursive = (src, dest) => {
+      const entries = fs.readdirSync(src, { withFileTypes: true });
+      for (const entry of entries) {
+        const srcPath = path.join(src, entry.name);
+        const destPath = path.join(dest, entry.name);
+        
+        if (entry.isDirectory()) {
+          fs.mkdirSync(destPath, { recursive: true });
+          copyRecursive(srcPath, destPath);
+        } else if (entry.name.match(/\.(png|svg)$/)) {
+          fs.copyFileSync(srcPath, destPath);
+        }
       }
-    });
+    };
+    
+    copyRecursive(sourceMermaidDir, tempMermaidDir);
   }
   
   // Copy QR images
