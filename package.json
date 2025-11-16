@@ -4,7 +4,7 @@
   "description": "Presentation on Autonomous Development Workflows",
   "scripts": {
     "dev": "npx @marp-team/marp-cli --no-stdin -w -s --html slides/",
-    "build": "node scripts/preprocess-for-pdf.js slides/presentation.md slides/presentation.preprocessed.md && npx @marp-team/marp-cli --no-stdin --html slides/presentation.preprocessed.md -o slides/presentation.html",
+    "build": "node scripts/preprocess-for-pdf.js slides/presentation.md slides/presentation.preprocessed.md && node scripts/build-html.js",
     "build:original": "npx @marp-team/marp-cli --no-stdin --html -o slides/presentation.original.html slides/presentation.md",
     "build:dist": "node scripts/build-dist.js",
     "export": "node scripts/export-with-validation.js",
