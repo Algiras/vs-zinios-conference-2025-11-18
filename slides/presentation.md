@@ -1165,11 +1165,12 @@ graph TB
 </div>
 
 <style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
-img[src*="mermaid"] { max-height: 40% !important; max-width: 85% !important; margin: 0.3em auto !important; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; }
+img[src*="mermaid"] { max-height: 42% !important; max-width: 80% !important; margin: 0.3em auto !important; }
 section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.88em; line-height: 1.4; margin: 0; }
-.columns div p { margin: 0.4em 0; }
+.columns div { font-size: 0.88em; line-height: 1.5; margin: 0; }
+.columns div p { margin: 0.6em 0; }
+.columns div strong { display: block; margin-bottom: 0.3em; }
 </style>
 
 ---
