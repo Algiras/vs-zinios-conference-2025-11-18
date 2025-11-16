@@ -134,20 +134,26 @@ function generateMermaid(code, themeName = 'rose-pine-dawn') {
       
       console.log(`   Generating Mermaid diagram: ${filename} (${themeName})...`);
       
-      // Add --no-sandbox flag for CI environments (GitHub Actions, etc.)
-      const sandboxFlag = process.env.CI ? ' --no-sandbox' : '';
-      
       // Set Puppeteer config for CI
-      const puppeteerConfig = process.env.PUPPETEER_EXECUTABLE_PATH 
-        ? `PUPPETEER_EXECUTABLE_PATH="${process.env.PUPPETEER_EXECUTABLE_PATH}" `
-        : '';
+      const puppeteerEnv = {
+        ...process.env
+      };
       
-      execSync(`${puppeteerConfig}npx -y mmdc -i "${mmdFile}" -o "${svgPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q${sandboxFlag}`, {
-        stdio: process.env.CI ? 'inherit' : 'pipe'
+      // In CI, use system Chromium and disable sandbox via puppeteer args
+      if (process.env.CI) {
+        puppeteerEnv.PUPPETEER_EXECUTABLE_PATH = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser';
+        // Pass Puppeteer args via environment (mmdc will use these)
+        puppeteerEnv.PUPPETEER_ARGS = '--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage';
+      }
+      
+      execSync(`npx -y mmdc -i "${mmdFile}" -o "${svgPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q --puppeteerConfigFile ${path.join(__dirname, '../puppeteer.config.json')}`, {
+        stdio: process.env.CI ? 'inherit' : 'pipe',
+        env: puppeteerEnv
       });
       
-      execSync(`${puppeteerConfig}npx -y mmdc -i "${mmdFile}" -o "${pngPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q${sandboxFlag}`, {
-        stdio: process.env.CI ? 'inherit' : 'pipe'
+      execSync(`npx -y mmdc -i "${mmdFile}" -o "${pngPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q --puppeteerConfigFile ${path.join(__dirname, '../puppeteer.config.json')}`, {
+        stdio: process.env.CI ? 'inherit' : 'pipe',
+        env: puppeteerEnv
       });
       
       console.log(`   ✅ Generated ${filename} (${themeName})`);
