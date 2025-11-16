@@ -4,7 +4,6 @@ repos/
 # Node modules
 node_modules/
 package-lock.json
-yarn.lock
 pnpm-lock.yaml
 
 # Generated presentation files (commit source only)
