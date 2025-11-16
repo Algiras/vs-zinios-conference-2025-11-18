@@ -230,7 +230,7 @@ module.exports = { preprocessMarkdown, generateMermaid, generateQRCode };
 if (require.main === module) {
   const inputFile = process.argv[2] || path.join(__dirname, '../slides/presentation.md');
   const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.md');
-  
+
   // Generate single preprocessed version (theme applied during HTML build)
   preprocessMarkdown(inputFile).then(content => {
     fs.writeFileSync(outputFile, content, 'utf8');

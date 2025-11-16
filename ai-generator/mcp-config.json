@@ -1,0 +1,93 @@
+{
+  "mcpServers": {
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      },
+      "description": "Web search for current information, trends, and technical details",
+      "useFor": [
+        "Finding latest frameworks and tools",
+        "Researching best practices",
+        "Getting current statistics and trends",
+        "Discovering new technologies"
+      ]
+    },
+    "octocode": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "octocode-mcp"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "description": "Search GitHub repositories, read code, find examples",
+      "useFor": [
+        "Finding code examples",
+        "Searching for MCP servers on GitHub",
+        "Reading framework documentation from repos",
+        "Discovering popular libraries and tools"
+      ]
+    },
+    "fetch": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ],
+      "description": "Fetch web pages and documentation",
+      "useFor": [
+        "Reading documentation pages",
+        "Fetching API references",
+        "Getting framework guides",
+        "Accessing online tutorials"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${WORKSPACE_PATH}"
+      ],
+      "description": "Read local files including existing presentation",
+      "useFor": [
+        "Reading existing presentation.md for style",
+        "Accessing theme files",
+        "Reading documentation files",
+        "Checking existing examples"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "context7-mcp"
+      ],
+      "description": "Access library documentation (React, Next.js, etc.)",
+      "useFor": [
+        "Getting official framework documentation",
+        "Finding API references",
+        "Learning library best practices",
+        "Understanding framework features"
+      ]
+    }
+  },
+  "required": [
+    "filesystem"
+  ],
+  "recommended": [
+    "brave-search",
+    "octocode",
+    "fetch"
+  ],
+  "optional": [
+    "context7"
+  ]
+}
+

@@ -95,3 +95,7 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
+# AI-generated presentations (keep the generator, ignore outputs)
+slides/demo-presentation.md
+slides/demo-*.md
+

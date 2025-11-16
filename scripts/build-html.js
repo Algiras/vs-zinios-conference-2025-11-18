@@ -45,9 +45,9 @@ try {
     // Skip config file that forces directory input mode
     const cmd = `npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files --theme "${build.theme}" "${preprocessed}" -o "${build.output}"`;
   
-    execSync(cmd, {
-      stdio: 'inherit'
-    });
+  execSync(cmd, {
+    stdio: 'inherit'
+  });
   
     console.log(`✅ ${build.label} theme: ${build.output}\n`);
   }
