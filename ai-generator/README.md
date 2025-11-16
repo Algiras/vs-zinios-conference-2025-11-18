@@ -1,448 +1,478 @@
 # AI Presentation Generator
 
-Automatically generate professional Marp presentations using **Ollama** (local LLMs) and **MCP** (Model Context Protocol) servers.
+This tool leverages Large Language Models (LLMs) via LangChain.js and Ollama to autonomously generate Marp Markdown presentations on any given topic. It uses a **multi-step workflow** to research, structure, and create professional presentations with diagrams and proper formatting.
 
-## 🚀 Features
+## 🎯 Two Generation Modes
 
-- 🤖 **Local LLMs via Ollama** - No API keys, runs on your machine
-- 🔌 **MCP Integration** - Web search, GitHub, documentation access
-- 📚 **Style Learning** - Learns from existing presentation
-- 📊 **Mermaid Diagrams** - Auto-generates architecture diagrams
-- 🎨 **Professional Formatting** - Follows Marp best practices
-- 🔄 **Two-Phase Workflow** - Research → Create
+### 1. **Multi-Step Generator** (Recommended - Default)
+**File**: `generate-multi-step.js`
 
-## 📋 Prerequisites
+Explicitly orchestrated workflow in 4 phases:
+- **Phase 1**: Research & Planning (reads existing style, creates outline)
+- **Phase 2**: Content Generation (generates each slide section-by-section)
+- **Phase 3**: Diagram Generation (creates Mermaid diagrams for key concepts)
+- **Phase 4**: Assembly (combines everything into final presentation)
+
+**Pros**:
+- ✅ Proper column layouts with diagrams
+- ✅ Explicit control over each phase
+- ✅ Better formatting consistency
+- ✅ Works with any Ollama model
+- ✅ Easier to debug and customize
+
+**Cons**:
+- Slower (multiple LLM calls)
+- No MCP tool usage (explicit orchestration instead)
+
+### 2. **Tool-Calling Generator** (Experimental)
+**File**: `generate.js`
+
+Uses LangChain's agent with tool calling:
+- Relies on LLM to decide when to use tools
+- Requires models with good tool-calling support
+- Designed for MCP integration
+
+**Status**: May not work with all Ollama models (tool calling support varies)
+
+---
+
+## 🚀 Quick Start
 
 ### 1. Install Ollama
 
+If you don't have Ollama installed, follow the instructions on the [Ollama website](https://ollama.com/download).
+
+### 2. Pull an LLM Model
+
+For best results with technical content, it's recommended to use a capable coding model.
 ```bash
-# macOS/Linux
-curl -fsSL https://ollama.com/install.sh | sh
-
-# Or download from: https://ollama.com
-```
-
-### 2. Pull a Model
-
-```bash
-# Recommended: Qwen 2.5 Coder (excellent for technical content)
 ollama pull qwen2.5-coder:7b
-
-# Alternatives:
-ollama pull llama3.2        # General purpose
-ollama pull codellama      # Code-focused
-ollama pull mistral        # Fast and capable
+# Or choose another model like llama3.2, codellama, mistral
 ```
 
 ### 3. Install Dependencies
 
+From the project root:
 ```bash
-cd vs-zinios
 npm install
 ```
 
-### 4. (Optional) Set up MCP Servers
+### 4. Generate a Presentation
 
-For enhanced capabilities, set up these MCP servers:
-
-**Brave Search** (web search):
+Run the generator with your desired topic:
 ```bash
-export BRAVE_API_KEY="your-brave-api-key"
-# Get key from: https://brave.com/search/api/
+npm run ai:generate "Building REST APIs with Node.js"
+# Example: npm run ai:generate "Docker Containers for Production"
+# Example: npm run ai:generate "React Server Components"
 ```
+The generated presentation will be saved to `slides/demo-presentation.md`.
 
-**GitHub/Octocode** (code search):
+### 5. Preview & Export
+
+To preview the generated presentation:
 ```bash
-export GITHUB_TOKEN="your-github-token"
-# Get token from: https://github.com/settings/tokens
-```
-
-## 🎯 Usage
-
-### Basic Usage
-
-```bash
-npm run ai:generate "Your Topic Here"
-```
-
-### Examples
-
-```bash
-# Generate presentation on REST APIs
-npm run ai:generate "Building REST APIs with Node.js and Express"
-
-# Generate presentation on Docker
-npm run ai:generate "Docker Containers: Development to Production"
-
-# Generate presentation on React
-npm run ai:generate "Modern React with Hooks and Server Components"
-
-# Generate presentation on Kubernetes
-npm run ai:generate "Kubernetes Orchestration and Best Practices"
-```
-
-### Advanced Options
-
-```bash
-# Use different Ollama model
-OLLAMA_MODEL=llama3.2 npm run ai:generate "Your Topic"
-
-# Use Ollama on different host
-OLLAMA_BASE_URL=http://192.168.1.100:11434 npm run ai:generate "Your Topic"
-
-# Direct script usage
-node ai-generator/generate.js "Your Topic Here"
-```
-
-## 📁 Project Structure
-
-```
-ai-generator/
-├── generate.js           # Main generator script
-├── mcp-config.json      # MCP server configuration
-└── README.md            # This file
-```
-
-## 🔧 How It Works
-
-### Two-Phase Workflow
-
-**PHASE 1: Information Gathering**
-1. ✅ `read_existing_presentation` - Learn Marp style
-2. 🔍 `search_web` - Find current information (via brave-search MCP)
-3. 🐙 `search_github` - Find code examples (via octocode MCP)
-4. 📚 `fetch_documentation` - Get official docs (via fetch/context7 MCP)
-
-**PHASE 2: Content Creation**
-5. 📊 `create_diagram` - Generate Mermaid diagrams
-6. 📐 `create_two_column_layout` - Create comparison slides
-7. 💾 `save_presentation` - Save to `slides/demo-presentation.md`
-
-### Tool Annotations
-
-Each tool has clear documentation:
-- **WHEN TO USE**: Specific scenarios for the tool
-- **MCP SERVER**: Which MCP server it uses
-- **EXAMPLES**: Practical usage examples
-
-## 🔌 MCP Configuration
-
-The `mcp-config.json` defines available MCP servers:
-
-### Required MCPs
-- **filesystem** - Read local files (existing presentation)
-
-### Recommended MCPs
-- **brave-search** - Web search for current info
-- **octocode** - GitHub search for code/repos
-- **fetch** - Fetch documentation pages
-
-### Optional MCPs
-- **context7** - Library docs (React, Next.js, etc.)
-
-### MCP Server Details
-
-| MCP | Purpose | Use For | Setup |
-|-----|---------|---------|-------|
-| **brave-search** | Web search | Latest trends, tools, practices | `BRAVE_API_KEY` |
-| **octocode** | GitHub search | Code examples, MCP servers | `GITHUB_TOKEN` |
-| **fetch** | HTTP requests | Documentation pages | No setup |
-| **filesystem** | File access | Read existing presentation | Auto (workspace) |
-| **context7** | Library docs | Official API references | No setup |
-
-## 📖 Generated Presentation Structure
-
-The generator creates presentations with:
-
-1. **Title Slide**
-   - Topic name
-   - Subtitle
-   - No pagination/footer
-
-2. **Hook Slide**
-   - Engaging introduction
-   - Problem/opportunity
-
-3. **3-5 Sections**
-   - Section intro (lead class)
-   - 3-5 content slides per section
-   - Mermaid diagrams
-   - Two-column layouts
-   - Code examples
-
-4. **Conclusion**
-   - Key takeaways
-   - Best practices
-
-5. **End Slides**
-   - Questions
-   - Thank you
-
-### Features Included
-
-- ✅ Mermaid diagrams (2-4 per presentation)
-- ✅ Two-column layouts for comparisons
-- ✅ Code snippets (when relevant)
-- ✅ Speaker notes for each slide
-- ✅ Professional formatting
-- ✅ Consistent theme (rose-pine-dawn)
-
-## 🎨 Preview & Export
-
-### Preview Generated Presentation
-
-```bash
-# Start dev server
 npm run dev
-
-# Open in browser
-open http://localhost:8080/demo-presentation.md
+# Then open http://localhost:8080/demo-presentation.md in your browser
 ```
-
-### Build HTML
-
+To export to PPTX or PDF:
 ```bash
-npm run build
-# Opens: slides/demo-presentation.html
+npm run export      # Generates slides/demo-presentation.pptx
+npm run export:pdf  # Generates slides/demo-presentation.pdf
 ```
 
-### Export to PPTX
+---
 
-```bash
-npm run export
-# Creates: slides/demo-presentation.pptx
+## 🧠 How It Works: Multi-Step Workflow
+
+The default generator operates in four distinct phases:
+
+### Phase 1: Research & Planning
+
+**Goal**: Understand the existing presentation style and create a detailed outline.
+
+**Steps**:
+1. **Read existing presentation** (`slides/presentation.md`) to extract:
+   - Front matter format
+   - Style patterns (lead slides, columns, Mermaid diagrams)
+   - Speaker notes usage
+2. **Create outline** with:
+   - 15-25 slides total
+   - Clear sections (Introduction, Core Concepts, Implementation, Best Practices, Conclusion)
+   - Specific slide titles
+   - Which slides need diagrams
+   - Which slides need two-column layouts
+
+**Output**: Style guide + JSON outline with all sections and slides
+
+### Phase 2: Content Generation
+
+**Goal**: Generate content for each slide section-by-section.
+
+**Steps**:
+1. For each section:
+   - Add section intro slide (with `<!-- _class: lead -->` if not Introduction)
+   - Generate each slide's content with:
+     - Hook slides: Engaging problem/opportunity paragraphs
+     - Content slides: 5-7 concise bullet points
+     - Brief speaker notes (1-2 sentences)
+2. Content is context-aware (knows the topic, section, and slide purpose)
+
+**Output**: Array of slides with content (some marked as `needsDiagram`)
+
+### Phase 3: Diagram Generation
+
+**Goal**: Create Mermaid diagrams for slides marked as needing visual explanation.
+
+**Steps**:
+1. For each slide marked `needsDiagram`:
+   - Generate Mermaid code (flowchart, sequence, state machine, or class diagram)
+   - Clean up the Mermaid code
+   - Extract slide content and speaker notes
+   - Rebuild slide with proper two-column layout:
+     - **Left column**: Mermaid diagram
+     - **Right column**: Bullet points/text content
+2. Ensures proper HTML structure with no overlaps
+
+**Output**: Updated slides with diagrams in proper column layouts
+
+### Phase 4: Final Assembly
+
+**Goal**: Combine everything into a complete, properly formatted Marp presentation.
+
+**Steps**:
+1. Create front matter with:
+   - Marp configuration
+   - Global styles for columns and diagrams
+   - Theme and pagination settings
+2. Add title slide (lead class, no pagination/footer)
+3. Combine all section and content slides
+4. Add end slides (Questions? + Thank You!)
+5. Write to `slides/demo-presentation.md`
+
+**Output**: Complete Marp Markdown presentation
+
+---
+
+## 📊 Generated Output Format
+
+The AI generator produces presentations with:
+
+- **15-35 slides** (varies by topic complexity)
+- **Front matter** with global styles for columns and diagrams
+- **Title slide** (lead class, centered)
+- **Hook slide** to engage the audience
+- **Section intro slides** (lead class) between major sections
+- **Content slides** with:
+  - Clear bullet points (5-7 max)
+  - Brief speaker notes
+- **Diagram slides** with:
+  - Two-column layout (diagram left, content right)
+  - Mermaid diagrams (flowcharts, sequences, state machines)
+  - Properly sized and styled
+- **Conclusion slides**:
+  - Key Takeaways
+  - Resources (if applicable)
+- **End slides** (Questions? + Thank You!)
+
+### Example Structure
+
+```markdown
+---
+marp: true
+size: 16:9
+theme: rose-pine-dawn
+paginate: true
+html: true
+header: 'Topic Title'
+footer: 'AI Generated | Date'
+style: |
+  .columns { ... }
+  /* Proper column and diagram sizing */
+---
+
+<!-- Title Slide -->
+<!-- _class: lead -->
+# Topic Title
+Subtitle
+
+---
+
+<!-- Hook Slide -->
+## The Challenge
+Engaging problem/opportunity...
+
+---
+
+<!-- Section Intro -->
+<!-- _class: lead -->
+# Core Concepts
+
+---
+
+<!-- Content Slide with Diagram -->
+## What is X?
+
+<div class="columns">
+<div>
+
+\`\`\`mermaid
+graph LR
+    A --> B
+    B --> C
+\`\`\`
+
+</div>
+<div>
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+</div>
+</div>
+
+<!-- SPEAKER NOTES: Brief notes -->
+
+---
+
+<!-- More slides... -->
+
+---
+
+<!-- End Slides -->
+<!-- _class: lead -->
+# Questions?
+
+---
+
+<!-- _class: lead -->
+# Thank You!
 ```
 
-## ⚙️ Configuration
+---
+
+## 🔧 Configuration
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `OLLAMA_MODEL` | Ollama model to use | `qwen2.5-coder:7b` |
-| `OLLAMA_BASE_URL` | Ollama server URL | `http://localhost:11434` |
-| `BRAVE_API_KEY` | Brave Search API key | (optional) |
-| `GITHUB_TOKEN` | GitHub personal access token | (optional) |
-| `WORKSPACE_PATH` | Path to workspace for filesystem MCP | Auto-detected |
+- `OLLAMA_MODEL` - Model to use (default: `qwen2.5-coder:7b`)
+- `OLLAMA_BASE_URL` - Ollama server URL (default: `http://localhost:11434`)
+- `BRAVE_API_KEY` - (Optional) For web search MCP (experimental)
+- `GITHUB_TOKEN` - (Optional) For GitHub search MCP (experimental)
 
-### Recommended Models
+### Switching Generator Mode
 
-| Model | Size | Best For | Speed |
-|-------|------|----------|-------|
-| **qwen2.5-coder:7b** | 4.7GB | Technical content, code | Fast |
-| **llama3.2** | 2.0GB | General topics | Very fast |
-| **codellama** | 3.8GB | Code-heavy presentations | Fast |
-| **mistral** | 4.1GB | Balanced content | Fast |
-| **llama3.1:8b** | 4.7GB | Detailed content | Medium |
-
-### Model Selection Guide
-
+To use the experimental tool-calling generator:
 ```bash
-# For technical/coding topics:
-OLLAMA_MODEL=qwen2.5-coder:7b npm run ai:generate "REST APIs"
-
-# For general business topics:
-OLLAMA_MODEL=llama3.2 npm run ai:generate "Project Management"
-
-# For maximum quality (slower):
-OLLAMA_MODEL=llama3.1:8b npm run ai:generate "Complex Topic"
+# Edit package.json
+"ai:generate": "node ai-generator/generate.js"
 ```
 
-## 🐛 Troubleshooting
+Or run directly:
+```bash
+node ai-generator/generate.js "Your Topic"
+```
 
-### Error: Cannot connect to Ollama
+---
+
+## 🛠️ Customization
+
+### Modify the Outline Structure
+
+Edit the `createFallbackOutline()` function in `generate-multi-step.js` to change default sections:
+
+```javascript
+function createFallbackOutline(topic) {
+  return {
+    title: topic,
+    subtitle: "An Introduction",
+    sections: [
+      {
+        name: "Your Custom Section",
+        slides: [
+          { title: "Slide Title", type: "content", hasDiagram: true }
+        ]
+      }
+    ]
+  };
+}
+```
+
+### Adjust Diagram Types
+
+Modify the diagram generation prompt in Phase 3 to prefer specific diagram types:
+
+```javascript
+const diagramPrompt = `Create a Mermaid diagram for this slide.
+
+Prefer: graph LR (horizontal flowcharts)
+Or use: sequenceDiagram, stateDiagram-v2, classDiagram
+
+...`;
+```
+
+### Change Themes
+
+The generated presentations use `rose-pine-dawn` (light theme) by default. To use the dark theme, edit `generate-multi-step.js`:
+
+```javascript
+const frontMatter = `---
+marp: true
+theme: rose-pine-moon  // Change to dark theme
+...
+---
+`;
+```
+
+---
+
+## 🔌 Model Context Protocol (MCP) Integration (Experimental)
+
+The tool-calling generator (`generate.js`) is designed to work with MCP servers for enhanced functionality. These are configured in `mcp-config.json`.
+
+### Available MCP Servers
+
+| MCP Server     | Purpose                                                              | Environment Variable |
+| :------------- | :------------------------------------------------------------------- | :------------------- |
+| `brave-search` | Web search for current information.                                  | `BRAVE_API_KEY`      |
+| `octocode`     | GitHub code and repository search.                                   | `GITHUB_TOKEN`       |
+| `fetch`        | Fetches content from specified URLs (e.g., documentation).           | None                 |
+| `filesystem`   | Reads local files (e.g., existing presentation for style guidance).  | None                 |
+| `context7`     | Specialized knowledge base search (optional, for internal docs).     | None                 |
+
+**Note**: The multi-step generator (default) does NOT use MCP servers. It explicitly orchestrates each phase without relying on LLM tool calling.
+
+---
+
+## ⚠️ Troubleshooting
+
+### Ollama Connection Failed
 
 ```bash
 # Make sure Ollama is running
 ollama serve
 
-# Or check if it's already running
-ps aux | grep ollama
-```
-
-### Error: Model not found
-
-```bash
-# Pull the model first
-ollama pull qwen2.5-coder:7b
-
-# List available models
+# Check if model is available
 ollama list
+
+# Pull model if missing
+ollama pull qwen2.5-coder:7b
 ```
 
-### Slow Generation
+### Column Layouts Not Rendering
 
-```bash
-# Use a smaller/faster model
-OLLAMA_MODEL=llama3.2 npm run ai:generate "Topic"
+- Ensure `style:` block in front matter includes `.columns` CSS
+- Check that `<div class="columns">` has proper closing `</div>` tags
+- Verify content is inside column divs, not after
 
-# Check Ollama performance
-ollama ps
-```
+### Mermaid Diagrams Not Showing
 
-### MCP Server Not Working
+- Check Mermaid syntax is valid (no markdown fences inside the code)
+- Ensure preprocessing runs: `npm run build`
+- Verify `mmdc` is installed: `npx -y mmdc --version`
 
-```bash
-# Check environment variables
-echo $BRAVE_API_KEY
-echo $GITHUB_TOKEN
+### Generated Content Too Long
 
-# Test MCP manually (if using npx)
-npx -y @modelcontextprotocol/server-brave-search
-```
+- Slides overflow footer
+- **Fix**: Edit `slides/demo-presentation.md` manually to split content
+- Or regenerate with more specific topic
 
-### Generated Content Issues
+### LLM Produces Invalid JSON
 
-If the generated presentation needs improvement:
-
-1. **Try a different model**: `qwen2.5-coder:7b` is best for technical content
-2. **Edit manually**: The generated markdown is meant to be refined
-3. **Run again**: Each generation is unique
-4. **Check phase execution**: Ensure Phase 1 tools ran successfully
-
-## 💡 Tips for Best Results
-
-### 1. Be Specific with Topics
-
-✅ Good:
-- "Building RESTful APIs with Node.js, Express, and PostgreSQL"
-- "React Server Components: Patterns and Best Practices"
-- "Docker Multi-stage Builds for Production"
-
-❌ Too vague:
-- "APIs"
-- "React"
-- "Docker"
-
-### 2. Include Context
-
-Add what aspect you want to focus on:
-- "GraphQL for beginners"
-- "Advanced Kubernetes networking"
-- "React performance optimization techniques"
-
-### 3. Choose Right Model
-
-- **Technical topics**: `qwen2.5-coder:7b`
-- **General topics**: `llama3.2`
-- **Code-heavy**: `codellama`
-
-### 4. Set Up MCPs
-
-For best results, configure:
-- Brave Search (current information)
-- Octocode (code examples)
-
-### 5. Review and Refine
-
-The generator creates a solid foundation. Always:
-- Review for accuracy
-- Adjust diagrams
-- Refine speaker notes
-- Add your expertise
-
-## 🔄 Example Workflow
-
-```bash
-# 1. Generate presentation
-npm run ai:generate "Building Microservices with Node.js"
-
-# 2. Preview
-npm run dev
-# Open: http://localhost:8080/demo-presentation.md
-
-# 3. Edit if needed
-code slides/demo-presentation.md
-
-# 4. Build HTML
-npm run build
-
-# 5. Export to PPTX
-npm run export
-
-# 6. Present!
-open slides/demo-presentation.pptx
-```
-
-## 📚 Examples of Generated Content
-
-The generator creates presentations with:
-
-### Slide Types
-- **Title slides** with proper front matter
-- **Section intros** with lead class
-- **Content slides** with diagrams + text
-- **Comparison slides** with two columns
-- **Code examples** with syntax highlighting
-- **Conclusion slides** with key takeaways
-
-### Mermaid Diagrams
-- **Flowcharts** for processes (graph LR)
-- **Sequence diagrams** for interactions
-- **State diagrams** for FSM
-- **Class diagrams** for structure
-
-### Formatting
-- Proper YAML front matter
-- Consistent theme (rose-pine-dawn)
-- Speaker notes on key slides
-- Professional typography
-
-## 🚀 Advanced Usage
-
-### Custom MCP Servers
-
-Edit `mcp-config.json` to add your own MCPs:
-
-```json
-{
-  "mcpServers": {
-    "your-mcp": {
-      "command": "npx",
-      "args": ["-y", "your-mcp-package"],
-      "description": "Your MCP description",
-      "useFor": ["What it's used for"]
-    }
-  }
-}
-```
-
-### Modify System Prompt
-
-Edit `generate.js` to customize the system prompt:
-
-```javascript
-const systemPrompt = `Your custom prompt...`;
-```
-
-### Add New Tools
-
-Add tools to `phase1Tools` or `phase2Tools`:
-
-```javascript
-new DynamicStructuredTool({
-  name: 'your_tool',
-  description: 'Tool description with WHEN TO USE section',
-  schema: z.object({ /* params */ }),
-  func: async (params) => { /* implementation */ }
-})
-```
-
-## 📄 License
-
-MIT - Same as parent project
-
-## 🤝 Contributing
-
-Contributions welcome! Areas for improvement:
-
-- Additional MCP integrations
-- More diagram templates
-- Better content generation prompts
-- Support for more Ollama models
-- Enhanced tool annotations
+- The outline parser has a fallback
+- If it keeps failing, check `OLLAMA_MODEL` supports structured output
+- Try: `llama3.2`, `qwen2.5`, or `mistral`
 
 ---
 
-**Need help?** Check the main project README or open an issue!
+## 📚 Generated Presentation Workflow
 
+1. **Generate**: `npm run ai:generate "Topic"`
+2. **Preview**: `npm run dev` → `http://localhost:8080/demo-presentation.md`
+3. **Refine**: Edit `slides/demo-presentation.md` manually
+4. **Build HTML**: `npm run build` (processes Mermaid diagrams)
+5. **Export PPTX**: `npm run export`
+6. **Export PDF**: `npm run export:pdf`
+
+---
+
+## 🎓 Tips for Best Results
+
+### Choose the Right Topic
+
+✅ **Good topics**:
+- "GraphQL APIs: Modern Data Fetching"
+- "Docker Containers for Production"
+- "TypeScript Best Practices"
+- "React Server Components Explained"
+
+❌ **Avoid**:
+- Too broad: "Programming" (be specific)
+- Too narrow: "useState Hook" (not enough content)
+
+### Review and Edit
+
+The generator creates a **solid foundation**, but you should:
+- **Edit for accuracy** - LLMs can hallucinate
+- **Add real examples** - Replace generic examples with your own
+- **Adjust speaker notes** - Personalize to your presentation style
+- **Verify diagrams** - Ensure Mermaid syntax is correct
+
+### Customize Style
+
+- Change theme: Edit `theme:` in front matter
+- Adjust colors: Modify theme CSS files
+- Change layout: Edit `.columns` grid template in `style:` block
+
+---
+
+## 📖 Additional Resources
+
+### Marp Documentation
+- [Marp Official Docs](https://marpit.marp.app/)
+- [Marp CLI](https://github.com/marp-team/marp-cli)
+- [Marp Themes](https://github.com/topics/marp-theme)
+
+### Ollama & LangChain
+- [Ollama](https://ollama.com/)
+- [LangChain.js](https://js.langchain.com/docs/)
+- [LangChain Ollama](https://js.langchain.com/docs/integrations/llms/ollama)
+
+### Mermaid Diagrams
+- [Mermaid Live Editor](https://mermaid.live/)
+- [Mermaid Syntax](https://mermaid.js.org/intro/)
+
+---
+
+## 🤝 Contributing
+
+Contributions to improve the generator are welcome! Areas for improvement:
+
+- Better diagram generation (smarter type selection)
+- MCP server integration (web search, GitHub code search)
+- Template customization
+- Support for more themes
+- Interactive refinement prompts
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License (see main repository).
+
+---
+
+## 🙏 Acknowledgments
+
+- **Marp**: Markdown presentation ecosystem
+- **Ollama**: Local LLM runtime
+- **LangChain.js**: LLM application framework
+- **Qwen 2.5 Coder**: High-quality coding model
+
+---
+
+**Ready to create your first presentation?**
+
+```bash
+npm run ai:generate "Your Amazing Topic"
+```
