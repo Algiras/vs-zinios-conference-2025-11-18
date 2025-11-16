@@ -38,8 +38,35 @@ jobs:
           node-version: '20'
           cache: 'npm'
       
+      - name: Install system dependencies for Chrome/Puppeteer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            chromium-browser \
+            fonts-liberation \
+            libasound2 \
+            libatk-bridge2.0-0 \
+            libatk1.0-0 \
+            libatspi2.0-0 \
+            libcups2 \
+            libdbus-1-3 \
+            libdrm2 \
+            libgbm1 \
+            libgtk-3-0 \
+            libnspr4 \
+            libnss3 \
+            libwayland-client0 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxfixes3 \
+            libxkbcommon0 \
+            libxrandr2 \
+            xdg-utils
+      
       - name: Install dependencies
         run: npm ci
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'false'
       
       - name: Lint Mermaid diagrams
         run: npm run lint:mermaid
