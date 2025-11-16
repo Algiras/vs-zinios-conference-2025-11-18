@@ -1482,10 +1482,6 @@ resource: {
 <div class="columns">
 <div>
 
-**Problem**: Multiple LLM providers, costs, performance variability
-
-**Solution**: Gateway layer for intelligent routing
-
 ```mermaid
 graph TD
     USER[User Request] --> GATEWAY[AI Gateway]
@@ -1502,6 +1498,10 @@ graph TD
 </div>
 <div>
 
+**Problem**: Multiple LLM providers, costs, performance variability
+
+**Solution**: Gateway layer for intelligent routing
+
 **Benefits**:
 - Model abstraction
 - Cost optimization
@@ -1513,10 +1513,12 @@ graph TD
 </div>
 
 <style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
-img[src*="mermaid"] { max-height: 50% !important; max-width: 90% !important; margin-top: 0.5em !important; }
+.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5em; }
+img[src*="mermaid"] { max-height: 45% !important; max-width: 90% !important; margin: 0.3em auto !important; }
 section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.9em; }
+.columns div { font-size: 0.88em; line-height: 1.4; }
+.columns div p { margin: 0.5em 0; }
+.columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
 </style>
 
 ---
