@@ -327,6 +327,253 @@ style: |
   section.lead footer {
     display: none;
   }
+  
+  /* ============================================================
+     EFFECTS FRAMEWORK - HTML Export Animations
+     ============================================================ */
+  
+  /* Entrance Effects */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .effect-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .effect-slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .effect-slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .effect-slide-in-up {
+    animation: slideInUp 0.6s ease-out;
+  }
+  
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .effect-zoom-in {
+    animation: zoomIn 0.6s ease-out;
+  }
+  
+  /* Emphasis Effects */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  .effect-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(215, 130, 126, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(215, 130, 126, 0.6); }
+  }
+  .effect-glow {
+    animation: glow 2s ease-in-out infinite;
+    border-radius: 4px;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .effect-bounce {
+    animation: bounce 1s ease-in-out infinite;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+  .effect-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  /* Exit Effects */
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  .effect-fade-out {
+    animation: fadeOut 0.6s ease-out forwards;
+  }
+  
+  @keyframes slideOutLeft {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+  }
+  .effect-slide-out-left {
+    animation: slideOutLeft 0.6s ease-out forwards;
+  }
+  
+  @keyframes slideOutRight {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+  }
+  .effect-slide-out-right {
+    animation: slideOutRight 0.6s ease-out forwards;
+  }
+  
+  /* Advanced Effects */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  .effect-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .effect-rotate {
+    animation: rotate 2s linear infinite;
+  }
+  
+  @keyframes highlight-slide {
+    0%, 100% { background-position: 200% 0; }
+    50% { background-position: -200% 0; }
+  }
+  .effect-highlight {
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--highlight-low) 20%,
+      var(--highlight-low) 80%,
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: highlight-slide 2s ease-in-out infinite;
+  }
+  
+  /* Duration Modifiers */
+  .effect-fast {
+    animation-duration: 0.3s !important;
+  }
+  .effect-normal {
+    animation-duration: 0.6s !important;
+  }
+  .effect-slow {
+    animation-duration: 1s !important;
+  }
+  
+  /* Delay Modifiers */
+  .effect-delay-100 {
+    animation-delay: 0.1s;
+  }
+  .effect-delay-200 {
+    animation-delay: 0.2s;
+  }
+  .effect-delay-300 {
+    animation-delay: 0.3s;
+  }
+  .effect-delay-500 {
+    animation-delay: 0.5s;
+  }
+  
+  /* Easing Modifiers */
+  .effect-ease-linear {
+    animation-timing-function: linear !important;
+  }
+  .effect-ease-ease-in {
+    animation-timing-function: ease-in !important;
+  }
+  .effect-ease-ease-out {
+    animation-timing-function: ease-out !important;
+  }
+  .effect-ease-ease-in-out {
+    animation-timing-function: ease-in-out !important;
+  }
+  
+  /* Color-Aware Effects */
+  .effect-glow-love {
+    box-shadow: 0 0 15px rgba(180, 99, 122, 0.5);
+  }
+  .effect-glow-rose {
+    box-shadow: 0 0 15px rgba(215, 130, 126, 0.5);
+  }
+  .effect-glow-pine {
+    box-shadow: 0 0 15px rgba(40, 105, 131, 0.5);
+  }
+  .effect-border-accent {
+    border: 2px solid var(--rose);
+    border-radius: 4px;
+  }
+  
+  /* Stagger Effects for Lists */
+  .effect-stagger li {
+    animation: fadeIn 0.6s ease-out backwards;
+  }
+  .effect-stagger li:nth-child(1) { animation-delay: 0.1s; }
+  .effect-stagger li:nth-child(2) { animation-delay: 0.2s; }
+  .effect-stagger li:nth-child(3) { animation-delay: 0.3s; }
+  .effect-stagger li:nth-child(4) { animation-delay: 0.4s; }
+  .effect-stagger li:nth-child(5) { animation-delay: 0.5s; }
+  
+  /* Accessibility - Respect prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 ---
 
 <!-- _paginate: false -->
