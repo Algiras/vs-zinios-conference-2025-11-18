@@ -760,6 +760,15 @@ style: |
 
 Building AI Systems That Code Independently
 
+<!--
+SPEAKER NOTES:
+- Welcome everyone and introduce the topic
+- Set expectations: This is about building AI systems that can autonomously complete programming tasks
+- Timing: 45-50 minutes + Q&A
+- We'll go from foundations to production-ready systems
+- Everyone will leave with practical knowledge they can apply immediately
+-->
+
 ---
 
 ## About Me
@@ -784,6 +793,14 @@ Focused on autonomous development and LLM orchestration
 </div>
 </div>
 </div>
+
+<!--
+SPEAKER NOTES:
+- Quick personal intro - keep it under 1 minute
+- Establish credibility: I build these systems daily at Wix
+- Connect with audience: "I've made all the mistakes you're about to avoid"
+- Transition: "Let me show you what I've learned building autonomous systems in production"
+-->
 
 ---
 
@@ -828,6 +845,16 @@ vs-zinios-conference-2025-11-18
 
 **The Solution**: Autonomous development systems that actually work
 
+<!--
+SPEAKER NOTES:
+- THIS IS THE HOOK - make it compelling!
+- Paint the pain: "We spend 60% of our time on repetitive tasks"
+- Show the gap: "LLMs like ChatGPT can write code, but they forget context, can't plan complex tasks, and don't improve"
+- Promise: "Today you'll learn the architecture patterns that make AI systems truly autonomous"
+- Key message: It's not about better models, it's about better architecture
+- Timing: 1-2 minutes - keep it punchy
+-->
+
 ---
 
 ## Our Talk Today
@@ -868,6 +895,15 @@ vs-zinios-conference-2025-11-18
 # Part 1: Foundations
 
 Workflows & Autonomous Systems
+
+<!--
+SPEAKER NOTES - PART 1 INTRO:
+- Transition: "Before we dive into agents and patterns, let's establish foundations"
+- Why this matters: "You can't build autonomous systems without understanding what makes them autonomous"
+- What we'll cover: Workflows vs Autonomous Workflows, key differences
+- Timing: 5 minutes for this section
+- Set context: "These definitions will guide all our architecture decisions"
+-->
 
 ---
 
@@ -915,6 +951,16 @@ Workflows & Autonomous Systems
 Reflex & Learning Agents
 
 **Key Question**: What types of agents exist and when should we use them?
+
+<!--
+SPEAKER NOTES - PART 2 INTRO:
+- Transition: "Now that we understand autonomous workflows, let's explore agent types"
+- Key insight: "Not all agents are created equal - simple problems need simple agents"
+- What we'll cover: Reflex (simple, fast) vs Learning (adaptive, complex)
+- Real-world analogy: "A thermostat (reflex) vs a chess AI (learning)"
+- Timing: 6-7 minutes for this section
+- Preview: "We'll see detailed architectures in Part 3"
+-->
 
 ---
 
@@ -1047,6 +1093,16 @@ section { padding-bottom: 3.8em !important; }
 FSM, BT, GOAP & ReAct
 
 **Key Question**: How do we structure agents for complex workflows?
+
+<!--
+SPEAKER NOTES - PART 3 INTRO:
+- Transition: "You know agent types. Now let's structure them"
+- Setup: "Four patterns, each solves different problems"
+- Preview: FSM (workflows) → BT (hierarchies) → GOAP (optimization) → ReAct (LLM default)
+- Promise: "You'll know which to use when"
+- Timing: 10-12 minutes - THIS IS CORE CONTENT
+- Key message: "Match pattern to problem complexity"
+-->
 
 ---
 
@@ -1243,6 +1299,16 @@ Standardized Tools & Resources
 
 **Key Question**: How do we standardize agent interactions?
 
+<!--
+SPEAKER NOTES - PART 4 INTRO:
+- Transition: "Agents need to talk to each other and use tools"
+- Problem: "Every framework has different tool formats - chaos!"
+- Solution: "MCP is the USB standard for AI agents"
+- Why this matters: "Write once, use everywhere"
+- Timing: 6-7 minutes
+- Analogy: "Like HTTP for web, MCP for agents"
+-->
+
 ---
 
 ## 🔌 Model Context Protocol (MCP)
@@ -1314,6 +1380,16 @@ section { padding-bottom: 3.5em !important; }
 Production Patterns & Best Practices
 
 **Key Question**: What patterns actually work in production?
+
+<!--
+SPEAKER NOTES - PART 5 INTRO:
+- Transition: "Theory is done. Let's talk reality."
+- Credibility: "These patterns run at scale, daily"
+- Promise: "You'll avoid our painful lessons"
+- What we'll cover: Control flows, tool design, AI Gateway, Scratchpad
+- Timing: 8-10 minutes
+- Key message: "Production is different - here's how"
+-->
 
 ---
 
@@ -1528,6 +1604,15 @@ Python, TypeScript & Orchestration
 
 **Key Question**: What tools are available to build these systems?
 
+<!--
+SPEAKER NOTES - PART 6 INTRO:
+- Transition: "Don't build from scratch - use these"
+- Promise: "I'll recommend which to start with"
+- Structure: Python → TypeScript → Orchestration
+- Timing: 5-6 minutes
+- Key advice: "Start with LangChain, explore later"
+-->
+
 ---
 
 ## Python Frameworks
@@ -1578,6 +1663,15 @@ ReAct agents, memory, streaming | Node.js and edge computing
 Real-World Implementations
 
 **Key Question**: How do these patterns work in real systems?
+
+<!--
+SPEAKER NOTES - PART 7 INTRO:
+- Transition: "Let's see these patterns in action"
+- Setup: "Simplified versions of production systems"
+- What to watch for: "How patterns combine"
+- Timing: 8-10 minutes
+- Keep concrete: Point to specific patterns in diagrams
+-->
 
 ---
 
@@ -1766,6 +1860,15 @@ Design, Security & Common Pitfalls
 
 **Key Question**: How do we avoid common mistakes?
 
+<!--
+SPEAKER NOTES - PART 8 INTRO:
+- Transition: "You've seen what works. Now what NOT to do."
+- Promise: "Learn from our mistakes, not yours"
+- Structure: Best practices → Pitfalls
+- Timing: 6-7 minutes
+- Emphasize: "These are all preventable!"
+-->
+
 ---
 
 ## Best Practices: Design & Operations
@@ -1873,6 +1976,15 @@ section { padding-bottom: 3.5em !important; }
 # Part 9: Conclusion
 
 Takeaways & Resources
+
+<!--
+SPEAKER NOTES - PART 9 INTRO:
+- Transition: "Let's wrap up with key takeaways"
+- Purpose: Reinforce main concepts
+- Structure: Architecture → Standards → Vision
+- Timing: 5-7 minutes total
+- Goal: Leave them confident and inspired
+-->
 
 ---
 
@@ -1985,6 +2097,17 @@ section { padding-bottom: 1.2em !important; }
 - From implementation → architecture
 
 **You're Ready**: You have the patterns, tools, and knowledge to build this
+
+<!--
+SPEAKER NOTES - THE VISION:
+- THIS IS YOUR INSPIRING CLOSE - deliver with energy!
+- Paint the transformation: "Coding becomes orchestration"
+- Empowerment: "You have everything you need to start"
+- Call to action: "Check the Getting Started guide, build something this week"
+- Future is now: "This isn't sci-fi - it's Monday morning"
+- End on high note: "You're not just learning patterns, you're shaping the future of software development"
+- Timing: 2-3 minutes, leave them inspired!
+-->
 
 ---
 
