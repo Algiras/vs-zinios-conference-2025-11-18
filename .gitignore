@@ -16,10 +16,7 @@ slides/presentation.preprocessed.*.md
 
 # Generated images (dev-mode build artifacts - use dist/ for final builds)
 slides/images/mermaid/
-slides/images/mermaid/rose-pine-dawn/
-slides/images/mermaid/rose-pine-moon/
 slides/images/qr/
-slides/images/
 slides/slide-images/
 slides/slide-images-light/
 slides/slide-images-dark/

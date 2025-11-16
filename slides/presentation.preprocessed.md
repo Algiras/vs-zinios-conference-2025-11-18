@@ -159,6 +159,17 @@ style: |
     background-color: var(--highlight-low);
   }
   
+  /* Profile image - circular */
+  img[alt="Profile"],
+  img[src*="profile"] {
+    width: 150px !important;
+    height: 150px !important;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+  }
+  
   /* QR codes - smaller, centered */
   img[src*="qr"],
   img[src*="qr/"] {
@@ -588,6 +599,14 @@ Building AI Systems That Code Independently
 
 ## About Me
 
+<div class="columns" style="grid-template-columns: 150px 1fr; gap: 2em; align-items: center;">
+<div>
+
+![Profile](images/profile.jpeg)
+
+</div>
+<div>
+
 **🧑‍💻 Algimantas Krasauskas**  
 AI Tool Developer at Wix
 
@@ -596,6 +615,9 @@ AI Tool Developer at Wix
 **Background**: Building scalable AI systems & intelligent workflows
 
 **GitHub**: https://github.com/Algiras/vs-zinios-conference-2025-11-18
+
+</div>
+</div>
 
 ---
 
@@ -1884,3 +1906,4 @@ code { font-size: 0.6em; line-height: 1.25; }
 section { padding-bottom: 3em !important; }
 .columns { font-size: 0.85em; }
 </style>
+
