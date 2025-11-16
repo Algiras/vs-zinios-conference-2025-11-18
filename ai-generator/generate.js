@@ -499,6 +499,18 @@ The presentation should be professional, engaging, and follow Marp best practice
     let response = await llmWithTools.invoke(messages);
     messages.push(response);
     
+    console.log(`\n📝 Initial response received`);
+    if (response.content) {
+      console.log(`Content length: ${response.content.length} chars`);
+    }
+    if (response.tool_calls) {
+      console.log(`Tool calls: ${response.tool_calls.length}`);
+    } else {
+      console.log(`⚠️  No tool calls found - model might not support tool calling well`);
+      console.log(`Response type: ${typeof response}`);
+      console.log(`Response keys: ${Object.keys(response).join(', ')}`);
+    }
+    
     // Handle tool calls iteratively
     let iterations = 0;
     const maxIterations = 20;

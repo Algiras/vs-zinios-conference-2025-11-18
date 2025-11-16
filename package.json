@@ -19,7 +19,7 @@
     "lint:mermaid": "md-mermaid-lint slides/presentation.md",
     "lint:mermaid:all": "md-mermaid-lint slides/**/*.md docs/**/*.md",
     "chart:generate": "node scripts/generate-charts.js",
-    "ai:generate": "node ai-generator/generate.js"
+    "ai:generate": "node ai-generator/generate-multi-step.js"
   },
   "keywords": [
     "marp",
