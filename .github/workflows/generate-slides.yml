@@ -54,6 +54,10 @@ jobs:
           mkdir -p public
           cp slides/presentation.html public/index.html
           cp slides/presentation-dark.html public/dark.html
+          # Copy images directory (contains generated mermaid, qr codes, and profile/logos)
+          if [ -d "slides/images" ]; then
+            cp -r slides/images public/
+          fi
           echo "# Autonomous Development Workflows" > public/README.md
           echo "" >> public/README.md
           echo "View the presentation:" >> public/README.md
