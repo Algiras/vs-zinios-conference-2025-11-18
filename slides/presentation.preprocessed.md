@@ -4,2110 +4,397 @@ size: 16:9
 theme: rose-pine-dawn
 paginate: true
 html: true
-header: 'Autonomous Development Workflows'
-footer: 'Algimantas Krasauskas | Wix | November 2025'
+header: 'Introduction to Kubernetes'
+footer: 'AI Generated | 11/16/2025'
 style: |
-  /* Header */
-  header {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    right: 30px;
-    font-size: 0.9em;
-    color: var(--muted);
-    text-align: left;
-    z-index: 1;
+  /* Global column layout for diagrams */
+  .columns {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.5em;
+    align-items: start;
+    font-size: 0.88em;
+    line-height: 1.5;
   }
   
-  /* Footer */
-  footer {
-    position: absolute;
-    bottom: 15px;
-    left: 30px;
-    right: 30px;
-    font-size: 0.9em;
-    color: var(--muted);
-    text-align: center;
-    z-index: 1;
-  }
-  section[data-marpit-footer=""] footer {
-    display: none;
+  /* Mermaid diagram sizing - make it fit better */
+  .columns img[alt*="Mermaid"],
+  .columns svg {
+    max-height: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
   }
   
-  /* Pagination - let theme handle it, just position it */
-  section::after {
-    position: absolute;
-    bottom: 15px;
-    right: 30px;
-    font-size: 0.8em;
-    color: var(--muted);
-    z-index: 1;
-  }
-  section[data-marpit-pagination=""]::after {
-    display: none;
-  }
-  
-  /* Section & Text */
+  /* Section padding to avoid footer overlap */
   section {
-    font-size: 28px;
-    position: relative;
-    overflow: hidden;
-    box-sizing: border-box;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    padding-top: 4em;
-    padding-bottom: 5em;
+    padding: 4em 2em 5em 2em;
   }
-  /* Prevent vertical centering on regular slides, but allow lead slides to center */
-  section:not(.lead) {
-    display: block !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-  }
-  h1 {
+  
+  /* Heading sizes for better hierarchy */
+  h2 {
+    font-size: 1.8em;
     margin-top: 0.2em;
     margin-bottom: 0.6em;
   }
   
-  /* Ensure first element in section doesn't overlap header */
-  /* Headings have their own consistent margins defined globally */
-  section > *:first-child:not(h1):not(h2) {
-    margin-top: 0.3em;
+  /* Bullet points - better spacing */
+  ul {
+    margin: 0.5em 0;
+    padding-left: 1.2em;
   }
   
-  /* Extra spacing for diagrams and code blocks */
-  section > p:first-child img,
-  section > p:first-child code {
-    margin-top: 0.5em;
+  li {
+    margin: 0.4em 0;
+    line-height: 1.5;
   }
   
-  /* Images - Mermaid diagrams */
-  img[src*="mermaid"],
-  .mermaid-diagram img {
-    max-width: 85% !important;
-    max-height: 55% !important;
-    width: auto !important;
-    height: auto !important;
-    object-fit: contain !important;
-    display: block !important;
-    margin: 0.8em auto !important;
-    clear: both !important;
+  /* Paragraphs */
+  p {
+    margin: 0.5em 0;
+    line-height: 1.6;
   }
-  
-  /* Ensure diagrams don't overlap with headers/footers */
-  section img[src*="mermaid"] {
-    margin-top: 1em !important;
-    margin-bottom: 0.5em !important;
-  }
-  
-  /* Prevent diagrams from overlapping header - extra margin after headings */
-  section h2 + p img[src*="mermaid"],
-  section h2 + * img[src*="mermaid"],
-  section h1 + p img[src*="mermaid"],
-  section h1 + * img[src*="mermaid"] {
-    margin-top: 0.8em !important;
-  }
-  
-  /* Ensure code blocks don't overlap header */
-  section pre,
-  section code {
-    margin-top: 0.5em;
-  }
-  section pre {
-    background-color: var(--overlay);
-    color: var(--text);
-    border: 1px solid var(--highlight-muted);
-  }
-  section code {
-    background-color: var(--highlight-muted);
-    color: var(--text);
-    padding: 0.1em 0.3em;
-    border-radius: 3px;
-  }
-  
-  /* Global table styles - theme-aware */
-  section table {
-    border-collapse: collapse;
-    width: 100%;
-    /* No outer border to match other full-width layouts */
-  }
-  section table th {
-    background-color: var(--overlay);
-    color: var(--text);
-    font-weight: 600;
-    border-bottom: 2px solid var(--subtle);
-    border-right: 1px solid var(--highlight-muted);
-    padding: 0.4em 0.5em;
-  }
-  section table th:last-child {
-    border-right: none;
-  }
-  section table td {
-    color: var(--text);
-    border-bottom: 1px solid var(--highlight-muted);
-    border-right: 1px solid var(--highlight-muted);
-    padding: 0.3em 0.5em;
-    background-color: var(--surface);
-  }
-  section table td:last-child {
-    border-right: none;
-  }
-  section table tr:last-child td {
-    border-bottom: none;
-  }
-  section table tr:hover td {
-    background-color: var(--highlight-low);
-  }
-  
-  /* Slide Container - prevents footer overlap */
-  .slide-container {
-    max-height: calc(100vh - 10em) !important;
-    overflow: visible !important;
-    margin-bottom: 1em !important;
-  }
-  
-  /* About Me Intro - Slide 1 */
-  .about-me-intro {
-    display: grid !important;
-    grid-template-columns: 280px 1fr !important;
-    gap: 3.5em !important;
-    align-items: center !important;
-    margin-top: 2em !important;
-  }
-  .about-me-intro .profile-section {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  .about-me-intro .info-section {
-    font-size: 0.95em !important;
-    line-height: 1.7 !important;
-  }
-  .about-me-intro .info-section h3 {
-    margin: 0 0 0.5em 0 !important;
-    font-size: 1.5em !important;
-    line-height: 1.2 !important;
-  }
-  .about-me-intro .info-section p {
-    margin: 0.8em 0 !important;
-  }
-  .about-me-intro .info-section strong {
-    display: block !important;
-    font-size: 1.15em !important;
-    color: var(--rose) !important;
-    margin-bottom: 0.6em !important;
-  }
-  
-  /* Focus Layout - Slide 2 */
-  .focus-layout {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 4em !important;
-    align-items: start !important;
-    margin-top: 2em !important;
-  }
-  .focus-layout .focus-areas {
-    font-size: 0.95em !important;
-    line-height: 1.7 !important;
-  }
-  .focus-layout .focus-areas strong {
-    display: block !important;
-    font-size: 1.2em !important;
-    color: var(--foam) !important;
-    margin-bottom: 0.6em !important;
-  }
-  .focus-layout .focus-areas img[src*="wix"] {
-    max-width: 120px !important;
-    height: auto !important;
-    display: block !important;
-    margin: 0.5em 0 1em 0 !important;
-  }
-  .focus-layout .focus-areas ul {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .focus-layout .focus-areas li {
-    margin: 0.6em 0 !important;
-    font-size: 1.05em !important;
-  }
-  .focus-layout .qr-section {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    font-size: 0.85em !important;
-    line-height: 1.5 !important;
-  }
-  .focus-layout .qr-section strong {
-    display: block !important;
-    font-size: 1.2em !important;
-    color: var(--foam) !important;
-    margin-bottom: 0.8em !important;
-  }
-  .focus-layout .qr-section img[src*="qr"] {
-    max-width: 200px !important;
-    max-height: 200px !important;
-    margin: 0.5em auto 1em auto !important;
-    display: block !important;
-  }
-  .focus-layout .qr-section p {
-    margin: 0.3em 0 !important;
-    color: var(--subtle) !important;
-  }
-  
-  /* Profile image - circular */
-  img[alt="Profile"],
-  img[src*="profile"] {
-    width: 240px !important;
-    height: 240px !important;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Wix Showcase Layout */
-  .wix-showcase {
-    margin-top: 1.5em !important;
-  }
-  .wix-showcase .wix-logo {
-    text-align: center !important;
-    margin-bottom: 1.5em !important;
-  }
-  .wix-showcase .wix-logo img {
-    max-width: 150px !important;
-    height: auto !important;
-  }
-  .wix-showcase .wix-content {
-    font-size: 0.92em !important;
-    line-height: 1.7 !important;
-  }
-  .wix-showcase .wix-content p {
-    margin: 1.2em 0 !important;
-  }
-  .wix-showcase .wix-content strong {
-    display: block !important;
-    font-size: 1.08em !important;
-    color: var(--rose) !important;
-    margin-bottom: 0.3em !important;
-  }
-  .wix-showcase .wix-patterns {
-    font-size: 0.95em !important;
-    line-height: 1.7 !important;
-  }
-  .wix-showcase .wix-patterns > p > strong {
-    display: block !important;
-    font-size: 1.1em !important;
-    color: var(--foam) !important;
-    margin-bottom: 0.8em !important;
-  }
-  .wix-showcase .wix-patterns ul {
-    margin: 0.5em 0 !important;
-    padding-left: 0 !important;
-    list-style: none !important;
-  }
-  .wix-showcase .wix-patterns li {
-    margin: 0.7em 0 !important;
-    padding-left: 1.5em !important;
-    position: relative !important;
-  }
-  .wix-showcase .wix-patterns li::before {
-    content: "▸" !important;
-    position: absolute !important;
-    left: 0 !important;
-    color: var(--rose) !important;
-    font-weight: bold !important;
-  }
-  .wix-showcase .wix-patterns li strong {
-    color: var(--pine) !important;
-  }
-  
-  /* Wix logo */
-  img[alt="Wix Logo"],
-  img[src*="wix_logo"],
-  img[src*="wix-logo"] {
-    max-width: 150px !important;
-    height: auto !important;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 auto !important;
-  }
-  
-  /* QR codes - smaller, centered */
-  img[src*="qr"],
-  img[src*="qr/"] {
-    max-width: 200px !important;
-    max-height: 200px !important;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0.5em auto;
-  }
-  
-  /* Plotly charts */
-  section .plotly-chart,
-  section div[id*="chart"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 450px !important;
-    max-height: 450px !important;
-    margin: 0.5em 0 !important;
-  }
-  
-  /* Column Layouts - consistent styling for all slides */
-  section .columns,
-  section .reflex-columns,
-  section .takeaways-grid,
-  section .resources-grid {
-    display: grid !important;
-    grid-template-columns: 1.1fr 0.9fr !important;
-    gap: 1em !important;
-    width: 100% !important;
-    margin: 0.5em 0 !important;
-    align-items: start !important;
-  }
-  section .columns > div,
-  section .reflex-columns > div,
-  section .takeaways-grid > div,
-  section .resources-grid > div {
-    display: block !important;
-    min-width: 0;
-    padding: 0 0.5em;
-    box-sizing: border-box;
-    overflow: hidden;
-    font-size: 0.88em !important;
-    line-height: 1.4 !important;
-    margin: 0 !important;
-  }
-  section .columns > div p,
-  section .reflex-columns > div p {
-    margin: 0.4em 0 !important;
-  }
-  section .columns > div ul,
-  section .reflex-columns > div ul {
-    margin: 0.4em 0 !important;
-    padding-left: 1.2em !important;
-  }
-  
-  /* Diagrams in columns - consistent sizing */
-  section .columns img[src*="mermaid"],
-  section .reflex-columns img[src*="mermaid"] {
-    max-height: 40% !important;
-    max-width: 90% !important;
-    margin: 0.3em auto !important;
-  }
-  
-  /* Headings - consistent across all slides */
-  /* Lead slides have their own h2 styling, so exclude them */
-  section:not(.lead) h2 {
-    margin-top: 0 !important;
-    margin-bottom: 0.6em !important;
-    position: relative !important;
-    top: 0 !important;
-  }
-  section .reflex-columns { 
-    font-size: 0.9em !important; 
-    margin: 2.2em 0 !important; 
-    gap: 2.2em !important; 
-  }
-  section .reflex-columns h3, 
-  section .takeaways-grid h3 { 
-    margin: 0 0 0.4em 0; 
-  }
-  section .takeaways-grid { 
-    font-size: 0.95em !important; 
-    line-height: 1.45 !important; 
-    gap: 2.4em !important; 
-  }
-  section .takeaways-grid h3 { 
-    margin: 0 0 0.45em 0; 
-  }
-  section .takeaways-grid ul { 
-    margin: 0 0 1em 0; 
-  }
-  
-  /* Flex-based layouts */
-  section .mcp-highlights,
-  section .gateway-summary {
-    display: flex !important;
-    gap: 1.5em !important;
-    width: 100% !important;
-  }
-  section .mcp-highlights > div,
-  section .gateway-summary > div {
-    flex: 1 !important;
-    display: block !important;
-    min-width: 0;
-  }
-  
-  section .resources-grid {
-    font-size: 0.9em !important;
-    gap: 2em !important;
-  }
-  section .resources-grid div {
-    background: transparent !important;
-    padding: 0.5em 0 !important;
-    border-radius: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-  }
-  section .resources-grid h4 { margin: 0 0 0.25em 0; font-size: 1.05em; }
-  section .resources-grid p { margin: 0; }
-  section .resources-grid a { color: var(--iris); text-decoration: none; }
-  section a { color: var(--iris); }
-  
-  /* Best practices layout - equal columns with larger headings */
-  section .columns.best-practices {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 2em !important;
-    font-size: 0.95em !important;
-  }
-  section .columns.best-practices h3 {
-    margin: 0 0 0.5em 0 !important;
-    font-size: 1.2em !important;
-  }
-  section .columns.best-practices ul {
-    margin: 0 !important;
-    padding-left: 1.2em !important;
-    line-height: 1.45 !important;
-  }
-  
-  /* Lead slide - Marp's built-in lead class centers content */
-  /* Allow centering for lead slides */
-  section.lead {
-    padding-top: 0;
-    padding-bottom: 0;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-direction: column !important;
-  }
-  section.lead h1 {
-    font-size: 2.5em;
-    margin-bottom: 0.5em;
-    margin-top: 0;
-  }
-  section.lead h2 {
-    margin-top: 0;
-    margin-bottom: 0.6em;
-  }
-  section.lead p {
-    font-size: 1.2em;
-    opacity: 0.9;
-  }
-  section.lead header,
-  section.lead footer {
-    display: none;
-  }
-  
-  /* ============================================================
-     EFFECTS FRAMEWORK - HTML Export Animations
-     ============================================================ */
-  
-  /* Entrance Effects */
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .effect-fade-in {
-    animation: fadeIn 0.6s ease-out;
-  }
-  
-  @keyframes slideInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  .effect-slide-in-left {
-    animation: slideInLeft 0.6s ease-out;
-  }
-  
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  .effect-slide-in-right {
-    animation: slideInRight 0.6s ease-out;
-  }
-  
-  @keyframes slideInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  .effect-slide-in-up {
-    animation: slideInUp 0.6s ease-out;
-  }
-  
-  @keyframes zoomIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  .effect-zoom-in {
-    animation: zoomIn 0.6s ease-out;
-  }
-  
-  /* Emphasis Effects */
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-  }
-  .effect-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(215, 130, 126, 0.3); }
-    50% { box-shadow: 0 0 20px rgba(215, 130, 126, 0.6); }
-  }
-  .effect-glow {
-    animation: glow 2s ease-in-out infinite;
-    border-radius: 4px;
-  }
-  
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  .effect-bounce {
-    animation: bounce 1s ease-in-out infinite;
-  }
-  
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-    20%, 40%, 60%, 80% { transform: translateX(5px); }
-  }
-  .effect-shake {
-    animation: shake 0.5s ease-in-out;
-  }
-  
-  /* Exit Effects */
-  @keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-  }
-  .effect-fade-out {
-    animation: fadeOut 0.6s ease-out forwards;
-  }
-  
-  @keyframes slideOutLeft {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateX(-30px);
-    }
-  }
-  .effect-slide-out-left {
-    animation: slideOutLeft 0.6s ease-out forwards;
-  }
-  
-  @keyframes slideOutRight {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateX(30px);
-    }
-  }
-  .effect-slide-out-right {
-    animation: slideOutRight 0.6s ease-out forwards;
-  }
-  
-  /* Advanced Effects */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-  .effect-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  .effect-rotate {
-    animation: rotate 2s linear infinite;
-  }
-  
-  @keyframes highlight-slide {
-    0%, 100% { background-position: 200% 0; }
-    50% { background-position: -200% 0; }
-  }
-  .effect-highlight {
-    background: linear-gradient(
-      to right,
-      transparent,
-      var(--highlight-low) 20%,
-      var(--highlight-low) 80%,
-      transparent
-    );
-    background-size: 200% 100%;
-    animation: highlight-slide 2s ease-in-out infinite;
-  }
-  
-  /* Duration Modifiers */
-  .effect-fast {
-    animation-duration: 0.3s !important;
-  }
-  .effect-normal {
-    animation-duration: 0.6s !important;
-  }
-  .effect-slow {
-    animation-duration: 1s !important;
-  }
-  
-  /* Delay Modifiers */
-  .effect-delay-100 {
-    animation-delay: 0.1s;
-  }
-  .effect-delay-200 {
-    animation-delay: 0.2s;
-  }
-  .effect-delay-300 {
-    animation-delay: 0.3s;
-  }
-  .effect-delay-500 {
-    animation-delay: 0.5s;
-  }
-  
-  /* Easing Modifiers */
-  .effect-ease-linear {
-    animation-timing-function: linear !important;
-  }
-  .effect-ease-ease-in {
-    animation-timing-function: ease-in !important;
-  }
-  .effect-ease-ease-out {
-    animation-timing-function: ease-out !important;
-  }
-  .effect-ease-ease-in-out {
-    animation-timing-function: ease-in-out !important;
-  }
-  
-  /* Color-Aware Effects */
-  .effect-glow-love {
-    box-shadow: 0 0 15px rgba(180, 99, 122, 0.5);
-  }
-  .effect-glow-rose {
-    box-shadow: 0 0 15px rgba(215, 130, 126, 0.5);
-  }
-  .effect-glow-pine {
-    box-shadow: 0 0 15px rgba(40, 105, 131, 0.5);
-  }
-  .effect-border-accent {
-    border: 2px solid var(--rose);
-    border-radius: 4px;
-  }
-  
-  /* Stagger Effects for Lists */
-  .effect-stagger li {
-    animation: fadeIn 0.6s ease-out backwards;
-  }
-  .effect-stagger li:nth-child(1) { animation-delay: 0.1s; }
-  .effect-stagger li:nth-child(2) { animation-delay: 0.2s; }
-  .effect-stagger li:nth-child(3) { animation-delay: 0.3s; }
-  .effect-stagger li:nth-child(4) { animation-delay: 0.4s; }
-  .effect-stagger li:nth-child(5) { animation-delay: 0.5s; }
-  
-  /* Accessibility - Respect prefers-reduced-motion */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
----
-
-<!-- _paginate: false -->
-<!-- _footer: "" -->
-<!-- _class: lead -->
-
-# Autonomous Development Workflows
-
-Building AI Systems That Code Independently
-
-<!--
-SPEAKER NOTES:
-- Welcome everyone and introduce the topic
-- Set expectations: This is about building AI systems that can autonomously complete programming tasks
-- Timing: 45-50 minutes + Q&A
-- We'll go from foundations to production-ready systems
-- Everyone will leave with practical knowledge they can apply immediately
--->
-
----
-
-## About Me
-
-<div class="slide-container">
-<div class="about-me-intro">
-<div class="profile-section">
-
-![Profile](images/profile.jpeg)
-
-</div>
-<div class="info-section">
-
-### 🧑‍💻 Algimantas Krasauskas
-
-**AI Tool Developer at Wix**
-
-Building scalable AI systems & intelligent workflows
-
-Focused on autonomous development and LLM orchestration
-
-</div>
-</div>
-</div>
-
-<!--
-SPEAKER NOTES:
-- Quick personal intro - keep it under 1 minute
-- Establish credibility: I build these systems daily at Wix
-- Connect with audience: "I've made all the mistakes you're about to avoid"
-- Transition: "Let me show you what I've learned building autonomous systems in production"
--->
-
----
-
-## What I Focus On
-
-<div class="slide-container">
-<div class="focus-layout">
-<div class="focus-areas">
-
-**My Work at Wix**
-
-- 🤖 Autonomous AI systems
-- 🔗 LLM orchestration
-- ⚡ Developer productivity
-- 🏗️ Intelligent workflows
-- 📚 Knowledge base infrastructure
-
-</div>
-<div class="qr-section">
-
-**Slides & Code**
-
-![QR Code](images/qr/qr-28584567.png)
-
-github.com/Algiras/  
-vs-zinios-conference-2025-11-18
-
-</div>
-</div>
-</div>
-
----
-
-## The Challenge
-
-**Current State**: Software development is slow, repetitive, and error-prone
-
-**The Opportunity**:
-- LLMs can write code
-- But lack structure, memory, and control
-- Need proper architecture for autonomy
-
-**The Solution**: Autonomous development systems that actually work
-
-<!--
-SPEAKER NOTES:
-- THIS IS THE HOOK - make it compelling!
-- Paint the pain: "We spend 60% of our time on repetitive tasks"
-- Show the gap: "LLMs like ChatGPT can write code, but they forget context, can't plan complex tasks, and don't improve"
-- Promise: "Today you'll learn the architecture patterns that make AI systems truly autonomous"
-- Key message: It's not about better models, it's about better architecture
-- Timing: 1-2 minutes - keep it punchy
--->
-
----
-
-## Our Talk Today
-
-**Building AI systems that autonomously complete programming tasks**
-
-**Topics**:
-- Autonomous workflow environments for LLMs
-- Agent architectures: Reflex → Learning → Production patterns
-- What works in production (and what doesn't)
-- Frameworks and tools for autonomous development
-- Real-world implementation examples
-
 ---
 
 <!-- _class: lead -->
 <!-- _paginate: false -->
 <!-- _footer: "" -->
 
-## Overview
+# Introduction to Kubernetes
 
-1. **Foundations** - Workflows & Autonomous Systems
-2. **Agent Types** - Reflex & Learning Agents
-3. **Architecture Patterns** - FSM, BT, GOAP, ReAct
-4. **Model Context Protocol** - Standardized Tools & Resources
-5. **What Works** - Production Patterns & Best Practices
-6. **Frameworks** - Python, TypeScript & Orchestration
-7. **Examples** - Real-World Implementations
-8. **Best Practices** - Design, Security & Common Pitfalls
-9. **Conclusion** - Takeaways & Resources
+A Comprehensive Guide for Beginners and Experts Alike
+
+---
+
+## Hook Slide
+
+Kubernetes, the de facto standard for container orchestration.
+
+- Automates deployment and scaling of containerized applications.
+- Ensures high availability and fault tolerance.
+- Simplifies management across diverse infrastructure environments.
+- Offers a robust ecosystem of tools and plugins.
+- Enables continuous integration and delivery pipelines.
+
+<!-- SPEAKER NOTES: Introduce Kubernetes as the backbone of modern cloud-native applications, highlighting its role in automating deployment, scaling, and managing containerized applications efficiently. -->
+
+---
+
+## Why This Matters
+
+- Automates deployment and scaling of applications
+- Improves resource utilization and cost efficiency
+- Enhances reliability and availability through self-healing capabilities
+- Simplifies management and maintenance for DevOps teams
+- Enables modern containerized application architectures
+
+<!-- SPEAKER NOTES: Emphasize how Kubernetes streamlines complex cloud-native environments. -->
 
 ---
 
 <!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
 
-# Part 1: Foundations
+# Core Concepts
 
-Workflows & Autonomous Systems
 
-<!--
-SPEAKER NOTES - PART 1 INTRO:
-- Transition: "Before we dive into agents and patterns, let's establish foundations"
-- Why this matters: "You can't build autonomous systems without understanding what makes them autonomous"
-- What we'll cover: Workflows vs Autonomous Workflows, key differences
-- Timing: 5 minutes for this section
-- Set context: "These definitions will guide all our architecture decisions"
--->
 
 ---
 
-## What is a Workflow?
-
-**Sequence of steps to accomplish a task**
+## What is Kubernetes?
 
 <div class="columns">
 <div>
 
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-736111dd.png)
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-e87f8cc9.png)
 
 </div>
 <div>
 
-**Examples**:
-- CI/CD: Code → Test → Deploy
-- Data: Extract → Transform → Load
-- Review: Submit → Analyze → Merge
+- **Automated Deployment and Scaling**  
+ Orchestrates containerized applications.
+
+- **Self-healing Mechanisms**  
+ Restarts failed containers, replaces unhealthy ones, scales resources dynamically.
+
+- **Service Discovery and Load Balancing**  
+ Manages network policies for communication between services.
 
 </div>
 </div>
 
+<!-- SPEAKER NOTES: Introduce Kubernetes as an automation tool for managing containerized applications. -->
 
 ---
 
-## What is an Autonomous Workflow?
+## Key Components of Kubernetes
 
-**Autonomous Workflow** (Agentic Workflow): A system that makes decisions and takes actions without human intervention
+<div class="columns">
+<div>
 
-**Key Characteristics**:
-- Self-directed decision making
-- Adaptive to changing conditions
-- Continuous execution without supervision
-- Learn from outcomes (in advanced systems)
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-6eca2c20.png)
+
+</div>
+<div>
+
+1. **Control Plane**
+   - Orchestrates and manages the cluster.
+   
+2. **Nodes**
+   - Run containers as pods.
+
+3. **Pods**
+   - Groups containers that run together.
+
+4. **Services**
+   - Exposes apps to external traffic.
+
+</div>
+</div>
+
+<!-- SPEAKER NOTES: Introduce the core components of Kubernetes and their basic functions within the system. -->
+
+---
+
+## Pods: The Building Blocks
+
+<div class="columns">
+<div>
+
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-902adfd7.png)
+
+</div>
+<div>
+
+- **Containerized Applications**: Group containers into logical units.
+- **Resource Allocation**: Manage resources efficiently within a single entity.
+- **Service Discovery**: Enable communication between pods.
+
+</div>
+</div>
+
+<!-- SPEAKER NOTES: Explain how pods encapsulate containers and manage their lifecycle. -->
 
 ---
 
 <!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
 
-# Part 2: Agent Types
+# Implementation
 
-Reflex & Learning Agents
 
-**Key Question**: What types of agents exist and when should we use them?
-
-<!--
-SPEAKER NOTES - PART 2 INTRO:
-- Transition: "Now that we understand autonomous workflows, let's explore agent types"
-- Key insight: "Not all agents are created equal - simple problems need simple agents"
-- What we'll cover: Reflex (simple, fast) vs Learning (adaptive, complex)
-- Real-world analogy: "A thermostat (reflex) vs a chess AI (learning)"
-- Timing: 6-7 minutes for this section
-- Preview: "We'll see detailed architectures in Part 3"
--->
 
 ---
 
-## Agent Types: Overview
+## Setting Up a Kubernetes Cluster
 
 <div class="columns">
 <div>
 
-**Reflex Agents**
-- React to current input only
-- No memory of past states
-- Fast, simple, predictable
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-0609f543.png)
 
 </div>
 <div>
 
-**Learning Agents**
-- Improve from experience
-- Maintain state and memory
-- Adapt behavior over time
+1. **Choose a Cloud Provider**
+   - Select a provider like GCP, AWS, or Azure.
+   <!-- SPEAKER NOTES: Choose based on familiarity and regional availability -->
+
+2. **Install kubeadm, kubelet, and kubectl**
+   - Install required tools on your control plane node.
+   <!-- SPEAKER NOTES: Ensure compatibility with the chosen cloud provider -->
+
+3. **Initialize the Master Node**
+   - Run `kubeadm init` to initialize the Kubernetes master.
+   <!-- SPEAKER NOTES: This sets up the control plane components -->
+
+4. **Join Worker Nodes**
+   - Use the join token from initialization to add worker nodes.
+   <!-- SPEAKER NOTES: Scale out your cluster by adding more nodes -->
 
 </div>
 </div>
 
-<style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
-.columns h3 { margin: 0 0 0.5em 0; font-size: 1.3em; }
-.columns ul { margin: 0; padding-left: 1.2em; line-height: 1.5; }
-section { padding-bottom: 3em !important; }
-</style>
+<!-- SPEAKER NOTES: Choose based on familiarity and regional availability -->
 
 ---
 
-## Reflex Agent: The Thermostat
-
-**🌡️ Simple Rule-Based System**
+## Deploying Applications
 
 <div class="columns">
 <div>
 
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-36876f59.png)
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-b2c3ba25.png)
 
 </div>
 <div>
 
-**Rules**: `IF temp < 20°C → ON` | `IF temp > 22°C → OFF`
+1. **Define Deployment**  
+   Create a deployment YAML file to specify the desired state of your application.
 
-**Pattern**: Sensor → Condition → Action
+2. **Apply Deployment**  
+   Use `kubectl apply` to create or update a deployment based on the YAML configuration.
 
-**Key**: No memory • Instant • Simple
+3. **Scale Application**  
+   Adjust the number of replicas in the deployment using `kubectl scale`.
+
+4. **Rollout Updates**  
+   Update the deployment with new configurations and monitor the rollout process.
 
 </div>
 </div>
 
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
-img[src*="mermaid"] { max-height: 35% !important; max-width: 80% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.82em; line-height: 1.3; margin: 0; }
-.columns div p { margin: 0.3em 0; }
-</style>
+<!-- SPEAKER NOTES: Explain how deployments allow for automated scaling and updates, ensuring high availability and reliability. -->
 
 ---
 
-## Reflex Agent: Characteristics
+## Managing Resources
 
-<div class="reflex-columns">
-<div>
+- **Resource Quotas:** Define limits on CPU and memory usage.
+- **Requests and Limits:** Allocate resources to containers.
+- **Horizontal Pod Autoscaling:** Scale pods based on demand.
+- **Node Affinity/Taints & Tolerations:** Control pod placement.
+- **Storage Classes:** Manage storage dynamically.
 
-### Strengths
-- ⚡ Instant reaction to sensor input
-- 💰 Low operational cost
-- 🎯 Predictable, explainable behavior
-- 🐛 Easy to debug and reason about
-
-</div>
-<div>
-
-### Constraints
-- 🚫 No planning or foresight
-- 📚 Cannot learn new responses
-- 🔧 Rigid rules require manual updates
-- 🌍 Limited to narrow environments
-
-</div>
-</div>
-
----
-
-## Learning Agent: Components
-
-**🧠 Four Key Elements**
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-c3d9eb2e.png)
-
-</div>
-<div>
-
-**Components**:
-- **Performance**: Selects actions
-- **Learning**: Improves over time
-- **Critic**: Provides feedback
-- **Problem Generator**: Suggests exploration
-
-**Key**: Agent improves through experience
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
-img[src*="mermaid"] { max-height: 42% !important; max-width: 88% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; }
-.columns div { font-size: 0.9em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
-.columns div p { margin: 0.6em 0; }
-.columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-</style>
+<!-- SPEAKER NOTES: Emphasize the importance of setting resource quotas and requests/limits for efficient cluster management. Discuss how horizontal pod autoscaling can significantly improve application performance under varying loads. Highlight the role of node affinity/taints & tolerations in achieving high availability and fault tolerance. Explain that storage classes provide a flexible way to manage persistent storage in Kubernetes clusters. -->
 
 ---
 
 <!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
 
-# Part 3: Architecture Patterns
+# Best Practices
 
-FSM, BT, GOAP & ReAct
 
-**Key Question**: How do we structure agents for complex workflows?
-
-<!--
-SPEAKER NOTES - PART 3 INTRO:
-- Transition: "You know agent types. Now let's structure them"
-- Setup: "Four patterns, each solves different problems"
-- Preview: FSM (workflows) → BT (hierarchies) → GOAP (optimization) → ReAct (LLM default)
-- Promise: "You'll know which to use when"
-- Timing: 10-12 minutes - THIS IS CORE CONTENT
-- Key message: "Match pattern to problem complexity"
--->
 
 ---
 
-## Finite State Machines (FSM)
+## Security Best Practices
 
-**State-Based Decision Making**
+1. **Use Role-Based Access Control (RBAC)**  
+   Limit access to Kubernetes resources based on user roles.  
+   <!-- SPEAKER NOTES: RBAC ensures that users and services have the minimum necessary permissions. -->
+
+2. **Implement Network Policies**  
+   Define network rules to control communication between pods.  
+   <!-- SPEAKER NOTES: Network policies enhance security by restricting pod-to-pod communications. -->
+
+3. **Enable Pod Security Policies (PSPs)**  
+   Enforce a set of constraints on the configuration of Kubernetes pods.  
+   <!-- SPEAKER NOTES: PSPs help in securing pods by enforcing security standards and best practices. -->
+
+4. **Use Secrets for Credentials**  
+   Store sensitive information securely using Kubernetes secrets.  
+   <!-- SPEAKER NOTES: Secrets provide a secure way to manage credentials and other sensitive data within Kubernetes clusters. -->
+
+5. **Regularly Update and Patch Components**  
+   Keep all Kubernetes components up to date to protect against vulnerabilities.  
+   <!-- SPEAKER NOTES: Regular updates ensure that security patches are applied, reducing the risk of exploits. -->
+
+---
+
+## Performance Optimization Tips
+
+- **Optimize Pod Specifications:** Use efficient container images and resource limits.
+<!-- SPEAKER NOTES: Ensure containers are lightweight and properly configured for optimal performance. -->
+
+- **Scale Applications Appropriately:** Use Horizontal Pod Autoscaler (HPA).
+<!-- SPEAKER NOTES: Dynamically adjust the number of pods based on CPU usage to maintain performance. -->
+
+- **Implement Network Policies:** Limit unnecessary network traffic.
+<!-- SPEAKER NOTES: Enhance security and performance by controlling pod-to-pod communication. -->
+
+- **Utilize Persistent Volumes:** Store data outside containers for faster access.
+<!-- SPEAKER NOTES: Improve application performance by using persistent storage solutions. -->
+
+- **Enable Caching:** Cache frequently accessed data to reduce latency.
+<!-- SPEAKER NOTES: Minimize data retrieval time by caching essential information. -->
+
+---
+
+## Monitoring and Logging Strategies
 
 <div class="columns">
 <div>
 
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-4a941b02.png)
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-1d1490c3.png)
 
 </div>
 <div>
 
-**Use Case**: CI/CD pipelines, workflows, automation
+**Monitor Resource Utilization**
+- Track CPU, memory, and disk usage.
+- Identify bottlenecks and optimize performance.
 
-**Key**: Clear • Predictable • Debuggable • Workflow-friendly
+**Implement Real-Time Alerts**
+- Set up alerts for critical thresholds.
+- Quickly respond to issues before they escalate.
 
-**In LLM Space**: LangGraph (Python) provides FSM/BT primitives for structured agent workflows
+**Collect Application Logs**
+- Aggregate logs from all containers.
+- Enable easy log analysis and troubleshooting.
 
-</div>
-</div>
-
-
----
-
-## Behavior Trees (BT)
-
-**🌳 Hierarchical Task Decomposition**
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-f329ec76.png)
-
-</div>
-<div>
-
-**Selector** = first success  
-**Sequence** = all in order
-
-**Use Cases**:
-- Game AI
-- Task planning
-- Decision trees
-- Hierarchical workflows
-
-**In LLM Space**: LangGraph supports BT patterns for complex agent hierarchies
+**Use Centralized Logging Solutions**
+- Deploy tools like ELK Stack or Fluentd.
+- Ensure consistent logging across the cluster.
 
 </div>
 </div>
 
-
----
-
-## GOAP: Goal-Oriented Action Planning
-
-**Tree of Thought with Pruning**
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-bdf87cb0.png)
-
-</div>
-<div>
-
-**Concept**: Tree of thought exploration with cost-based pruning
-
-**Use Case**: Complex multi-step workflows requiring optimal planning
-
-**In LLM Space**: Advanced planning pattern. Evaluates multiple paths before execution.
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5em; }
-img[src*="mermaid"] { max-height: 35% !important; max-width: 90% !important; margin: 0.5em auto !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.88em; line-height: 1.5; margin: 0; }
-.columns div p { margin: 0.6em 0; }
-.columns div strong { display: block; margin-bottom: 0.3em; }
-</style>
-
----
-
-## ReAct Pattern (Reasoning + Acting)
-
-**Simplified FSM + GOAP with Limitations**
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-1e34972c.png)
-
-</div>
-<div>
-
-**Key**: FSM states + single-step planning (no tree exploration)
-
-**Cycle**: Think → Act → Observe → Reflect (fixed state machine)
-
-**Limitations**: No multi-path exploration, no cost-based pruning, simpler than full GOAP
-
-**In LLM Space**: Default pattern in LangChain, VoltAgent, AG2, CrewAI. Trade-off: simplicity vs. optimal planning.
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
-img[src*="mermaid"] { max-height: 35% !important; max-width: 85% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.85em; line-height: 1.3; margin: 0; }
-.columns div p { margin: 0.3em 0; }
-</style>
-
----
-
-## Agent Architecture Patterns
-
-**Comprehensive Comparison**
-
-| **Pattern** | **Mechanism** | **Strengths** | **Best For** |
-|:---|:---|:---|:---|
-| 🔄 **FSM** | State + Transitions | Simple, predictable | Workflow pipelines |
-| 🌳 **BT** | Tree of behaviors | Modular, scalable | Complex task hierarchies |
-| 🎯 **GOAP** | Tree of thought + pruning | Optimal planning | Multi-path goal planning |
-| 💭 **ReAct** | FSM + single-step planning | Simple, fast | Common LLM agents |
-| 🧠 **Learning Agents** | Memory + Feedback loops | Adaptive, self-improving | Long-term autonomous systems |
-
-<style scoped>
-section table { 
-  font-size: 0.75em; 
-  margin: 0.5em 0; 
-  line-height: 1.3; 
-}
-section { padding-bottom: 3em !important; }
-</style>
-
----
-
-## Agent Architecture Patterns: Recommendations
-
-**Recommendation**: For autonomous development, use **ReAct + Learning** with optional GOAP for optimal planning
-
-**Framework Mapping**:
-- **ReAct**: LangChain, VoltAgent, AG2, CrewAI (simplified FSM+planning)
-- **FSM/BT**: LangGraph provides primitives for structured workflows
-- **GOAP**: Specialized planning (tree of thought with pruning, more complex than ReAct)
-
----
-
-## Memory and Feedback Cycles
-
-**Critical for Learning**
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-792fd3e2.png)
-
-</div>
-<div>
-
-**Key**: Memory enables context-aware decisions
-
-**Process**: Act → Observe → Feedback → Memory → Learn → Action
-
-**In LLM Space**: LangChain, AG2, VoltAgent support memory systems. Essential for learning agents and long-running workflows.
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
-img[src*="mermaid"] { max-height: 35% !important; max-width: 85% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.85em; line-height: 1.3; margin: 0; }
-.columns div p { margin: 0.3em 0; }
-</style>
+<!-- SPEAKER NOTES: Highlight key monitoring and logging practices to ensure a healthy, resilient Kubernetes environment. -->
 
 ---
 
 <!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
 
-# Part 4: Model Context Protocol
+# Conclusion
 
-Standardized Tools & Resources
 
-**Key Question**: How do we standardize agent interactions?
-
-<!--
-SPEAKER NOTES - PART 4 INTRO:
-- Transition: "Agents need to talk to each other and use tools"
-- Problem: "Every framework has different tool formats - chaos!"
-- Solution: "MCP is the USB standard for AI agents"
-- Why this matters: "Write once, use everywhere"
-- Timing: 6-7 minutes
-- Analogy: "Like HTTP for web, MCP for agents"
--->
 
 ---
 
-## 🔌 Model Context Protocol (MCP)
+## Summary of Key Points
 
-**Plugin Architecture for AI Pipelines**
+- **Kubernetes Overview**: Automates deployment, scaling, and management of containerized applications.
+<!-- SPEAKER NOTES: Introduce the overarching concept of Kubernetes -->
 
-| Concept | Purpose |
-|---------|---------|
-| **Resources** 📦 | Context and data for AI models |
-| **Tools** ⚙️ | Functions AI can execute |
-| **Prompts** 📋 | Templated workflows |
-| **Sampling** 🎯 | Extension strategies for tool selection |
+- **Containerization**: Enables packaging of application code and dependencies into lightweight containers for consistent environments.
+<!-- SPEAKER NOTES: Explain what containerization is and its importance -->
 
----
+- **Autoscaling**: Automatically adjusts the number of running instances to meet demand, ensuring optimal resource utilization.
+<!-- SPEAKER NOTES: Highlight the benefits of autoscaling in managing resources efficiently -->
 
-## MCP: Key Benefits
+- **Service Discovery**: Simplifies communication between services by automatically discovering and routing traffic.
+<!-- SPEAKER NOTES: Explain how Kubernetes facilitates service discovery for microservices architecture -->
 
-**Key Insight**: MCP is a **generic plugin system** - add tools, resources, and features to any pipeline without modifying core code
-
-**Benefits**:
-- Standardized interface
-- Easy integration
-- Clear capability negotiation
-- Secure access
-- Composable servers
+- **Self-healing**: Automatically detects and restarts failed containers, ensuring high availability and reliability.
+<!-- SPEAKER NOTES: Discuss the self-healing feature that maintains system stability -->
 
 ---
 
-## 🏗️ MCP Architecture
+## Next Steps for Learning More
 
-<div class="columns">
-<div>
+- **Read Official Documentation**  
+  Dive into the Kubernetes official website for detailed guides and examples.
 
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-df73482c.png)
+<!-- SPEAKER NOTES: Encourage attendees to explore the Kubernetes documentation for in-depth learning. -->
 
-</div>
-<div>
+- **Watch Tutorials on YouTube**  
+  Follow along with video tutorials that provide visual explanations of Kubernetes concepts.
 
-**Plugin Architecture**
-- Host manages clients
-- Servers act as plugins
-- Add capabilities without code changes
+<!-- SPEAKER NOTES: Recommend YouTube channels like Kube Insights or The New Stack for educational videos. -->
 
-**Impact**
-- Compose multiple servers
-- Extend pipelines easily
-- Language-agnostic
+- **Join Online Communities**  
+  Engage with other Kubernetes users and developers through forums like the Kubernetes Slack channel.
 
-</div>
-</div>
+<!-- SPEAKER NOTES: Suggest joining the Kubernetes community to ask questions and share knowledge. -->
 
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
-img[src*="mermaid"] { max-height: 38% !important; max-width: 80% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.85em; line-height: 1.3; margin: 0; }
-.columns div p { margin: 0.4em 0; }
-.columns div ul { margin: 0.4em 0; padding-left: 1.2em; }
-</style>
+- **Practice with Minikube**  
+  Install Minikube on your local machine to run a single-node Kubernetes cluster for hands-on practice.
 
----
+<!-- SPEAKER NOTES: Encourage attendees to set up a local Kubernetes environment using Minikube for practical experience. -->
 
-<!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
+- **Attend Webinars and Conferences**  
+  Stay updated with the latest developments in Kubernetes by attending webinars or conferences focused on container orchestration.
 
-# Part 5: What Works
-
-Production Patterns & Best Practices
-
-**Key Question**: What patterns actually work in production?
-
-<!--
-SPEAKER NOTES - PART 5 INTRO:
-- Transition: "Theory is done. Let's talk reality."
-- Credibility: "These patterns run at scale, daily"
-- Promise: "You'll avoid our painful lessons"
-- What we'll cover: Control flows, tool design, AI Gateway, Scratchpad
-- Timing: 8-10 minutes
-- Key message: "Production is different - here's how"
--->
-
----
-
-## What Works in Production
-
-<div class="columns">
-<div>
-
-**Separate Planning Agent**
-✅ **Benefits**:
-- Dedicated agent for task decomposition
-- Clearer reasoning traces
-- Better error recovery
-
-</div>
-<div>
-
-**Separate Information Gathering**
-✅ **Benefits**:
-- Focused research/search agents
-- Parallel information collection
-- Reduced context pollution
-
-</div>
-</div>
-
----
-
-## What Works: Control Flows
-
-<div class="columns">
-<div>
-
-**Continuous Workflows**
-✅ **Scheduling Patterns**:
-- **Queue**: Sequential task processing
-- **Stack**: Depth-first execution (interrupts)
-- **Async**: Parallel agent coordination with semaphores
-
-</div>
-<div>
-
-**Adaptive Patterns**
-✅ **Communication**:
-- JSON-RPC 2.0 for structured communication
-- STDIO for process communication
-- Event-driven architectures
-
-</div>
-</div>
-
----
-
-## What Works: Tool Design
-
-✅ **Annotation-Based Descriptions**
-
-```typescript
-const tool = {
-  name: "search_web",
-  description: "Search the web for information",
-  parameters: { query: { type: "string", description: "Search query" } },
-  annotations: {
-    audience: ["assistant"],
-    priority: 0.8,
-    category: "research"
-  }
-}
-```
-
-<style scoped>
-section { padding-bottom: 0.2em !important; }
-pre { margin-bottom: 0.2em !important; line-height: 1.2; max-height: 340px; }
-p { margin: 0.3em 0 !important; }
-</style>
-
-**Benefits**: Clear metadata, better tool selection, priority handling
-
----
-
-## What Works: Resource Visibility
-
-✅ **Priority and Scoping**
-
-```typescript
-resource: {
-  uri: "file:///project/README.md",
-  annotations: {
-    audience: ["user", "assistant"],
-    priority: 0.9,  // 0.0-1.0 (1 = required)
-    scope: "public"
-  }
-}
-```
-
-**Key Insight**: Annotations help agents choose the right resources
-
----
-
-## What Works: AI Gateway Pattern
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-8a6f06d0.png)
-
-</div>
-<div>
-
-**Problem**: Multiple LLM providers, costs, performance variability
-
-**Solution**: Gateway layer for intelligent routing
-
-**Benefits**:
-- Model abstraction
-- Cost optimization
-- Performance routing
-- A/B testing
-- Fallback handling
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5em; }
-img[src*="mermaid"] { max-height: 45% !important; max-width: 90% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.88em; line-height: 1.4; }
-.columns div p { margin: 0.5em 0; }
-.columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-</style>
-
----
-
-## AI Gateway: Benefits
-
-✅ **Model Abstraction** - Switch models without code changes • A/B testing
-
-✅ **Cost Optimization** - Route cheap tasks to cheaper models • Budget enforcement
-
-✅ **Reliability** - Automatic failover • Load balancing across instances
-
-✅ **Observability** - Centralized logging • Cost tracking • Performance monitoring
-
-<div class="gateway-summary">
-<div>
-
-**When to use it**
-- Multiple model providers in production
-- Need routing by price, latency, or quality
-
-</div>
-<div>
-
-**Operational Tips**
-- Instrument routing decisions for audit trails
-- Tune thresholds regularly with telemetry
-
-</div>
-</div>
-
-<style scoped>
-section { padding-bottom: 2em; }
-</style>
-
----
-
-## Scratchpad Pattern
-
-**Working Memory for Complex Tasks**
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-e5b0f995.png)
-
-</div>
-<div>
-
-**Benefits**:
-- Tracks task progress
-- Maintains context
-- Stores observations
-
-**Use Cases**:
-- Long-running tasks
-- Multi-step workflows
-- Complex reasoning
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
-img[src*="mermaid"] { max-height: 47% !important; max-width: 87% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 4.5em !important; }
-.columns div { font-size: 0.92em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
-.columns div p { margin: 0.6em 0; }
-.columns div ul { margin: 0.5em 0; padding-left: 1.2em; }
-</style>
-
-
----
-
-<!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
-
-# Part 6: Frameworks
-
-Python, TypeScript & Orchestration
-
-**Key Question**: What tools are available to build these systems?
-
-<!--
-SPEAKER NOTES - PART 6 INTRO:
-- Transition: "Don't build from scratch - use these"
-- Promise: "I'll recommend which to start with"
-- Structure: Python → TypeScript → Orchestration
-- Timing: 5-6 minutes
-- Key advice: "Start with LangChain, explore later"
--->
-
----
-
-## Python Frameworks
-
-**LangChain** (119K+ stars)
-- ReAct agents, memory, tools, chains | General-purpose LLM applications
-
-**LangGraph** (LangChain extension)
-- FSM/BT patterns, stateful workflows | Structured agent control flows
-
-**AG2 (AutoGen)** (38K+ stars)
-- ReAct-based conversations, code execution | Collaborative problem solving
-
-**CrewAI** (30K+ stars)
-- Role-playing ReAct agents, workflows | Content creation and research
-
----
-
-## TypeScript Frameworks
-
-**VoltAgent** - Production-Ready  
-ReAct agents, type safety, tool system, built-in observability | Enterprise deployments
-
-**LangChain.js** - Feature Parity  
-ReAct agents, memory, streaming | Node.js and edge computing
-
-**Composio** - Integration Platform  
-100+ integrations, universal function calling | Integration-heavy applications
-
----
-
-## Workflow Orchestration
-
-**n8n** - Visual workflow builder | 400+ integrations | Low-code automation
-
-**Apache Airflow** - Python-based DAGs | Production-grade scheduling | Complex dependencies
-
-**Temporal** - Durable execution | Automatic retries | Long-running workflows (days/weeks)
-
----
-
-<!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
-
-# Part 7: Examples
-
-Real-World Implementations
-
-**Key Question**: How do these patterns work in real systems?
-
-<!--
-SPEAKER NOTES - PART 7 INTRO:
-- Transition: "Let's see these patterns in action"
-- Setup: "Simplified versions of production systems"
-- What to watch for: "How patterns combine"
-- Timing: 8-10 minutes
-- Keep concrete: Point to specific patterns in diagrams
--->
-
----
-
-## Practical Example: Multi-Agent System
-
-**Scenario**: Autonomous code review system
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-d0156407.png)
-
-</div>
-<div>
-
-**Flow**: Commit → Analyst → Agents → Report → Decision → Approve/Notify
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.2em; }
-img[src*="mermaid"] { max-height: 42% !important; max-width: 88% !important; margin: 0.4em auto 0.6em auto !important; }
-section { padding-bottom: 3.8em !important; }
-.columns div { font-size: 0.9em; line-height: 1.6; margin: 0; padding: 0.2em 0; }
-.columns div p { margin: 0.3em 0; }
-</style>
-
----
-
-## Multi-Agent System: Flow
-
-**Process**:
-1. **Analyst Agent** receives code commit
-2. **Distributes tasks** to specialized agents:
-   - Architect: Code structure review
-   - Code Reviewer: Quality checks
-   - Security: Vulnerability scanning
-3. **Agents report** back to Analyst
-4. **Decision point**: Approve or notify based on results
-
----
-
-## Multi-Agent System: Patterns
-
-**Patterns Used**:
-- **ReAct**: Each agent uses Think → Act → Observe cycle
-- **FSM**: System states (Commit → Analyzing → Reviewing → Decision)
-- **MCP**: Agents communicate via standardized tools/resources
-- **Memory**: Agents learn from past reviews to improve
-
----
-
-## Practical Example: Agent Handoff
-
-**Language-Agnostic Pattern**
-
-<div class="columns">
-<div>
-
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-f7654fb5.png)
-
-</div>
-<div>
-
-**Patterns**:
-- **BT**: Task routing
-- **MCP**: Standardized interfaces
-- **ReAct**: Internal pattern
-- **Scratchpad**: Shared memory
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1em; }
-img[src*="mermaid"] { max-height: 38% !important; max-width: 80% !important; margin: 0.3em auto !important; }
-section { padding-bottom: 3.5em !important; }
-.columns div { font-size: 0.82em; line-height: 1.25; margin: 0; }
-.columns div p { margin: 0.3em 0; }
-.columns div ul { margin: 0.3em 0; padding-left: 1.2em; }
-</style>
-
----
-
-## Agent Handoff: Key Benefits
-
-**Standard interfaces (MCP) allow language-agnostic composition**
-
-**Advantages**:
-- Agents can be written in different languages
-- Coordinator manages communication
-- Each agent focuses on specific tasks
-- Easy to add/remove agents
-- Scalable architecture
-
----
-
-## Agent Handoff: Patterns
-
-**Patterns Used**:
-- **MCP**: Core pattern - standardized tool/resource definitions
-- **Behavior Tree**: Coordinator uses BT for task routing
-- **ReAct**: Each agent implements ReAct internally
-- **AI Gateway**: Routes requests to appropriate agents/models
-
----
-
-## What We Use at Wix
-
-<div class="slide-container">
-<div class="columns">
-<div>
-
-**Knowledge Base Pattern**  
-Infrastructure for semantic search · Build and test easily · RAG foundation
-
-**Workflow Orchestration**  
-Internal systems + n8n · Agent task scheduling · Multi-step automation
-
-</div>
-<div>
-
-**AI Gateway Adapter**  
-Model routing (performance, cost, availability) · Single interface, multiple providers
-
-**Internal LLM Tooling**  
-80% of daily work automated · Focus on what LLMs can't do · Productivity multiplier
-
-</div>
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
-.columns div { font-size: 0.9em; line-height: 1.6; }
-.columns div p { margin: 0.8em 0; }
-.columns div strong { display: block; font-size: 1.08em; color: var(--rose); margin-bottom: 0.3em; }
-</style>
-
----
-
-## What We Use at Wix: Patterns
-
-<div class="slide-container">
-<div class="columns">
-<div>
-
-**Architecture Patterns**
-
-- **AI Gateway** — Routes tasks to optimal models (cost/performance)
-- **FSM** — Workflow orchestration uses state machines
-- **ReAct + Learning** — Agents improve from feedback
-
-</div>
-<div>
-
-**Integration Patterns**
-
-- **MCP** — Standardized tool definitions across systems
-- **Scratchpad** — Complex tasks use working memory pattern
-
-</div>
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
-.columns div { font-size: 0.92em; line-height: 1.6; }
-.columns div strong { display: block; font-size: 1.12em; color: var(--foam); margin-bottom: 0.8em; }
-.columns div ul { list-style: none; padding: 0; margin: 0; }
-.columns div li { margin: 0.7em 0; padding-left: 1.5em; position: relative; }
-.columns div li::before { content: "▸"; position: absolute; left: 0; color: var(--rose); font-weight: bold; }
-.columns div li strong { display: inline; color: var(--pine); font-size: 1em; margin: 0; }
-</style>
-
----
-
-<!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
-
-# Part 8: Best Practices
-
-Design, Security & Common Pitfalls
-
-**Key Question**: How do we avoid common mistakes?
-
-<!--
-SPEAKER NOTES - PART 8 INTRO:
-- Transition: "You've seen what works. Now what NOT to do."
-- Promise: "Learn from our mistakes, not yours"
-- Structure: Best practices → Pitfalls
-- Timing: 6-7 minutes
-- Emphasize: "These are all preventable!"
--->
-
----
-
-## Best Practices: Design & Operations
-
-<div class="columns best-practices">
-<div>
-
-**Design**
-- ✅ Start single → multi-agent
-- ✅ Clear responsibilities
-- ✅ Use standard protocols (MCP)
-- ✅ Proper error handling
-
-</div>
-<div>
-
-**Operations**
-- ✅ Monitor costs & tokens
-- ✅ Implement rate limiting
-- ✅ Log all decisions
-- ✅ Plan for failures
-
-</div>
-</div>
-
-<style scoped>
-section { padding-bottom: 3em !important; }
-</style>
-
----
-
-## Best Practices: Security & Testing
-
-<div class="columns best-practices">
-<div>
-
-**Security**
-- ✅ Validate tool inputs
-- ✅ Sandbox code (E2B)
-- ✅ Access controls
-- ✅ Human-in-the-loop
-
-</div>
-<div>
-
-**Testing**
-- ✅ Diverse scenarios
-- ✅ Benchmark baselines
-- ✅ A/B test approaches
-- ✅ Measure outcomes
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; font-size: 0.95em; }
-.columns h3 { margin: 0 0 0.5em 0; font-size: 1.2em; }
-.columns ul { margin: 0; padding-left: 1.2em; line-height: 1.45; }
-section { padding-bottom: 3em !important; }
-</style>
-
----
-
-## Common Pitfalls to Avoid
-
-<div class="columns">
-<div>
-
-❌ **Over-Automation**
-- Not all tasks need agents
-- Some require human judgment
-
-❌ **Ignoring Costs**
-- API calls add up quickly
-- Monitor continuously
-
-</div>
-<div>
-
-❌ **Poor Tool Design**
-- Vague descriptions confuse agents
-- Complex tools reduce reliability
-
-❌ **Lack of Observability**
-- Can't debug what you can't see
-- Invest in logging early
-
-</div>
-</div>
-
-<style scoped>
-section { padding-bottom: 3.5em !important; }
-.columns { gap: 2em !important; }
-.columns div { font-size: 0.9em !important; line-height: 1.5 !important; }
-.columns div p { margin: 0.5em 0 !important; }
-.columns div ul { margin: 0.3em 0 !important; padding-left: 1.2em !important; }
-</style>
-
----
-
-<!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
-
-# Part 9: Conclusion
-
-Takeaways & Resources
-
-<!--
-SPEAKER NOTES - PART 9 INTRO:
-- Transition: "Let's wrap up with key takeaways"
-- Purpose: Reinforce main concepts
-- Structure: Architecture → Standards → Vision
-- Timing: 5-7 minutes total
-- Goal: Leave them confident and inspired
--->
-
----
-
-## Key Takeaways: Architecture & Design
-
-<div class="takeaways-grid">
-<div>
-
-**Choose the Right Architecture**
-- Simple: Reflex agents
-- Complex: Learning agents + planning
-
-**Design Matters**
-- Separate planning/execution
-- Use scratchpad for reasoning
-- Maintain proper control flows
-
-</div>
-<div>
-
-**Production Ready**
-- Observability is critical
-- Cost monitoring is essential
-- Security first, always
-
-</div>
-</div>
-
-<style scoped>
-section { padding-bottom: 3.5em !important; }
-.takeaways-grid { gap: 2em !important; }
-.takeaways-grid div { font-size: 0.9em !important; }
-</style>
-
----
-
-## Key Takeaways: Standards & Growth
-
-<div class="takeaways-grid">
-<div>
-
-**Leverage Standards**
-- MCP for tools/resources
-- Standard protocols across teams
-- Language-agnostic patterns
-
-**Iterate & Improve**
-- Start simple → expand to complex
-- Measure outcomes continually
-- Learn from failures quickly
-
-</div>
-<div>
-
-**The Future**
-- Better reasoning models (GPT-5, Claude 4)
-- Longer context windows (1M+ tokens)
-- Lower costs, specialized models
-- Shift to "system generation"
-
-</div>
-</div>
-
-<style scoped>
-section { padding-bottom: 3.5em !important; }
-.takeaways-grid { gap: 2em !important; }
-.takeaways-grid div { font-size: 0.9em !important; }
-</style>
-
----
-
-## Resources
-
-**Documentation & Links**
-
-<div class="resources-grid">
-<div>
-<h4>MCP Specification</h4>
-<p><a href="https://modelcontextprotocol.io">modelcontextprotocol.io</a></p>
-</div>
-<div>
-<h4>AG2 (AutoGen)</h4>
-<p><a href="https://ag2.ai">ag2.ai</a></p>
-</div>
-<div>
-<h4>LangChain Python</h4>
-<p><a href="https://python.langchain.com">python.langchain.com</a></p>
-</div>
-<div>
-<h4>Conference Repository</h4>
-<p><a href="https://github.com/Algiras/vs-zinios-conference-2025-11-18">github.com/Algiras/vs-zinios-conference-2025-11-18</a></p>
-</div>
-</div>
-
-<style scoped>
-section { padding-bottom: 1.2em !important; }
-</style>
-
----
-
-## The Vision: Autonomous Development
-
-**Today**: Developers manually write most code
-
-**Tomorrow**: Developers design systems; AI implements them
-
-**The Shift**:
-- From coding → orchestrating agents
-- From debugging → tuning workflows
-- From implementation → architecture
-
-**You're Ready**: You have the patterns, tools, and knowledge to build this
-
-<!--
-SPEAKER NOTES - THE VISION:
-- THIS IS YOUR INSPIRING CLOSE - deliver with energy!
-- Paint the transformation: "Coding becomes orchestration"
-- Empowerment: "You have everything you need to start"
-- Call to action: "Check the Getting Started guide, build something this week"
-- Future is now: "This isn't sci-fi - it's Monday morning"
-- End on high note: "You're not just learning patterns, you're shaping the future of software development"
-- Timing: 2-3 minutes, leave them inspired!
--->
+<!-- SPEAKER NOTES: Suggest attending events like KubeCon, CloudNativeCon, or meetups to learn from experts and peers. -->
 
 ---
 
@@ -2125,237 +412,4 @@ SPEAKER NOTES - THE VISION:
 
 # Thank You!
 
-<div class="thank-you-layout">
-<div class="qr-card">
-
-**Conference Slides & Code**
-
-![QR Code](images/qr/qr-28584567.png)
-
-github.com/Algiras/  
-vs-zinios-conference-2025-11-18
-
-</div>
-<div class="qr-card">
-
-**Connect on LinkedIn**
-
-![QR Code](images/qr/qr-5724c6b6.png)
-
-linkedin.com/in/asimplek
-
-</div>
-</div>
-
-<style scoped>
-.thank-you-layout {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 4em !important;
-  align-items: start !important;
-  margin-top: 3em !important;
-  max-width: 900px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-.qr-card {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  text-align: center !important;
-}
-.qr-card strong {
-  display: block !important;
-  font-size: 1.15em !important;
-  margin-bottom: 0.8em !important;
-  color: var(--foam) !important;
-}
-.qr-card img { 
-  max-width: 220px !important; 
-  max-height: 220px !important;
-  width: auto !important;
-  height: auto !important;
-  margin: 0.8em auto !important;
-  display: block !important;
-}
-.qr-card p {
-  margin: 0.5em 0 0 0 !important;
-  font-size: 0.85em !important;
-  color: var(--subtle) !important;
-  line-height: 1.4 !important;
-}
-</style>
-
----
-
-<!-- _class: lead -->
-<!-- _paginate: false -->
-<!-- _footer: "" -->
-
-## Backup Slides
-
----
-
-## Detailed FSM Example
-
-```python
-class State:
-    def enter(self): pass
-    def execute(self): pass
-    def exit(self): pass
-    def check_transitions(self): return None
-
-class AnalyzingState(State):
-    def execute(self):
-        run_code_analysis()
-    
-    def check_transitions(self):
-        if issues_found():
-            return TestingState()
-        return IdleState()
-
-class FSM:
-    def __init__(self, initial_state):
-        self.current_state = initial_state
-        self.current_state.enter()
-    
-    def update(self):
-        self.current_state.execute()
-        next_state = self.current_state.check_transitions()
-        if next_state:
-            self.current_state.exit()
-            self.current_state = next_state
-            self.current_state.enter()
-```
-
-<style scoped>
-code { font-size: 0.6em; line-height: 1.25; }
-section { padding-bottom: 3em !important; }
-</style>
-
----
-
-## Behavior Tree Node Types
-
-<div class="columns">
-<div>
-
-### Sequence Node
-- Runs children left-to-right
-- Stops on first **FAILURE**
-- Returns SUCCESS if all pass
-- Use for: Required steps
-
-### Selector Node
-- Runs children left-to-right
-- Stops on first **SUCCESS**
-- Returns FAILURE if all fail
-- Use for: Fallback options
-
-</div>
-<div>
-
-### Decorator Node
-- Modifies child behavior
-- Inverter, Repeater, etc.
-- Single child only
-
-### Leaf Nodes
-- **Condition**: Check state
-- **Action**: Do something
-- No children
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; font-size: 0.9em; }
-section { padding-bottom: 2.5em !important; }
-</style>
-
----
-
-## GOAP Planning Algorithm
-
-<div class="columns">
-<div>
-
-### A* Search Process
-1. Start with current state
-2. Try all possible actions
-3. Calculate costs
-4. Choose lowest cost path
-5. Return action sequence
-
-### World State
-- Key-value pairs
-- `has_weapon: true`
-- `ammo: 10`
-
-</div>
-<div>
-
-### Action Structure
-- **Preconditions**: What's needed
-- **Effects**: What changes
-- **Cost**: How expensive
-
-### Planning
-- Build action graph
-- Find cheapest path
-- Execute in sequence
-
-</div>
-</div>
-
-<style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; font-size: 0.9em; }
-section { padding-bottom: 2.5em !important; }
-</style>
-
----
-
-## MCP Tool Structure
-
-<div class="columns">
-<div>
-
-### Core Components
-- **name**: Unique identifier
-- **description**: What it does  
-- **inputSchema**: JSON Schema
-- **outputSchema**: Output format
-
-### Annotations
-- **audience**: `["user", "assistant"]`
-- **priority**: `0.0` to `1.0`
-- **category**: Grouping
-
-</div>
-<div>
-
-### Example: web_search
-```json
-{
-  "name": "web_search",
-  "description": "Search web",
-  "input": {
-    "query": "required",
-    "max_results": "optional"
-  },
-  "output": {
-    "results": "array"
-  }
-}
-```
-
-</div>
-</div>
-
-<style scoped>
-code { font-size: 0.6em; line-height: 1.25; }
-section { padding-bottom: 3em !important; }
-.columns { font-size: 0.85em; }
-</style>
-
-
+**Topic**: Introduction to Kubernetes
