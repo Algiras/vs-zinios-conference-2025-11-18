@@ -49,89 +49,31 @@ jobs:
         env:
           CI: 'true'
       
-      - name: Install ImageMagick (for image generation)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y imagemagick
-      
-      - name: Generate slides and export PPTX
-        run: npm run export:pptx
-        env:
-          CI: 'true'
-      
-      - name: Generate theme-specific slide images
-        run: npm run export:themes
-        env:
-          CI: 'true'
-      
-      - name: Generate PDF
-        run: npm run export:pdf
-        env:
-          CI: 'true'
-      
       - name: Prepare site artifact
         run: |
-          mkdir -p public/downloads
+          mkdir -p public
           cp slides/presentation.html public/index.html
           cp slides/presentation-dark.html public/dark.html
-          cp slides/presentation.pdf public/downloads/presentation.pdf
-          cp slides/presentation.pptx public/downloads/presentation.pptx
-          if [ -f slides/slide-images-light/slides-combined-light.png ]; then
-            cp slides/slide-images-light/slides-combined-light.png public/downloads/slides-combined-light.png
-          fi
-          if [ -f slides/slide-images-dark/slides-combined-dark.png ]; then
-            cp slides/slide-images-dark/slides-combined-dark.png public/downloads/slides-combined-dark.png
-          fi
+          echo "# Autonomous Development Workflows" > public/README.md
+          echo "" >> public/README.md
+          echo "View the presentation:" >> public/README.md
+          echo "- [Light Theme](./index.html)" >> public/README.md
+          echo "- [Dark Theme](./dark.html)" >> public/README.md
       
-      - name: Upload PPTX artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: presentation-pptx
-          path: slides/presentation.pptx
-          retention-days: 30
-          if-no-files-found: warn
-      
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: presentation-pdf
-          path: slides/presentation.pdf
-          retention-days: 30
-          if-no-files-found: warn
-      
-      - name: Upload HTML artifact
+      - name: Upload HTML artifacts
         uses: actions/upload-artifact@v4
         with:
           name: presentation-html
-          path: slides/presentation.html
-          retention-days: 30
-          if-no-files-found: warn
-      
-      - name: Upload combined slide images
-        uses: actions/upload-artifact@v4
-        with:
-          name: slide-images
           path: |
-            slides/slide-images-light/slides-combined-light.png
-            slides/slide-images-dark/slides-combined-dark.png
+            slides/presentation.html
+            slides/presentation-dark.html
           retention-days: 30
-          if-no-files-found: warn
+          if-no-files-found: error
       
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
-      
-      - name: Commit and push generated files (optional)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add slides/presentation.pptx slides/presentation.pdf || true
-          git commit -m "chore: auto-generate slides, PPTX, and PDF [skip ci]" || exit 0
-          git push || exit 0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-pages:
     needs: generate-slides
