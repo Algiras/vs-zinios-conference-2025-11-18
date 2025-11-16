@@ -134,17 +134,22 @@ function generateMermaid(code, themeName = 'rose-pine-dawn') {
       
       console.log(`   Generating Mermaid diagram: ${filename} (${themeName})...`);
       
-      execSync(`npx -y mmdc -i "${mmdFile}" -o "${svgPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q`, {
+      // Add --no-sandbox flag for CI environments (GitHub Actions, etc.)
+      const sandboxFlag = process.env.CI ? ' --no-sandbox' : '';
+      
+      execSync(`npx -y mmdc -i "${mmdFile}" -o "${svgPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q${sandboxFlag}`, {
         stdio: 'pipe'
       });
       
-      execSync(`npx -y mmdc -i "${mmdFile}" -o "${pngPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q`, {
+      execSync(`npx -y mmdc -i "${mmdFile}" -o "${pngPath}" -t default -b transparent -w 1920 -H 1080 -s 2 -q${sandboxFlag}`, {
         stdio: 'pipe'
       });
       
       console.log(`   ✅ Generated ${filename} (${themeName})`);
     } catch (error) {
-      console.error(`   ❌ Failed to generate ${filename} (${themeName}):`, error.message);
+      console.warn(`   ⚠️  Failed to generate ${filename} (${themeName}):`, error.message.split('\n')[0]);
+      console.warn(`   📝 Will use inline SVG fallback instead`);
+      // Return null to indicate fallback should be used (keep original mermaid block)
       return null;
     }
   }

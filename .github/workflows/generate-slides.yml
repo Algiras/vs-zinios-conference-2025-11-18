@@ -46,6 +46,8 @@ jobs:
       
       - name: Build HTML presentation
         run: npm run build
+        env:
+          CI: 'true'
       
       - name: Install ImageMagick (for image generation)
         run: |
@@ -54,12 +56,18 @@ jobs:
       
       - name: Generate slides and export PPTX
         run: npm run export:pptx
+        env:
+          CI: 'true'
       
       - name: Generate theme-specific slide images
         run: npm run export:themes
+        env:
+          CI: 'true'
       
       - name: Generate PDF
         run: npm run export:pdf
+        env:
+          CI: 'true'
       
       - name: Prepare site artifact
         run: |
