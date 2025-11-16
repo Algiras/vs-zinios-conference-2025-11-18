@@ -67,6 +67,12 @@ jobs:
         run: npm ci
         env:
           PUPPETEER_SKIP_DOWNLOAD: 'false'
+          PUPPETEER_EXECUTABLE_PATH: '/usr/bin/chromium-browser'
+      
+      - name: Configure Puppeteer for CI
+        run: |
+          echo "PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser" >> $GITHUB_ENV
+          echo "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true" >> $GITHUB_ENV
       
       - name: Lint Mermaid diagrams
         run: npm run lint:mermaid
