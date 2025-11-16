@@ -1088,21 +1088,21 @@ FSM, BT, GOAP & ReAct
 
 ## GOAP: Goal-Oriented Action Planning
 
-**Advanced ReAct Planning with Cost Optimization**
+**Tree of Thought with Pruning**
 
 <div class="columns">
 <div>
 
-![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-ea397b79.png)
+![Mermaid diagram](images/mermaid/rose-pine-dawn/mermaid-412d0eb2.png)
 
 </div>
 <div>
 
-**Concept**: ReAct planning with cost-based pathfinding
+**Concept**: Tree of thought exploration with cost-based pruning
 
-**Use Case**: Complex multi-step workflows where cost matters
+**Use Case**: Complex multi-step workflows requiring optimal planning
 
-**In LLM Space**: Advanced ReAct variant. Most frameworks use simpler ReAct; GOAP for specialized planning needs.
+**In LLM Space**: Advanced planning pattern. Evaluates multiple paths before execution.
 
 </div>
 </div>
@@ -1119,7 +1119,7 @@ section { padding-bottom: 3.5em !important; }
 
 ## ReAct Pattern (Reasoning + Acting)
 
-**Modern LLM Agent Paradigm**
+**Simplified FSM + GOAP with Limitations**
 
 <div class="columns">
 <div>
@@ -1129,11 +1129,13 @@ section { padding-bottom: 3.5em !important; }
 </div>
 <div>
 
-**Key**: Reasoning + tool use
+**Key**: FSM states + single-step planning (no tree exploration)
 
-**Cycle**: Think → Act → Observe → Reflect
+**Cycle**: Think → Act → Observe → Reflect (fixed state machine)
 
-**In LLM Space**: Core pattern in LangChain, VoltAgent, AG2, CrewAI. Most modern LLM frameworks implement ReAct as their default agent paradigm.
+**Limitations**: No multi-path exploration, no cost-based pruning, simpler than full GOAP
+
+**In LLM Space**: Default pattern in LangChain, VoltAgent, AG2, CrewAI. Trade-off: simplicity vs. optimal planning.
 
 </div>
 </div>
@@ -1156,8 +1158,8 @@ section { padding-bottom: 3.5em !important; }
 |:---|:---|:---|:---|
 | 🔄 **FSM** | State + Transitions | Simple, predictable | Workflow pipelines |
 | 🌳 **BT** | Tree of behaviors | Modular, scalable | Complex task hierarchies |
-| 🎯 **GOAP** | A* pathfinding | Dynamic, optimal paths | Goal-driven planning |
-| 💭 **ReAct** | Thought → Action → Observation | LLM reasoning | Modern LLM agents |
+| 🎯 **GOAP** | Tree of thought + pruning | Optimal planning | Multi-path goal planning |
+| 💭 **ReAct** | FSM + single-step planning | Simple, fast | Common LLM agents |
 | 🧠 **Learning Agents** | Memory + Feedback loops | Adaptive, self-improving | Long-term autonomous systems |
 
 <style scoped>
@@ -1173,12 +1175,12 @@ section { padding-bottom: 3em !important; }
 
 ## Agent Architecture Patterns: Recommendations
 
-**Recommendation**: For autonomous development, use **ReAct + Learning** with optional GOAP/BT/FSM for complex workflows
+**Recommendation**: For autonomous development, use **ReAct + Learning** with optional GOAP for optimal planning
 
 **Framework Mapping**:
-- **ReAct**: LangChain, VoltAgent, AG2, CrewAI (default pattern)
+- **ReAct**: LangChain, VoltAgent, AG2, CrewAI (simplified FSM+planning)
 - **FSM/BT**: LangGraph provides primitives for structured workflows
-- **GOAP**: Specialized planning (advanced ReAct variant, less common)
+- **GOAP**: Specialized planning (tree of thought with pruning, more complex than ReAct)
 
 ---
 
