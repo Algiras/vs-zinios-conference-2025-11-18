@@ -20,7 +20,7 @@ const fs = require('fs');
 const path = require('path');
 const { ChatOllama } = require('@langchain/ollama');
 const { HumanMessage, SystemMessage } = require('@langchain/core/messages');
-const { exec } = require('child_process');
+const { exec, execSync } = require('child_process');
 const util = require('util');
 const execPromise = util.promisify(exec);
 
@@ -480,24 +480,34 @@ ${outline.subtitle}
   console.log(`📏 Total slides: ${allSlides.length + 2}`); // +2 for Questions and Thank You
   
   // Post-process: Build HTML with Mermaid diagrams
-  console.log('\n🔧 Post-processing: Building HTML with Mermaid diagrams...');
+  console.log('\n🔧 Post-processing: Converting Mermaid diagrams to images...');
   try {
-    // Preprocess Mermaid diagrams to images
-    execSync(`node scripts/preprocess-for-pdf.js slides/demo-presentation.md`, {
-      cwd: path.join(__dirname, '..'),
-      stdio: 'inherit'
-    });
+    const scriptsDir = path.join(__dirname, '../scripts');
+    const preprocessScript = path.join(scriptsDir, 'preprocess-for-pdf.js');
+    const demoMdPath = path.join(__dirname, '../slides/demo-presentation.md');
+    const preprocessedPath = path.join(__dirname, '../slides/demo-presentation.preprocessed.md');
+    const demoHtmlPath = path.join(__dirname, '../slides/demo-presentation.html');
+    const themePath = path.join(__dirname, '../themes/rose-pine-dawn.css');
     
-    // Build HTML from preprocessed markdown
-    execSync(`npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files --theme themes/rose-pine-dawn.css slides/presentation.preprocessed.md -o slides/demo-presentation.html`, {
-      cwd: path.join(__dirname, '..'),
-      stdio: 'inherit'
-    });
+    // Step 1: Preprocess Mermaid diagrams to images
+    console.log('   1/2: Preprocessing Mermaid diagrams...');
+    const { preprocessMarkdown } = require(preprocessScript);
+    const preprocessedContent = await preprocessMarkdown(demoMdPath);
+    fs.writeFileSync(preprocessedPath, preprocessedContent, 'utf8');
+    console.log('   ✅ Mermaid diagrams converted to images');
     
-    console.log('✅ HTML built: slides/demo-presentation.html');
+    // Step 2: Build HTML from preprocessed markdown
+    console.log('   2/2: Building HTML...');
+    execSync(`npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files --theme "${themePath}" "${preprocessedPath}" -o "${demoHtmlPath}"`, {
+      stdio: 'pipe'
+    });
+    console.log('   ✅ HTML built: slides/demo-presentation.html');
   } catch (error) {
-    console.warn('⚠️  Post-processing failed, but markdown was saved');
-    console.warn('Run manually: npm run build');
+    console.warn('\n⚠️  Post-processing failed:', error.message);
+    console.warn('   Markdown saved, but Mermaid diagrams not rendered');
+    console.warn('   Run manually:');
+    console.warn('   1. node scripts/preprocess-for-pdf.js slides/demo-presentation.md');
+    console.warn('   2. npx @marp-team/marp-cli slides/demo-presentation.preprocessed.md -o slides/demo-presentation.html');
   }
   
   return outputPath;
