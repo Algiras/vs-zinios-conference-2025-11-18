@@ -159,15 +159,54 @@ style: |
     background-color: var(--highlight-low);
   }
   
+  /* About Me Layout */
+  .about-me-layout {
+    display: grid !important;
+    grid-template-columns: 200px 1fr !important;
+    gap: 3em !important;
+    align-items: start !important;
+    margin-top: 2em !important;
+  }
+  .about-me-layout .profile-image {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .about-me-layout .profile-content h3 {
+    margin: 0 0 0.3em 0 !important;
+    font-size: 1.3em !important;
+    line-height: 1.3 !important;
+  }
+  .about-me-layout .profile-content p {
+    margin: 0.6em 0 !important;
+    line-height: 1.6 !important;
+  }
+  .about-me-layout .profile-content strong {
+    display: block !important;
+    margin-bottom: 0.2em !important;
+    color: var(--rose) !important;
+  }
+  
   /* Profile image - circular */
   img[alt="Profile"],
   img[src*="profile"] {
-    width: 150px !important;
-    height: 150px !important;
+    width: 180px !important;
+    height: 180px !important;
     border-radius: 50%;
     object-fit: cover;
     display: block;
     margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Wix logo */
+  img[alt="Wix Logo"],
+  img[src*="wix-logo"] {
+    max-width: 120px !important;
+    height: auto !important;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
   }
   
   /* QR codes - smaller, centered */
@@ -599,22 +638,25 @@ Building AI Systems That Code Independently
 
 ## About Me
 
-<div class="columns" style="grid-template-columns: 150px 1fr; gap: 2em; align-items: center;">
-<div>
+<div class="about-me-layout">
+<div class="profile-image">
 
 ![Profile](images/profile.jpeg)
 
 </div>
-<div>
+<div class="profile-content">
 
-**🧑‍💻 Algimantas Krasauskas**  
-AI Tool Developer at Wix
+### 🧑‍💻 Algimantas Krasauskas
+**AI Tool Developer at Wix**
 
-**Focus:** Autonomous AI systems | LLM orchestration | Developer productivity
+**Focus**  
+Autonomous AI systems · LLM orchestration · Developer productivity
 
-**Background**: Building scalable AI systems & intelligent workflows
+**Background**  
+Building scalable AI systems & intelligent workflows
 
-**GitHub**: https://github.com/Algiras/vs-zinios-conference-2025-11-18
+**GitHub**  
+https://github.com/Algiras/vs-zinios-conference-2025-11-18
 
 </div>
 </div>
@@ -1462,6 +1504,14 @@ section { padding-bottom: 3.5em !important; }
 
 ## What We Use at Wix
 
+<div style="display: flex; align-items: center; gap: 1em; margin-bottom: 1em;">
+<div>
+
+<!-- Add Wix logo here when available: ![Wix Logo](images/wix-logo.png) -->
+
+</div>
+</div>
+
 **Knowledge Base Pattern** - Infrastructure for semantic search | Build and test easily | RAG foundation
 
 **Workflow Orchestration** - Internal systems + n8n | Agent task scheduling | Multi-step automation
@@ -1473,6 +1523,14 @@ section { padding-bottom: 3.5em !important; }
 ---
 
 ## What We Use at Wix: Patterns
+
+<div style="display: flex; align-items: center; gap: 1em; margin-bottom: 1em;">
+<div>
+
+<!-- Add Wix logo here when available: ![Wix Logo](images/wix-logo.png) -->
+
+</div>
+</div>
 
 **Patterns in Practice**:
 - **AI Gateway**: Routes tasks to optimal models (cost/performance)
