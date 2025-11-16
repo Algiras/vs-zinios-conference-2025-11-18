@@ -166,68 +166,94 @@ style: |
     margin-bottom: 1em !important;
   }
   
-  /* About Me Layout - 3 columns */
-  .about-me-layout {
+  /* About Me Intro - Slide 1 */
+  .about-me-intro {
     display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
-    gap: 2em !important;
-    align-items: start !important;
-    margin-top: 1em !important;
+    grid-template-columns: 280px 1fr !important;
+    gap: 3.5em !important;
+    align-items: center !important;
+    margin-top: 2em !important;
   }
-  .about-me-layout .profile-image {
+  .about-me-intro .profile-section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .about-me-intro .info-section {
+    font-size: 0.95em !important;
+    line-height: 1.7 !important;
+  }
+  .about-me-intro .info-section h3 {
+    margin: 0 0 0.5em 0 !important;
+    font-size: 1.5em !important;
+    line-height: 1.2 !important;
+  }
+  .about-me-intro .info-section p {
+    margin: 0.8em 0 !important;
+  }
+  .about-me-intro .info-section strong {
+    display: block !important;
+    font-size: 1.15em !important;
+    color: var(--rose) !important;
+    margin-bottom: 0.6em !important;
+  }
+  
+  /* Focus Layout - Slide 2 */
+  .focus-layout {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4em !important;
+    align-items: start !important;
+    margin-top: 2em !important;
+  }
+  .focus-layout .focus-areas {
+    font-size: 0.95em !important;
+    line-height: 1.7 !important;
+  }
+  .focus-layout .focus-areas strong {
+    display: block !important;
+    font-size: 1.2em !important;
+    color: var(--foam) !important;
+    margin-bottom: 0.6em !important;
+  }
+  .focus-layout .focus-areas img[src*="wix-logo"] {
+    max-width: 120px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0.5em 0 1em 0 !important;
+  }
+  .focus-layout .focus-areas ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .focus-layout .focus-areas li {
+    margin: 0.6em 0 !important;
+    font-size: 1.05em !important;
+  }
+  .focus-layout .qr-section {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
     font-size: 0.85em !important;
-    line-height: 1.4 !important;
-  }
-  .about-me-layout .profile-image p {
-    margin: 0.6em 0 0.3em 0 !important;
-  }
-  .about-me-layout .profile-image strong {
-    font-size: 1.05em !important;
-    line-height: 1.3 !important;
-    display: block !important;
-    margin-bottom: 0.3em !important;
-  }
-  .about-me-layout .profile-content {
-    font-size: 0.85em !important;
     line-height: 1.5 !important;
   }
-  .about-me-layout .profile-content p {
-    margin: 0 0 0.8em 0 !important;
-  }
-  .about-me-layout .profile-content strong {
+  .focus-layout .qr-section strong {
     display: block !important;
-    font-size: 1.05em !important;
-    margin-bottom: 0.4em !important;
+    font-size: 1.2em !important;
     color: var(--foam) !important;
+    margin-bottom: 0.8em !important;
   }
-  .about-me-layout .profile-links {
-    font-size: 0.85em !important;
-    line-height: 1.5 !important;
-  }
-  .about-me-layout .profile-links p {
-    margin: 0 !important;
-  }
-  .about-me-layout .profile-links strong {
+  .focus-layout .qr-section img[src*="qr"] {
+    max-width: 200px !important;
+    max-height: 200px !important;
+    margin: 0.5em auto 1em auto !important;
     display: block !important;
-    font-size: 1.05em !important;
-    margin-bottom: 0.4em !important;
-    color: var(--foam) !important;
   }
-  .about-me-layout .profile-links a {
-    color: var(--pine) !important;
-    text-decoration: none !important;
-    border-bottom: 1px solid var(--pine) !important;
-    transition: all 0.2s ease !important;
-    word-break: normal !important;
-    display: inline-block !important;
-  }
-  .about-me-layout .profile-links a:hover {
-    color: var(--rose) !important;
-    border-bottom-color: var(--rose) !important;
+  .focus-layout .qr-section p {
+    margin: 0.3em 0 !important;
+    color: var(--subtle) !important;
   }
   
   /* Profile image - circular */
@@ -738,33 +764,53 @@ Building AI Systems That Code Independently
 ## About Me
 
 <div class="slide-container">
-<div class="about-me-layout">
-<div class="profile-image">
+<div class="about-me-intro">
+<div class="profile-section">
 
 ![Profile](images/profile.jpeg)
 
-**🧑‍💻 Algimantas Krasauskas**
-
-AI Tool Developer at Wix
-
 </div>
-<div class="profile-content">
+<div class="info-section">
 
-**Focus**  
-Autonomous AI systems  
-LLM orchestration  
-Developer productivity
+### 🧑‍💻 Algimantas Krasauskas
 
-**Background**  
+**AI Tool Developer at Wix**
+
 Building scalable AI systems & intelligent workflows
 
-</div>
-<div class="profile-links">
+Focused on autonomous development and LLM orchestration
 
-**GitHub**  
-[github.com/Algiras/  
-vs-zinios-conference-  
-2025-11-18](https://github.com/Algiras/vs-zinios-conference-2025-11-18)
+</div>
+</div>
+</div>
+
+---
+
+## What I Focus On
+
+<div class="slide-container">
+<div class="focus-layout">
+<div class="focus-areas">
+
+**My Work at Wix**
+
+![Wix Logo](images/wix-logo.png)
+
+- 🤖 Autonomous AI systems
+- 🔗 LLM orchestration
+- ⚡ Developer productivity
+- 🏗️ Intelligent workflows
+- 📚 Knowledge base infrastructure
+
+</div>
+<div class="qr-section">
+
+**Slides & Code**
+
+![QR Code](images/qr/qr-28584567.png)
+
+github.com/Algiras/  
+vs-zinios-conference-2025-11-18
 
 </div>
 </div>
@@ -1904,26 +1950,64 @@ section { padding-bottom: 1.2em !important; }
 
 # Thank You!
 
-**Conference Repository**
+<div class="thank-you-layout">
+<div class="qr-card">
 
-https://github.com/Algiras/vs-zinios-conference-2025-11-18
+**Conference Slides & Code**
 
 ![QR Code](images/qr/qr-28584567.png)
 
+github.com/Algiras/  
+vs-zinios-conference-2025-11-18
+
+</div>
+<div class="qr-card">
+
+**Connect on LinkedIn**
+
+![QR Code](images/qr/qr-5724c6b6.png)
+
+linkedin.com/in/asimplek
+
+</div>
+</div>
+
 <style scoped>
-p {
-  margin: 0.8em 0;
-  font-size: 1.1em;
-}
-img { 
-  max-width: 200px !important; 
-  max-height: 200px !important;
-  width: auto !important;
-  height: auto !important;
-  margin-top: 1.5em !important;
-  display: block !important;
+.thank-you-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 4em !important;
+  align-items: start !important;
+  margin-top: 3em !important;
+  max-width: 900px !important;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+.qr-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+.qr-card strong {
+  display: block !important;
+  font-size: 1.15em !important;
+  margin-bottom: 0.8em !important;
+  color: var(--foam) !important;
+}
+.qr-card img { 
+  max-width: 220px !important; 
+  max-height: 220px !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0.8em auto !important;
+  display: block !important;
+}
+.qr-card p {
+  margin: 0.5em 0 0 0 !important;
+  font-size: 0.85em !important;
+  color: var(--subtle) !important;
+  line-height: 1.4 !important;
 }
 </style>
 
