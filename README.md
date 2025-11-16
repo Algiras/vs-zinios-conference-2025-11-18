@@ -59,9 +59,19 @@ npm run dev:dark
 # Open http://localhost:8080 in your browser
 ```
 
-**Download**:
-- [PowerPoint (PPTX)](slides/presentation.pptx) - 16:9 format
-- [PDF](slides/presentation.pdf) - For offline viewing
+**Generate Downloads**:
+```bash
+# Generate PowerPoint (PPTX) - 16:9 format
+npm run export
+
+# Generate PDF
+npm run export:pdf
+
+# Outputs will be in slides/ directory
+```
+
+**Or Download from GitHub Actions Artifacts**:
+- Check the [latest workflow run](https://github.com/Algiras/vs-zinios-conference-2025-11-18/actions) for downloadable artifacts
 
 ## 🎯 For Presenters
 
