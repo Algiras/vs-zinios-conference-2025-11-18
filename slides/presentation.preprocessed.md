@@ -166,11 +166,11 @@ style: |
     margin-bottom: 1em !important;
   }
   
-  /* About Me Layout */
+  /* About Me Layout - 3 columns */
   .about-me-layout {
     display: grid !important;
-    grid-template-columns: 200px 1fr !important;
-    gap: 3em !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 2em !important;
     align-items: start !important;
     margin-top: 1em !important;
   }
@@ -178,35 +178,54 @@ style: |
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    text-align: center !important;
+    font-size: 0.85em !important;
+    line-height: 1.4 !important;
+  }
+  .about-me-layout .profile-image p {
+    margin: 0.6em 0 0.3em 0 !important;
+  }
+  .about-me-layout .profile-image strong {
+    font-size: 1.05em !important;
+    line-height: 1.3 !important;
+    display: block !important;
+    margin-bottom: 0.3em !important;
   }
   .about-me-layout .profile-content {
-    font-size: 0.92em !important;
-    line-height: 1.6 !important;
+    font-size: 0.85em !important;
+    line-height: 1.5 !important;
   }
-  .about-me-layout .profile-content h3 {
-    margin: 0 0 0.2em 0 !important;
-    font-size: 1.3em !important;
-    line-height: 1.2 !important;
-  }
-  .about-me-layout .profile-content > p {
+  .about-me-layout .profile-content p {
     margin: 0 0 0.8em 0 !important;
   }
-  .about-me-layout .profile-content > p > strong:first-child {
+  .about-me-layout .profile-content strong {
     display: block !important;
     font-size: 1.05em !important;
-    margin-bottom: 0.3em !important;
+    margin-bottom: 0.4em !important;
     color: var(--foam) !important;
   }
-  .about-me-layout .profile-content a {
+  .about-me-layout .profile-links {
+    font-size: 0.85em !important;
+    line-height: 1.5 !important;
+  }
+  .about-me-layout .profile-links p {
+    margin: 0 !important;
+  }
+  .about-me-layout .profile-links strong {
+    display: block !important;
+    font-size: 1.05em !important;
+    margin-bottom: 0.4em !important;
+    color: var(--foam) !important;
+  }
+  .about-me-layout .profile-links a {
     color: var(--pine) !important;
     text-decoration: none !important;
     border-bottom: 1px solid var(--pine) !important;
     transition: all 0.2s ease !important;
-    word-break: break-all !important;
-    font-size: 0.9em !important;
+    word-break: normal !important;
+    display: inline-block !important;
   }
-  .about-me-layout .profile-content a:hover {
+  .about-me-layout .profile-links a:hover {
     color: var(--rose) !important;
     border-bottom-color: var(--rose) !important;
   }
@@ -724,20 +743,28 @@ Building AI Systems That Code Independently
 
 ![Profile](images/profile.jpeg)
 
+**🧑‍💻 Algimantas Krasauskas**
+
+AI Tool Developer at Wix
+
 </div>
 <div class="profile-content">
 
-### 🧑‍💻 Algimantas Krasauskas
-**AI Tool Developer at Wix**
-
 **Focus**  
-Autonomous AI systems · LLM orchestration · Developer productivity
+Autonomous AI systems  
+LLM orchestration  
+Developer productivity
 
 **Background**  
 Building scalable AI systems & intelligent workflows
 
+</div>
+<div class="profile-links">
+
 **GitHub**  
-[github.com/Algiras/vs-zinios-conference-2025-11-18](https://github.com/Algiras/vs-zinios-conference-2025-11-18)
+[github.com/Algiras/  
+vs-zinios-conference-  
+2025-11-18](https://github.com/Algiras/vs-zinios-conference-2025-11-18)
 
 </div>
 </div>
@@ -2071,4 +2098,5 @@ code { font-size: 0.6em; line-height: 1.25; }
 section { padding-bottom: 3em !important; }
 .columns { font-size: 0.85em; }
 </style>
+
 
