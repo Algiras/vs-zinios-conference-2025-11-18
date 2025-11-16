@@ -96,6 +96,18 @@ if (fs.existsSync(sourceQrDir)) {
   });
 }
 
+// Copy other images (profile, logos, etc) from images/ root
+const sourceImagesDir = path.join(slidesDir, 'images');
+if (fs.existsSync(sourceImagesDir)) {
+  fs.readdirSync(sourceImagesDir).forEach(file => {
+    const filePath = path.join(sourceImagesDir, file);
+    // Only copy files (not directories) that are image files
+    if (fs.statSync(filePath).isFile() && file.match(/\.(png|svg|jpg|jpeg|gif|webp)$/i)) {
+      fs.copyFileSync(filePath, path.join(tempImagesDir, file));
+    }
+  });
+}
+
 // Copy theme files to temp location so Marp CLI can find them
 const sourceThemesDir = path.join(slidesDir);
 const tempThemesDir = tempDir;
