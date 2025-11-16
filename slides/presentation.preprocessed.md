@@ -56,7 +56,7 @@ style: |
     padding-left: 1.5em;
     padding-right: 1.5em;
     padding-top: 4em;
-    padding-bottom: 3.5em;
+    padding-bottom: 5em;
   }
   /* Prevent vertical centering on regular slides, but allow lead slides to center */
   section:not(.lead) {
@@ -159,13 +159,20 @@ style: |
     background-color: var(--highlight-low);
   }
   
+  /* Slide Container - prevents footer overlap */
+  .slide-container {
+    max-height: calc(100vh - 10em) !important;
+    overflow: visible !important;
+    margin-bottom: 1em !important;
+  }
+  
   /* About Me Layout */
   .about-me-layout {
     display: grid !important;
     grid-template-columns: 220px 1fr !important;
     gap: 3.5em !important;
     align-items: start !important;
-    margin-top: 2.5em !important;
+    margin-top: 1.5em !important;
   }
   .about-me-layout .profile-image {
     display: flex !important;
@@ -718,6 +725,7 @@ Building AI Systems That Code Independently
 
 ## About Me
 
+<div class="slide-container">
 <div class="about-me-layout">
 <div class="profile-image">
 
@@ -743,6 +751,7 @@ Building scalable AI systems & intelligent workflows
 
 </div>
 
+</div>
 </div>
 </div>
 
@@ -1589,6 +1598,7 @@ section { padding-bottom: 3.5em !important; }
 
 ## What We Use at Wix
 
+<div class="slide-container">
 <div class="wix-showcase">
 
 <!-- Add Wix logo here when available:
@@ -1616,11 +1626,13 @@ Model routing (performance, cost, availability) · Single interface, multiple pr
 </div>
 
 </div>
+</div>
 
 ---
 
 ## What We Use at Wix: Patterns
 
+<div class="slide-container">
 <div class="wix-showcase">
 
 <!-- Add Wix logo here when available:
@@ -1643,6 +1655,7 @@ Model routing (performance, cost, availability) · Single interface, multiple pr
 
 </div>
 
+</div>
 </div>
 
 ---
