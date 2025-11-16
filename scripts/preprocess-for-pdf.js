@@ -215,14 +215,38 @@ module.exports = { preprocessMarkdown, generateMermaid, generateQRCode };
 // Main execution (CLI mode - for backward compatibility)
 if (require.main === module) {
   const inputFile = process.argv[2] || path.join(__dirname, '../slides/presentation.md');
-  const outputFile = process.argv[3] || path.join(__dirname, '../slides/presentation.preprocessed.md');
-
-  preprocessMarkdown(inputFile).then(content => {
-    fs.writeFileSync(outputFile, content, 'utf8');
-    console.log(`✅ Preprocessed markdown saved to: ${outputFile}`);
-  }).catch(error => {
-    console.error('❌ Preprocessing failed:', error.message);
-    process.exit(1);
-  });
+  const themeName = process.argv[3]; // Optional: 'rose-pine-dawn' or 'rose-pine-moon'
+  
+  if (themeName && (themeName === 'rose-pine-dawn' || themeName === 'rose-pine-moon')) {
+    // Generate themed version
+    const suffix = themeName === 'rose-pine-dawn' ? 'light' : 'dark';
+    const outputFile = path.join(__dirname, `../slides/presentation.preprocessed.${suffix}.md`);
+    
+    preprocessMarkdown(inputFile, themeName).then(content => {
+      fs.writeFileSync(outputFile, content, 'utf8');
+      console.log(`✅ Preprocessed markdown (${suffix}) saved to: ${outputFile}`);
+    }).catch(error => {
+      console.error(`❌ Preprocessing (${suffix}) failed:`, error.message);
+      process.exit(1);
+    });
+  } else {
+    // Default: generate both light and dark versions
+    const outputFileLight = path.join(__dirname, '../slides/presentation.preprocessed.light.md');
+    const outputFileDark = path.join(__dirname, '../slides/presentation.preprocessed.dark.md');
+    
+    Promise.all([
+      preprocessMarkdown(inputFile, 'rose-pine-dawn').then(content => {
+        fs.writeFileSync(outputFileLight, content, 'utf8');
+        console.log(`✅ Preprocessed markdown (light) saved to: ${outputFileLight}`);
+      }),
+      preprocessMarkdown(inputFile, 'rose-pine-moon').then(content => {
+        fs.writeFileSync(outputFileDark, content, 'utf8');
+        console.log(`✅ Preprocessed markdown (dark) saved to: ${outputFileDark}`);
+      })
+    ]).catch(error => {
+      console.error('❌ Preprocessing failed:', error.message);
+      process.exit(1);
+    });
+  }
 }
 

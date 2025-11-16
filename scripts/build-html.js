@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Build HTML presentation from preprocessed markdown
+ * Build HTML presentations from preprocessed markdown (light + dark themes)
  * Handles Marp CLI export with proper error handling
  */
 
@@ -10,32 +10,49 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const slidesDir = path.join(__dirname, '../slides');
-const preprocessedFile = path.join(slidesDir, 'presentation.preprocessed.md');
-const outputFile = path.join(slidesDir, 'presentation.html');
+const themesDir = path.join(__dirname, '../themes');
+
+const builds = [
+  {
+    preprocessed: path.join(slidesDir, 'presentation.preprocessed.light.md'),
+    output: path.join(slidesDir, 'presentation.html'),
+    theme: path.join(themesDir, 'rose-pine-dawn.css'),
+    label: 'light (default)'
+  },
+  {
+    preprocessed: path.join(slidesDir, 'presentation.preprocessed.dark.md'),
+    output: path.join(slidesDir, 'presentation-dark.html'),
+    theme: path.join(themesDir, 'rose-pine-moon.css'),
+    label: 'dark'
+  }
+];
 
 try {
-  console.log('📄 Building HTML presentation...\n');
+  console.log('📄 Building HTML presentations...\n');
   
-  // Check if preprocessed file exists
-  if (!fs.existsSync(preprocessedFile)) {
-    console.error(`❌ Error: Preprocessed file not found: ${preprocessedFile}`);
-    console.error('Please run npm run build first');
-    process.exit(1);
+  for (const build of builds) {
+    console.log(`🎨 Building ${build.label} theme...`);
+    
+    // Check if preprocessed file exists
+    if (!fs.existsSync(build.preprocessed)) {
+      console.error(`❌ Error: Preprocessed file not found: ${build.preprocessed}`);
+      console.error('Please run preprocessing first');
+      process.exit(1);
+    }
+    
+    // Use Marp CLI to convert markdown to HTML
+    // Specify full output file path to avoid directory interpretation
+    // Skip config file that forces directory input mode
+    const cmd = `npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files --theme "${build.theme}" "${build.preprocessed}" -o "${build.output}"`;
+    
+    execSync(cmd, {
+      stdio: 'inherit'
+    });
+    
+    console.log(`✅ ${build.label} theme: ${build.output}\n`);
   }
   
-  // Use Marp CLI to convert markdown to HTML
-  // Specify full output file path to avoid directory interpretation
-  // Skip config file that forces directory input mode
-  const cmd = `npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files "${preprocessedFile}" -o "${outputFile}"`;
-  
-  console.log(`Running: marp-cli --html presentation.preprocessed.md -o slides/presentation.html\n`);
-  
-  execSync(cmd, {
-    stdio: 'inherit'
-  });
-  
-  console.log('\n✅ HTML presentation generated successfully');
-  console.log(`📄 Output: ${outputFile}`);
+  console.log('✅ All HTML presentations generated successfully');
   
 } catch (error) {
   console.error('\n❌ HTML build failed');

@@ -11,7 +11,7 @@ slides/*.html
 slides/*.pptx
 slides/*.pdf
 slides/*.processed.md
-slides/presentation.preprocessed.md
+slides/presentation.preprocessed.*.md
 
 # Generated images (dev-mode build artifacts - use dist/ for final builds)
 slides/images/mermaid/

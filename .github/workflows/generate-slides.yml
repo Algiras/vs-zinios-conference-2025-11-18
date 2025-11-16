@@ -73,6 +73,7 @@ jobs:
         run: |
           mkdir -p public/downloads
           cp slides/presentation.html public/index.html
+          cp slides/presentation-dark.html public/dark.html
           cp slides/presentation.pdf public/downloads/presentation.pdf
           cp slides/presentation.pptx public/downloads/presentation.pptx
           if [ -f slides/slide-images-light/slides-combined-light.png ]; then
