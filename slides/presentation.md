@@ -1140,11 +1140,11 @@ graph LR
 <div>
 
 ```mermaid
-graph TB
-    GOAL["🎯 Goal"] --> EXPLORE["🌳 Explore<br/>Possible Paths"]
-    EXPLORE --> PRUNE["✂️ Prune<br/>(Cost-based)"]
-    PRUNE --> PLAN["📋 Select Plan<br/>(A* pathfinding)"]
-    PLAN --> EXEC["⚙️ Execute<br/>(Optimal path)"]
+graph LR
+    GOAL["🎯 Goal"] --> EXPLORE["🌳 Explore<br/>Paths"]
+    EXPLORE --> PRUNE["✂️ Prune<br/>Cost-based"]
+    PRUNE --> PLAN["📋 Plan<br/>A* search"]
+    PLAN --> EXEC["⚙️ Execute"]
     style GOAL fill:#e1f5ff
     style EXPLORE fill:#fff3e0
     style PRUNE fill:#ffebee
@@ -1165,8 +1165,8 @@ graph TB
 </div>
 
 <style scoped>
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; }
-img[src*="mermaid"] { max-height: 42% !important; max-width: 80% !important; margin: 0.3em auto !important; }
+.columns { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5em; }
+img[src*="mermaid"] { max-height: 35% !important; max-width: 90% !important; margin: 0.5em auto !important; }
 section { padding-bottom: 3.5em !important; }
 .columns div { font-size: 0.88em; line-height: 1.5; margin: 0; }
 .columns div p { margin: 0.6em 0; }
