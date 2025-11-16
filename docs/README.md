@@ -2,6 +2,15 @@
 
 This directory contains research materials and documentation for the presentation on "Autonomous Development Workflows." All resources are organized to support the key points outlined in the main README.
 
+## 🚀 Quick Start
+
+**New to Autonomous Development?** Start here:
+- **[Getting Started Guide](getting-started.md)** - Practical steps to build your first autonomous system
+  - Choose your first use case
+  - Pick the right architecture pattern
+  - Set up your environment
+  - Implement and iterate
+
 ## Document Organization
 
 ### 1. Model Context Protocol (MCP)
