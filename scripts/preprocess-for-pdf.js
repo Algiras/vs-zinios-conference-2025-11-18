@@ -240,10 +240,10 @@ if (require.main === module) {
   } else if (themeArg === 'default') {
     // Generate default (no theme-specific Mermaid colors)
     const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.md');
-    preprocessMarkdown(inputFile).then(content => {
-      fs.writeFileSync(outputFile, content, 'utf8');
+  preprocessMarkdown(inputFile).then(content => {
+    fs.writeFileSync(outputFile, content, 'utf8');
       console.log(`✅ Preprocessed markdown (default) saved to: ${outputFile}`);
-    }).catch(error => {
+  }).catch(error => {
       console.error(`❌ Preprocessing (default) failed:`, error.message);
       process.exit(1);
     });
@@ -267,9 +267,9 @@ if (require.main === module) {
         console.log(`✅ Preprocessed markdown (dark) saved to: ${outputFileDark}`);
       })
     ]).catch(error => {
-      console.error('❌ Preprocessing failed:', error.message);
-      process.exit(1);
-    });
+    console.error('❌ Preprocessing failed:', error.message);
+    process.exit(1);
+  });
   }
 }
 

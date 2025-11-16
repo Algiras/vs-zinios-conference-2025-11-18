@@ -162,29 +162,53 @@ style: |
   /* About Me Layout */
   .about-me-layout {
     display: grid !important;
-    grid-template-columns: 200px 1fr !important;
-    gap: 3em !important;
+    grid-template-columns: 220px 1fr !important;
+    gap: 3.5em !important;
     align-items: start !important;
-    margin-top: 2em !important;
+    margin-top: 2.5em !important;
   }
   .about-me-layout .profile-image {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: flex-start !important;
   }
-  .about-me-layout .profile-content h3 {
-    margin: 0 0 0.3em 0 !important;
-    font-size: 1.3em !important;
+  .about-me-layout .profile-name {
+    margin: 0 0 0.4em 0 !important;
+    font-size: 1.4em !important;
+    line-height: 1.2 !important;
+    color: var(--text) !important;
+  }
+  .about-me-layout .profile-role {
+    margin: 0 0 1.2em 0 !important;
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+    color: var(--rose) !important;
     line-height: 1.3 !important;
   }
-  .about-me-layout .profile-content p {
-    margin: 0.6em 0 !important;
-    line-height: 1.6 !important;
+  .about-me-layout .profile-details {
+    font-size: 0.95em !important;
+    line-height: 1.7 !important;
   }
-  .about-me-layout .profile-content strong {
+  .about-me-layout .profile-details p {
+    margin: 0.8em 0 !important;
+  }
+  .about-me-layout .profile-details strong {
     display: block !important;
-    margin-bottom: 0.2em !important;
+    margin-top: 1em !important;
+    margin-bottom: 0.3em !important;
+    color: var(--foam) !important;
+    font-size: 1.05em !important;
+  }
+  .about-me-layout .profile-details a {
+    color: var(--pine) !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid var(--pine) !important;
+    transition: all 0.2s ease !important;
+  }
+  .about-me-layout .profile-details a:hover {
     color: var(--rose) !important;
+    border-bottom-color: var(--rose) !important;
   }
   
   /* Profile image - circular */
@@ -199,14 +223,70 @@ style: |
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
+  /* Wix Showcase Layout */
+  .wix-showcase {
+    margin-top: 1.5em !important;
+  }
+  .wix-showcase .wix-logo {
+    text-align: center !important;
+    margin-bottom: 1.5em !important;
+  }
+  .wix-showcase .wix-logo img {
+    max-width: 150px !important;
+    height: auto !important;
+  }
+  .wix-showcase .wix-content {
+    font-size: 0.92em !important;
+    line-height: 1.7 !important;
+  }
+  .wix-showcase .wix-content p {
+    margin: 1.2em 0 !important;
+  }
+  .wix-showcase .wix-content strong {
+    display: block !important;
+    font-size: 1.08em !important;
+    color: var(--rose) !important;
+    margin-bottom: 0.3em !important;
+  }
+  .wix-showcase .wix-patterns {
+    font-size: 0.95em !important;
+    line-height: 1.7 !important;
+  }
+  .wix-showcase .wix-patterns > p > strong {
+    display: block !important;
+    font-size: 1.1em !important;
+    color: var(--foam) !important;
+    margin-bottom: 0.8em !important;
+  }
+  .wix-showcase .wix-patterns ul {
+    margin: 0.5em 0 !important;
+    padding-left: 0 !important;
+    list-style: none !important;
+  }
+  .wix-showcase .wix-patterns li {
+    margin: 0.7em 0 !important;
+    padding-left: 1.5em !important;
+    position: relative !important;
+  }
+  .wix-showcase .wix-patterns li::before {
+    content: "▸" !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: var(--rose) !important;
+    font-weight: bold !important;
+  }
+  .wix-showcase .wix-patterns li strong {
+    color: var(--pine) !important;
+  }
+  
   /* Wix logo */
   img[alt="Wix Logo"],
   img[src*="wix-logo"] {
-    max-width: 120px !important;
+    max-width: 150px !important;
     height: auto !important;
     display: inline-block;
     vertical-align: middle;
-    margin: 0;
+    margin: 0 auto !important;
   }
   
   /* QR codes - smaller, centered */
@@ -646,8 +726,11 @@ Building AI Systems That Code Independently
 </div>
 <div class="profile-content">
 
-### 🧑‍💻 Algimantas Krasauskas
-**AI Tool Developer at Wix**
+<h3 class="profile-name">🧑‍💻 Algimantas Krasauskas</h3>
+
+<p class="profile-role">AI Tool Developer at Wix</p>
+
+<div class="profile-details">
 
 **Focus**  
 Autonomous AI systems · LLM orchestration · Developer productivity
@@ -655,8 +738,10 @@ Autonomous AI systems · LLM orchestration · Developer productivity
 **Background**  
 Building scalable AI systems & intelligent workflows
 
-**GitHub**  
-https://github.com/Algiras/vs-zinios-conference-2025-11-18
+**Connect**  
+[github.com/Algiras/vs-zinios-conference-2025-11-18](https://github.com/Algiras/vs-zinios-conference-2025-11-18)
+
+</div>
 
 </div>
 </div>
@@ -1504,40 +1589,61 @@ section { padding-bottom: 3.5em !important; }
 
 ## What We Use at Wix
 
-<div style="display: flex; align-items: center; gap: 1em; margin-bottom: 1em;">
-<div>
+<div class="wix-showcase">
 
-<!-- Add Wix logo here when available: ![Wix Logo](images/wix-logo.png) -->
+<!-- Add Wix logo here when available:
+<div class="wix-logo">
+
+![Wix Logo](images/wix-logo.png)
 
 </div>
+-->
+
+<div class="wix-content">
+
+**Knowledge Base Pattern**  
+Infrastructure for semantic search · Build and test easily · RAG foundation
+
+**Workflow Orchestration**  
+Internal systems + n8n · Agent task scheduling · Multi-step automation
+
+**AI Gateway Adapter**  
+Model routing (performance, cost, availability) · Single interface, multiple providers
+
+**Internal LLM Tooling**  
+80% of daily work automated · Focus on what LLMs can't do · Productivity multiplier
+
 </div>
 
-**Knowledge Base Pattern** - Infrastructure for semantic search | Build and test easily | RAG foundation
-
-**Workflow Orchestration** - Internal systems + n8n | Agent task scheduling | Multi-step automation
-
-**AI Gateway Adapter** - Model routing (performance, cost, availability) | Single interface, multiple providers
-
-**Internal LLM Tooling** - 80% of daily work automated | Focus on what LLMs can't do | Productivity multiplier
+</div>
 
 ---
 
 ## What We Use at Wix: Patterns
 
-<div style="display: flex; align-items: center; gap: 1em; margin-bottom: 1em;">
-<div>
+<div class="wix-showcase">
 
-<!-- Add Wix logo here when available: ![Wix Logo](images/wix-logo.png) -->
+<!-- Add Wix logo here when available:
+<div class="wix-logo">
+
+![Wix Logo](images/wix-logo.png)
 
 </div>
+-->
+
+<div class="wix-patterns">
+
+**Patterns in Practice**
+
+- **AI Gateway** — Routes tasks to optimal models (cost/performance)
+- **FSM** — Workflow orchestration uses state machines
+- **ReAct + Learning** — Agents improve from feedback
+- **MCP** — Standardized tool definitions across systems
+- **Scratchpad** — Complex tasks use working memory pattern
+
 </div>
 
-**Patterns in Practice**:
-- **AI Gateway**: Routes tasks to optimal models (cost/performance)
-- **FSM**: Workflow orchestration uses state machines
-- **ReAct + Learning**: Agents improve from feedback
-- **MCP**: Standardized tool definitions across systems
-- **Scratchpad**: Complex tasks use working memory pattern
+</div>
 
 ---
 

@@ -32,23 +32,23 @@ try {
   
   for (const build of builds) {
     console.log(`🎨 Building ${build.label} theme...`);
-    
-    // Check if preprocessed file exists
+  
+  // Check if preprocessed file exists
     if (!fs.existsSync(build.preprocessed)) {
       console.error(`❌ Error: Preprocessed file not found: ${build.preprocessed}`);
       console.error('Please run preprocessing first');
-      process.exit(1);
-    }
-    
-    // Use Marp CLI to convert markdown to HTML
+    process.exit(1);
+  }
+  
+  // Use Marp CLI to convert markdown to HTML
     // Specify full output file path to avoid directory interpretation
     // Skip config file that forces directory input mode
     const cmd = `npx @marp-team/marp-cli --no-stdin --no-config-file --html --allow-local-files --theme "${build.theme}" "${build.preprocessed}" -o "${build.output}"`;
-    
-    execSync(cmd, {
-      stdio: 'inherit'
-    });
-    
+  
+  execSync(cmd, {
+    stdio: 'inherit'
+  });
+  
     console.log(`✅ ${build.label} theme: ${build.output}\n`);
   }
   
