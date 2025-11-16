@@ -215,26 +215,49 @@ module.exports = { preprocessMarkdown, generateMermaid, generateQRCode };
 // Main execution (CLI mode - for backward compatibility)
 if (require.main === module) {
   const inputFile = process.argv[2] || path.join(__dirname, '../slides/presentation.md');
-  const themeName = process.argv[3]; // Optional: 'rose-pine-dawn' or 'rose-pine-moon'
+  const themeArg = process.argv[3]; // Optional: 'light', 'dark', or empty for all
   
-  if (themeName && (themeName === 'rose-pine-dawn' || themeName === 'rose-pine-moon')) {
-    // Generate themed version
-    const suffix = themeName === 'rose-pine-dawn' ? 'light' : 'dark';
-    const outputFile = path.join(__dirname, `../slides/presentation.preprocessed.${suffix}.md`);
-    
-    preprocessMarkdown(inputFile, themeName).then(content => {
+  if (themeArg === 'light') {
+    // Generate light theme only
+    const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.light.md');
+    preprocessMarkdown(inputFile, 'rose-pine-dawn').then(content => {
       fs.writeFileSync(outputFile, content, 'utf8');
-      console.log(`✅ Preprocessed markdown (${suffix}) saved to: ${outputFile}`);
+      console.log(`✅ Preprocessed markdown (light) saved to: ${outputFile}`);
     }).catch(error => {
-      console.error(`❌ Preprocessing (${suffix}) failed:`, error.message);
+      console.error(`❌ Preprocessing (light) failed:`, error.message);
+      process.exit(1);
+    });
+  } else if (themeArg === 'dark') {
+    // Generate dark theme only
+    const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.dark.md');
+    preprocessMarkdown(inputFile, 'rose-pine-moon').then(content => {
+      fs.writeFileSync(outputFile, content, 'utf8');
+      console.log(`✅ Preprocessed markdown (dark) saved to: ${outputFile}`);
+    }).catch(error => {
+      console.error(`❌ Preprocessing (dark) failed:`, error.message);
+      process.exit(1);
+    });
+  } else if (themeArg === 'default') {
+    // Generate default (no theme-specific Mermaid colors)
+    const outputFile = path.join(__dirname, '../slides/presentation.preprocessed.md');
+    preprocessMarkdown(inputFile).then(content => {
+      fs.writeFileSync(outputFile, content, 'utf8');
+      console.log(`✅ Preprocessed markdown (default) saved to: ${outputFile}`);
+    }).catch(error => {
+      console.error(`❌ Preprocessing (default) failed:`, error.message);
       process.exit(1);
     });
   } else {
-    // Default: generate both light and dark versions
+    // No argument: generate all three versions (default, light, dark)
+    const outputFileDefault = path.join(__dirname, '../slides/presentation.preprocessed.md');
     const outputFileLight = path.join(__dirname, '../slides/presentation.preprocessed.light.md');
     const outputFileDark = path.join(__dirname, '../slides/presentation.preprocessed.dark.md');
     
     Promise.all([
+      preprocessMarkdown(inputFile).then(content => {
+        fs.writeFileSync(outputFileDefault, content, 'utf8');
+        console.log(`✅ Preprocessed markdown (default) saved to: ${outputFileDefault}`);
+      }),
       preprocessMarkdown(inputFile, 'rose-pine-dawn').then(content => {
         fs.writeFileSync(outputFileLight, content, 'utf8');
         console.log(`✅ Preprocessed markdown (light) saved to: ${outputFileLight}`);
