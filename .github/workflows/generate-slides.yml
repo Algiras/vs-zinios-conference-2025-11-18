@@ -49,6 +49,9 @@ jobs:
         env:
           CI: 'true'
       
+      - name: Export PPTX
+        run: npm run export:pptx
+      
       - name: Prepare site artifact
         run: |
           mkdir -p public
@@ -72,6 +75,14 @@ jobs:
             slides/presentation.html
             slides/presentation-dark.html
           retention-days: 30
+          if-no-files-found: error
+      
+      - name: Upload PPTX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: presentation-pptx
+          path: slides/presentation.pptx
+          retention-days: 90
           if-no-files-found: error
       
       - name: Upload Pages artifact
