@@ -817,6 +817,19 @@ vs-zinios-conference-2025-11-18
 
 ---
 
+## The Challenge
+
+**Current State**: Software development is slow, repetitive, and error-prone
+
+**The Opportunity**:
+- LLMs can write code
+- But lack structure, memory, and control
+- Need proper architecture for autonomy
+
+**The Solution**: Autonomous development systems that actually work
+
+---
+
 ## Our Talk Today
 
 **Building AI systems that autonomously complete programming tasks**
@@ -900,6 +913,8 @@ Workflows & Autonomous Systems
 # Part 2: Agent Types
 
 Reflex & Learning Agents
+
+**Key Question**: What types of agents exist and when should we use them?
 
 ---
 
@@ -1030,6 +1045,8 @@ section { padding-bottom: 3.8em !important; }
 # Part 3: Architecture Patterns
 
 FSM, BT, GOAP & ReAct
+
+**Key Question**: How do we structure agents for complex workflows?
 
 ---
 
@@ -1224,6 +1241,8 @@ section { padding-bottom: 3.5em !important; }
 
 Standardized Tools & Resources
 
+**Key Question**: How do we standardize agent interactions?
+
 ---
 
 ## 🔌 Model Context Protocol (MCP)
@@ -1293,6 +1312,8 @@ section { padding-bottom: 3.5em !important; }
 # Part 5: What Works
 
 Production Patterns & Best Practices
+
+**Key Question**: What patterns actually work in production?
 
 ---
 
@@ -1505,6 +1526,8 @@ section { padding-bottom: 4.5em !important; }
 
 Python, TypeScript & Orchestration
 
+**Key Question**: What tools are available to build these systems?
+
 ---
 
 ## Python Frameworks
@@ -1553,6 +1576,8 @@ ReAct agents, memory, streaming | Node.js and edge computing
 # Part 7: Examples
 
 Real-World Implementations
+
+**Key Question**: How do these patterns work in real systems?
 
 ---
 
@@ -1738,6 +1763,8 @@ Model routing (performance, cost, availability) · Single interface, multiple pr
 # Part 8: Best Practices
 
 Design, Security & Common Pitfalls
+
+**Key Question**: How do we avoid common mistakes?
 
 ---
 
@@ -1943,6 +1970,21 @@ section { padding-bottom: 3.5em !important; }
 <style scoped>
 section { padding-bottom: 1.2em !important; }
 </style>
+
+---
+
+## The Vision: Autonomous Development
+
+**Today**: Developers manually write most code
+
+**Tomorrow**: Developers design systems; AI implements them
+
+**The Shift**:
+- From coding → orchestrating agents
+- From debugging → tuning workflows
+- From implementation → architecture
+
+**You're Ready**: You have the patterns, tools, and knowledge to build this
 
 ---
 
